@@ -24,6 +24,8 @@ blob-report/
 .codex/
 .open-knowledge/
 .mirror-output/
+.ok/
+output/
 /test-doc.md
 
 # Env files (keep .env.example committed)
