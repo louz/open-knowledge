@@ -39,6 +39,7 @@ import type {
   ShareTargetStatusResponse,
 } from './schemas/api/share.ts';
 import type { RecentProjectEntry } from './sharing/index.ts';
+import type { SkillCostTiers } from './skills-catalog/skill-cost.ts';
 import type { TerminalPlacement } from './terminal-layout.ts';
 
 export type { OkFolderState } from './constants/folder-state.ts';
@@ -290,7 +291,15 @@ export interface OkProjectOpenRequest {
    * `sendDeepLink` for the warm-focus path. Mirrors the existing
    * `openknowledge://open?project=&doc=` flow.
    */
-  pendingDeepLinkTarget?: { kind: 'doc' | 'folder'; path: string };
+  pendingDeepLinkTarget?: {
+    kind: 'doc' | 'folder';
+    /** Content-relative renderer navigation path. */
+    path: string;
+    /** Repository-relative path used only by receive-side Git/filesystem probes. */
+    repositoryPath?: string;
+    /** Present only for v2; strips the repository prefix from rename results. */
+    contentRootDepth?: number;
+  };
   /**
    * Optional share branch riding alongside `pendingDeepLinkTarget`. See
    * canonical bridge contract below.
@@ -415,6 +424,10 @@ export interface OkSharePayloadFields {
   readonly repo: string;
   readonly branch: string;
   readonly sharedUrl: string;
+  /** URL-derived repository coordinate. Never inferred from receiver config. */
+  readonly repositoryTarget: ShareTarget;
+  /** `null` for historical v1; positive decoded prefix depth for v2. */
+  readonly contentRootDepth: number | null;
   readonly target: ShareTarget;
 }
 
@@ -509,14 +522,15 @@ export type OkMcpWiringEditorId = EditorId;
 
 /**
  * Payload delivered to `mcpWiring.onShow` subscribers on first-launch MCP
- * consent. Every editor in `ALL_EDITOR_IDS` appears; `detected: true`
- * preselects the checkbox in `<McpConsentDialog>`. `willReplace: true`
- * signals that the editor has an existing OK-managed entry that Add would
- * overwrite — surfaced per-row so long-time CLI users aren't surprised to
- * find their pre-existing entry stomped. `pathInstall` drives the dialog's
- * shell-PATH toggle row: `shellDetected: false` hides the row;
- * `alreadyInstalled: true` renders it informational; `rcFilesToTouch`
- * names the tildified shell files a grant would edit.
+ * consent. Every editor in `ALL_EDITOR_IDS` appears, but only `detected: true`
+ * ones are in `<McpConsentDialog>`'s write set — the rest have no config to
+ * wire and are not shown. `willReplace: true` signals an existing OK-managed
+ * entry the setup would overwrite, which the dialog surfaces next to its
+ * checkbox so long-time CLI users aren't surprised to find their pre-existing
+ * entry stomped. `pathInstall` drives the dialog's shell-PATH toggle row:
+ * `shellDetected: false` hides the row; `alreadyInstalled: true` renders it
+ * informational; `rcFilesToTouch` names the tildified shell files a grant
+ * would edit.
  */
 export interface OkMcpWiringShowPayload {
   readonly detectedEditors: readonly {
@@ -534,13 +548,15 @@ export interface OkMcpWiringShowPayload {
     readonly rcFilesToTouch: readonly string[];
     readonly alreadyInstalled: boolean;
   };
-  /** Per-bundle opt-in rows for the two user-global skills. Empty ⇒ no skill
-   *  decision solicited. `alreadyInstalled: true` renders the row pre-checked
-   *  as an existing install the user can uncheck to remove. */
+  /** The user-global skill bundles onboarding sets up alongside the MCP wiring.
+   *  Empty ⇒ no skill decision solicited. `paths` lists every destination the
+   *  install writes to, computed from the installer's own iteration set and
+   *  gates, so the dialog's disclosure can never advertise a copy that will not
+   *  be made. */
   readonly globalSkills: readonly {
     readonly id: string;
     readonly name: string;
-    readonly alreadyInstalled: boolean;
+    readonly paths: readonly string[];
   }[];
 }
 
@@ -550,9 +566,12 @@ export interface OkMcpWiringShowPayload {
  * granted); `false` → record declined, touch no rc file; absent → no PATH
  * decision was solicited (row hidden or informational).
  *
- * `skills` — bundle ids the user left checked. Present ⇒ a skill decision was
- * solicited; every offered bundle not in the list is recorded declined (and
- * removed if already installed).
+ * `skills` — bundle ids the user left checked. An ARRAY (even empty) ⇒ a
+ * decision was made, and every offered bundle not in the list is recorded
+ * declined (and removed if already installed). Absent ⇒ no decision was made:
+ * the skills leg is skipped, so nothing is written and nothing installed is
+ * torn down. Onboarding sends the absent form when the user declines setup,
+ * because declining must never uninstall an existing bundle.
  */
 export interface OkMcpWiringConfirmRequest {
   readonly editorIds: readonly OkMcpWiringEditorId[];
@@ -597,8 +616,23 @@ export interface OkIntegrationsStatus {
   readonly skills: readonly {
     readonly id: string;
     readonly name: string;
+    /** The skill's own frontmatter description; empty when the bundle is
+     *  unreadable. Replaces the hand-written per-id subtext on the row. */
+    readonly description: string;
     readonly installed: boolean;
     readonly paths: readonly string[];
+    /** Three-tier context cost from the shared estimator. Absent when the
+     *  bundle could not be parsed (broken build) — the row hides the cost. */
+    readonly size?: SkillCostTiers;
+    /** On-disk source directory of the built-in bundle (its SKILL.md + files). */
+    readonly sourceDir: string;
+    /** Every place this skill would install: static agent hosts present on disk
+     *  plus declared custom roots. For a custom root `editor === skillsRoot`. */
+    readonly resolvedHosts: readonly {
+      readonly editor: string;
+      readonly skillsRoot: string;
+      readonly custom: boolean;
+    }[];
   }[];
   /**
    * Every editor whose host root already exists on this machine — a SUPERSET
@@ -655,6 +689,18 @@ export interface OkProjectIntegrationsStatus {
   readonly skill: {
     readonly installed: boolean;
     readonly paths: readonly string[];
+    /** The skill's own frontmatter description, so the row states what the
+     *  bundle says rather than a hand-written subtext that can drift from it. */
+    readonly description: string;
+    /** Editor ids this project's skill fans out to — the reach cluster's input.
+     *  Project-scoped, so these are the editors with a project skill root here,
+     *  not the user-global host set. */
+    readonly hosts: readonly string[];
+    /** Three-tier context cost of the bundled project skill. Absent when the
+     *  bundle cannot be read. */
+    readonly size?: SkillCostTiers;
+    /** On-disk source of the bundled skill, so the row can open its preview. */
+    readonly sourceDir?: string;
   } | null;
 }
 
@@ -1270,6 +1316,8 @@ export interface OkDesktopBridge {
       branch?: string | null;
       multiCandidate?: boolean;
       targetMissing?: boolean;
+      repositoryPath?: string;
+      contentRootDepth?: number;
     }) => void,
   ): OkUnsubscribe;
   /**
@@ -1570,6 +1618,7 @@ export interface OkDesktopBridge {
       projectPath: string;
       branch: string;
       kind: 'doc' | 'folder';
+      /** URL-derived repository-relative target path. */
       path: string;
     }): Promise<BranchInfoResponse | null>;
     /**
@@ -1590,8 +1639,11 @@ export interface OkDesktopBridge {
     fetchTargetStatus(request: {
       projectPath: string;
       branch: string;
+      /** URL-derived repository-relative target path. */
       path: string;
       kind: 'doc' | 'folder';
+      /** Present only for v2 so rename destinations can be content-relative. */
+      contentRootDepth?: number;
     }): Promise<ShareTargetStatusResponse | null>;
     /**
      * Gate dialog dismissal on the `branch-switched` broadcast landing
@@ -2009,7 +2061,12 @@ export interface OkDesktopBridge {
     onExit(cb: (msg: OkPtyExit) => void): OkUnsubscribe;
     claudePreflight(): Promise<ClaudeReadiness>;
     cliPreflight(cli: TerminalCli): Promise<CliReadiness>;
-    cliInstalledMap(): Promise<Record<TerminalCli, boolean>>;
+    /**
+     * Batched on-PATH readiness. An absent key means the probe could not verify
+     * that CLI either way (NOT absence) — consumers must fail open on
+     * `undefined` and reserve gating-off for the positive `false`.
+     */
+    cliInstalledMap(): Promise<Partial<Record<TerminalCli, boolean>>>;
     rewireClaudeMcp(): Promise<ClaudeReadiness>;
   };
 

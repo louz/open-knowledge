@@ -100,6 +100,11 @@ msgstr "\"{trimmed}\" यहाँ पहले से मौजूद है"
 msgid "\"frontmatter\" is a reserved property name"
 msgstr "\"frontmatter\" एक आरक्षित प्रॉपर्टी नाम है"
 
+#. placeholder {0}: item.attempts
+#: src/components/acp/ThreadView.tsx
+msgid "({0, plural, one {# attempt} other {# attempts}})"
+msgstr "({0, plural, one {# प्रयास} other {# प्रयास}})"
+
 #: src/components/settings/LintingSection.tsx
 msgid "(a bare folder name needs /** after it to match what's inside)"
 msgstr "(केवल फ़ोल्डर नाम के बाद /** जोड़ना ज़रूरी है ताकि उसके अंदर की सामग्री मेल खाए)"
@@ -184,10 +189,20 @@ msgstr "{0, plural, one {# दस्तावेज़} other {# दस्ता
 msgid "{0, plural, one {# error} other {# errors}}"
 msgstr "{0, plural, one {# त्रुटि} other {# त्रुटियाँ}}"
 
+#. placeholder {0}: pack.entryCounts.files
+#: src/components/PackCardGrid.tsx
+msgid "{0, plural, one {# file} other {# files}}"
+msgstr "{0, plural, one {# फ़ाइल} other {# फ़ाइलें}}"
+
 #. placeholder {0}: selected.size
 #: src/components/settings/applies-to-folder-picker.tsx
 msgid "{0, plural, one {# folder picked} other {# folders picked}}"
 msgstr "{0, plural, one {# फ़ोल्डर चुना गया} other {# फ़ोल्डर चुने गए}}"
+
+#. placeholder {0}: pack.entryCounts.folders
+#: src/components/PackCardGrid.tsx
+msgid "{0, plural, one {# folder} other {# folders}}"
+msgstr "{0, plural, one {# फ़ोल्डर} other {# फ़ोल्डर}}"
 
 #. placeholder {0}: value.length
 #: src/components/ArrayOfObjectsWidget.tsx
@@ -267,11 +282,6 @@ msgstr "{0, plural, one {# दस्तावेज़ में कोई स�
 #: src/components/CreatedItemsList.tsx
 msgid "{0, plural, one {Plugin} other {Plugins}}"
 msgstr "{0, plural, one {प्लगइन} other {प्लगइन}}"
-
-#. placeholder {0}: editorList.hiddenCount
-#: src/components/McpConsentDialogBody.tsx
-msgid "{0, plural, one {Show # more tool} other {Show # more tools}}"
-msgstr "{0, plural, one {# और टूल दिखाएँ} other {# और टूल दिखाएँ}}"
 
 #. placeholder {0}: skillRows.length
 #: src/components/CreatedItemsList.tsx
@@ -983,6 +993,10 @@ msgstr "<0>मिरर स्रोत हटा दिया गया।</0> 
 msgid "<0>ok</0> won't run in external terminals until you add it later from the File menu. OpenKnowledge's built-in terminal and AI tools keep working."
 msgstr "<0>ok</0> बाहरी टर्मिनलों में तब तक नहीं चलेगा जब तक आप इसे बाद में File मेन्यू से न जोड़ें। OpenKnowledge का अंतर्निहित टर्मिनल और AI टूल काम करते रहेंगे।"
 
+#: src/components/OkBlobRunner.tsx
+msgid "<0>Space</0> to jump · <1>↓</1> to duck"
+msgstr "कूदने के लिए <0>स्पेस</0> · झुकने के लिए <1>↓</1>"
+
 #: src/components/settings/SkillTargetsPicker.tsx
 msgid "~/.myteam/skills"
 msgstr "~/.myteam/skills"
@@ -1184,10 +1198,6 @@ msgstr "{appName} के बारे में"
 msgid "Above"
 msgstr "ऊपर"
 
-#: src/components/settings/SkillTargetsPicker.tsx
-msgid "absent"
-msgstr "अनुपस्थित"
-
 #: src/components/DiffView.tsx
 msgid "Accept"
 msgstr "स्वीकारें"
@@ -1324,8 +1334,8 @@ msgid "Add link"
 msgstr "लिंक जोड़ें"
 
 #: src/components/settings/SearchSection.tsx
-msgid "Add meaning-based ranking to search so conceptually-related pages surface even when they share no keywords. This setting applies only to this computer."
-msgstr "खोज में अर्थ-आधारित रैंकिंग जोड़ें ताकि वैचारिक रूप से जुड़े पेज तब भी सामने आएँ जब उनमें कोई साझा कीवर्ड न हो। यह सेटिंग केवल इसी कंप्यूटर पर लागू होती है।"
+msgid "Add meaning-based ranking to search so conceptually-related pages surface even when they share no keywords."
+msgstr "खोज में अर्थ-आधारित रैंकिंग जोड़ें ताकि वैचारिक रूप से जुड़े पेज तब भी सामने आएँ जब उनमें कोई साझा कीवर्ड न हो।"
 
 #: src/components/settings/OkignoreSection.tsx
 msgid "Add pattern"
@@ -1393,13 +1403,6 @@ msgstr "इस संदेश में अपनी टिप्पणिय�
 msgid "Added"
 msgstr "जोड़ा गया"
 
-#. Subtext for the open-knowledge-write-skill skill row
-#. Subtext for the open-knowledge-write-skill skill row
-#: src/components/McpConsentDialogBody.tsx
-#: src/components/settings/AiToolsSection.tsx
-msgid "Adds a guided workflow for authoring new Agent Skills."
-msgstr "नई Agent Skills लिखने के लिए एक मार्गदर्शित कार्यप्रवाह जोड़ता है।"
-
 #: src/components/settings/AiToolsSection.tsx
 msgid "Adds a managed block to"
 msgstr "इसमें एक प्रबंधित ब्लॉक जोड़ता है"
@@ -1410,6 +1413,21 @@ msgstr "इसमें एक प्रबंधित ब्लॉक जो�
 #: src/components/settings/AiToolsSection.tsx
 msgid "Adds a managed block to {0}"
 msgstr "{0} में एक प्रबंधित ब्लॉक जोड़ता है"
+
+#. Subtext under the create-project AI-tools checkbox
+#: src/components/CreateProjectDialog.tsx
+msgid "Adds an OpenKnowledge MCP entry and the project skill, so each tool can read and update these notes."
+msgstr "OpenKnowledge की MCP प्रविष्टि और प्रोजेक्ट Skill जोड़ता है, ताकि हर टूल इन दस्तावेज़ों को पढ़ और अपडेट कर सके।"
+
+#. Subtext under the single AI-tools checkbox when a skill is also installed
+#: src/components/McpConsentDialogBody.tsx
+msgid "Adds OpenKnowledge's MCP connection to each, plus the open-knowledge-discovery skill so your agents recognize OpenKnowledge projects."
+msgstr "हर टूल में OpenKnowledge का MCP कनेक्शन जोड़ता है, साथ ही open-knowledge-discovery Skill भी, ताकि आपके एजेंट OpenKnowledge प्रोजेक्ट पहचान सकें।"
+
+#. Subtext under the single AI-tools checkbox when only MCP is wired
+#: src/components/McpConsentDialogBody.tsx
+msgid "Adds OpenKnowledge's MCP connection to each."
+msgstr "हर टूल में OpenKnowledge का MCP कनेक्शन जोड़ता है।"
 
 #: src/components/ReportBugDialogBody.tsx
 msgid "Adds telemetry, server state, and runtime info when available. Credentials are always removed; document names, if included, appear in cleartext (not redacted)."
@@ -1466,9 +1484,12 @@ msgstr "Terminal को पढ़ने योग्य बनाए रखन�
 msgid "Agent settings"
 msgstr "एजेंट सेटिंग"
 
-#. Group label above the skill rows in Settings → AI tools & CLI
-#. Section label above the skill checkboxes in the first-launch dialog
+#. Heading above the skill install destinations in the disclosure
 #: src/components/McpConsentDialogBody.tsx
+msgid "Agent Skill"
+msgstr "Agent Skill"
+
+#. Group label above the skill rows in Settings → AI tools & CLI
 #: src/components/settings/AiToolsSection.tsx
 msgid "Agent Skills"
 msgstr "Agent Skills"
@@ -1485,6 +1506,8 @@ msgstr "एजेंट"
 msgid "AI tool management is only available in the OpenKnowledge desktop app."
 msgstr "AI टूल प्रबंधन केवल OpenKnowledge डेस्कटॉप ऐप में उपलब्ध है।"
 
+#. Section label above the AI-tools checkbox in the first-launch dialog
+#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/settings/SettingsDialogShell.tsx
 msgid "AI tools"
@@ -1530,6 +1553,10 @@ msgstr "सभी हंक सुलझा दिए गए"
 #: src/components/CommandPalette.tsx
 msgid "All tags"
 msgstr "सभी टैग"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Allow external access"
+msgstr "बाहरी एक्सेस की अनुमति दें"
 
 #: src/components/settings/frontmatter-schema-field-editor.tsx
 msgid "Allowed element values (empty = any)"
@@ -1582,6 +1609,15 @@ msgstr "पहले से साइन इन हैं?"
 #: src/components/ReportBugDialogBody.tsx
 msgid "Always included"
 msgstr "हमेशा शामिल"
+
+#: src/components/SkillCostValue.tsx
+msgid "always-on"
+msgstr "हमेशा सक्रिय"
+
+#. Suffix on a skill directory card's context-cost figure
+#: src/components/SkillDirectoryResult.tsx
+msgid "always-on tokens"
+msgstr "हमेशा सक्रिय टोकन"
 
 #: src/components/AppErrorBoundary.tsx
 #: src/components/DocumentErrorBoundary.tsx
@@ -1661,13 +1697,29 @@ msgstr "किस पर लागू (ग्लोब — शुरू मे�
 msgid "Applies to all projects on this machine. Claude and Codex, started from the built-in terminal, auto-approve OpenKnowledge's read and write tools (Claude also auto-runs \"ok open\"). Deleting, moving, sharing, importing or installing skills, other commands, and non-OpenKnowledge file edits still ask. Cursor, OpenCode, and Pi are unaffected. Best-effort per agent."
 msgstr "इस मशीन के सभी प्रोजेक्ट पर लागू होता है। अंतर्निहित टर्मिनल से शुरू किए गए Claude और Codex, OpenKnowledge के पढ़ने और लिखने वाले टूल स्वत: स्वीकृत करते हैं (Claude \"ok open\" भी स्वत: चलाता है)। स्किल हटाना, हिलाना, साझा करना, आयात करना या इंस्टॉल करना, अन्य कमांड, और OpenKnowledge के बाहर की फ़ाइल संपादन अब भी पूछते हैं। Cursor, OpenCode और Pi अप्रभावित रहते हैं। हर एजेंट के लिए यथासंभव।"
 
+#: src/components/settings/ScopeBadge.tsx
+msgid "Applies to this project on this computer only. Stored in .ok/local, not shared via git."
+msgstr "केवल इस कंप्यूटर पर इस प्रोजेक्ट पर लागू होता है। .ok/local में सहेजा जाता है, git के ज़रिए साझा नहीं होता।"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Apply and restart project server"
+msgstr "लागू करें और प्रोजेक्ट सर्वर पुनः प्रारंभ करें"
+
 #: src/editor/bubble-menu/LinkEditPopover.tsx
 msgid "Apply link"
 msgstr "लिंक लागू करें"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Applying restarts this project's server."
+msgstr "लागू करने पर इस प्रोजेक्ट का सर्वर पुनः प्रारंभ होता है।"
+
 #: src/components/settings/SearchSection.tsx
 msgid "Applying your change"
 msgstr "आपका बदलाव लागू किया जा रहा है"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Applying…"
+msgstr "लागू किया जा रहा है…"
 
 #: src/components/acp/ThreadView.tsx
 msgid "Approved"
@@ -1682,12 +1734,12 @@ msgid "Are you sure you want to convert this file into a template? The original 
 msgstr "क्या आप वाकई इस फ़ाइल को टेम्पलेट में बदलना चाहते हैं? मूल फ़ाइल हटा दी जाएगी। यह क्रिया वापस नहीं ली जा सकती।"
 
 #: src/components/file-tree-trash-copy.ts
-msgid "Are you sure you want to delete '{name}' and its contents?"
-msgstr "क्या आप वाकई '{name}' और उसकी सामग्री हटाना चाहते हैं?"
+msgid "Are you sure you want to delete \"{name}\" and its contents?"
+msgstr "क्या आप वाकई \"{name}\" और उसकी सामग्री को हटाना चाहते हैं?"
 
 #: src/components/file-tree-trash-copy.ts
-msgid "Are you sure you want to delete '{name}'?"
-msgstr "क्या आप वाकई '{name}' को हटाना चाहते हैं?"
+msgid "Are you sure you want to delete \"{name}\"?"
+msgstr "क्या आप वाकई \"{name}\" को हटाना चाहते हैं?"
 
 #: src/components/FileTree.tsx
 msgid "Are you sure you want to delete {folderName}/ and all files inside? This action cannot be undone."
@@ -1786,6 +1838,7 @@ msgid "Attach the file in an email to <0/>"
 msgstr "फ़ाइल को एक ईमेल में <0/> पर संलग्न करें"
 
 #: src/components/settings/AttachmentsSection.tsx
+#: src/components/settings/SettingsDialogShell.tsx
 msgid "Attachments"
 msgstr "संलग्नक"
 
@@ -1876,8 +1929,13 @@ msgstr "\"{name}\" के लिए स्वत: अपडेट चालू"
 
 #. Section label for the automatic, one-click install path
 #: src/components/InstallInClaudeDesktopDialog.tsx
+#: src/components/settings/NetworkAccessSection.tsx
 msgid "Automatic"
 msgstr "स्वचालित"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Automatic picks a free port each start. Choose a fixed port to keep the same address across restarts."
+msgstr "स्वचालित हर बार प्रारंभ पर एक मुक्त port चुनता है। पुनः प्रारंभ के बीच समान पता बनाए रखने के लिए एक निश्चित port चुनें।"
 
 #: src/components/PublishToGitHubDialog.tsx
 msgid "Available"
@@ -1965,7 +2023,6 @@ msgstr "खाली नोट"
 
 #: src/components/command-palette-commands.ts
 #: src/components/EditorTabs.tsx
-#: src/components/HelpPopover.tsx
 #: src/components/OkBlobRunnerPage.tsx
 msgid "Blob Run"
 msgstr "Blob Run"
@@ -2183,12 +2240,14 @@ msgstr "यह पथ साझा नहीं किया जा सकता
 #: src/components/SeedDialog.tsx
 #: src/components/settings/LinkPreviewsSection.tsx
 #: src/components/settings/LintingSection.tsx
+#: src/components/settings/NetworkAccessSection.tsx
 #: src/components/settings/SavedThemesTiles.tsx
 #: src/components/settings/SearchSection.tsx
 #: src/components/ShareBranchSwitchDialog.tsx
 #: src/components/ShareReceiveDialog.tsx
 #: src/components/SkillFileCreateDialog.tsx
 #: src/components/SkillFileRenameDialog.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
 #: src/components/SkillPluginBundleDialog.tsx
 #: src/components/SkillRenameDialog.tsx
 #: src/components/SkillScopeMoveDialog.tsx
@@ -2334,6 +2393,10 @@ msgstr "कौशल की जाँच करना"
 #: src/components/ImportSkillForm.tsx
 msgid "Checking source"
 msgstr "स्रोत जाँचा जा रहा है"
+
+#: src/components/CreateProjectDialog.tsx
+msgid "Checking which AI tools you have"
+msgstr "जाँच रहे हैं कि आपके पास कौन-से AI टूल हैं"
 
 #: src/components/settings/AccountSection.tsx
 msgid "Checking your GitHub connection"
@@ -2885,11 +2948,14 @@ msgstr "विरोधी फ़ाइलें: {0}।"
 msgid "Conflicts"
 msgstr "विरोध"
 
-#. Primary button that writes MCP config for the selected AI tools
 #: src/components/AuthModal.tsx
-#: src/components/McpConsentDialogBody.tsx
 msgid "Connect"
 msgstr "जोड़ें"
+
+#. placeholder {0}: formatToolList( status.editors.map((id) => EDITOR_LABELS[id]), i18n.locale, )
+#: src/components/CreateProjectDialog.tsx
+msgid "Connect {0} to this project"
+msgstr "{0} को इस प्रोजेक्ट से जोड़ें"
 
 #: src/components/settings/AccountSection.tsx
 msgid "Connect a GitHub account to browse and sync your repositories."
@@ -2924,7 +2990,6 @@ msgid "Connect this project to GitHub to share."
 msgstr "साझा करने के लिए इस प्रोजेक्ट को GitHub से जोड़ें।"
 
 #: src/components/ConsentDialogBody.tsx
-#: src/components/CreateProjectDialog.tsx
 msgid "Connect to AI tools"
 msgstr "AI टूल से जोड़ें"
 
@@ -3023,6 +3088,10 @@ msgstr "सामग्री नियम"
 msgid "Content rules not yet loaded — try again in a moment"
 msgstr "सामग्री नियम अभी लोड नहीं हुए — कुछ देर बाद फिर कोशिश करें"
 
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Context cost"
+msgstr "कॉन्टेक्स्ट लागत"
+
 #: src/components/acp/ThreadView.tsx
 msgid "Context window:"
 msgstr "संदर्भ विंडो:"
@@ -3030,6 +3099,11 @@ msgstr "संदर्भ विंडो:"
 #: src/components/acp/ThreadView.tsx
 msgid "Context window: {percent}% used, {usedLabel} of {sizeLabel} tokens"
 msgstr "संदर्भ विंडो: {percent}% उपयोग में, {sizeLabel} में से {usedLabel} टोकन"
+
+#. Primary button that applies the first-launch setup choices
+#: src/components/McpConsentDialogBody.tsx
+msgid "Continue"
+msgstr "जारी रखें"
 
 #: src/components/AuthModal.tsx
 msgid "Continue in browser"
@@ -3720,6 +3794,12 @@ msgstr "परीक्षण नहीं चलाया जा सका। �
 msgid "Couldn’t save changes. Try editing a color again."
 msgstr "बदलाव सहेजे नहीं जा सके। किसी रंग को फिर से संपादित करें।"
 
+#. placeholder {0}: humanFormat(first.error)
+#. placeholder {0}: humanFormat(second.error)
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Couldn't save network settings — {0}"
+msgstr "नेटवर्क सेटिंग्स सहेजी नहीं जा सकीं — {0}"
+
 #: src/components/TemplateForm.tsx
 msgid "Couldn't save template: {error}"
 msgstr "टेम्पलेट नहीं सहेजा जा सका: {error}"
@@ -3816,6 +3896,10 @@ msgstr "स्किल साझाकरण अपडेट नहीं क�
 #: src/components/settings/SharingSection.tsx
 msgid "Couldn't update skills sharing — {detail}."
 msgstr "स्किल साझाकरण अपडेट नहीं किया जा सका — {detail}."
+
+#: src/components/TerminalCliUnverifiedBanner.tsx
+msgid "Couldn't verify that {displayName} ({bin}) is available, so this is a plain shell. You can still run {bin} yourself."
+msgstr "यह सत्यापित नहीं हो सका कि {displayName} ({bin}) उपलब्ध है, इसलिए यह एक सादा शेल है। आप फिर भी {bin} स्वयं चला सकते हैं।"
 
 #: src/components/settings/settings-fields.ts
 msgid "Count skill installs publicly"
@@ -4268,10 +4352,6 @@ msgstr "अभी आपको मिली त्रुटि का विव�
 msgid "Detected in {0}"
 msgstr "{0} में पाया गया"
 
-#: src/components/settings/AiToolsSection.tsx
-msgid "Detected on this machine"
-msgstr "इस मशीन पर पाया गया"
-
 #: src/uninstall/UninstallPickerScreen.tsx
 msgid "Detected OpenKnowledge projects"
 msgstr "पाए गए OpenKnowledge प्रोजेक्ट"
@@ -4379,6 +4459,7 @@ msgstr "कनेक्शन तोड़ा जा रहा है"
 #: src/components/OnboardingCard.tsx
 #: src/components/settings/SharingSection.tsx
 #: src/components/TerminalCliMissingBanner.tsx
+#: src/components/TerminalCliUnverifiedBanner.tsx
 msgid "Dismiss"
 msgstr "ख़ारिज करें"
 
@@ -4608,10 +4689,6 @@ msgstr "जैसे एक बड़ी तालिका चिपकान�
 #: src/components/NavigatorApp.tsx
 msgid "Each pack scaffolds your project with ready-made folders and templates."
 msgstr "हर पैक आपके प्रोजेक्ट को तैयार फ़ोल्डर और टेम्पलेट के साथ ढाँचा देता है।"
-
-#: src/components/CreateProjectDialog.tsx
-msgid "Each selected tool gets an OpenKnowledge MCP entry."
-msgstr "हर चयनित टूल को एक OpenKnowledge MCP प्रविष्टि मिलती है।"
 
 #: src/components/AppMenubar.tsx
 #: src/components/settings/LintingSection.tsx
@@ -4933,6 +5010,10 @@ msgstr "एक फ़ोल्डर नाम डालें (जैसे bra
 msgid "Enter a name for this theme."
 msgstr "इस थीम का नाम दर्ज करें।"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Enter a port between 1 and 65535."
+msgstr "1 और 65535 के बीच एक port दर्ज करें।"
+
 #: src/components/CreateProjectDialog.tsx
 msgid "Enter a project name"
 msgstr "एक प्रोजेक्ट नाम डालें"
@@ -4957,7 +5038,14 @@ msgstr "थीम का मान्य नाम दर्ज करें।"
 msgid "Enter a valid URL (for example https://api.openai.com/v1)."
 msgstr "एक मान्य URL डालें (उदाहरण के लिए https://api.openai.com/v1)।"
 
-#: src/components/McpConsentDialogBody.tsx
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Enter a valid URL, for example https://notes.example.com"
+msgstr "एक मान्य URL दर्ज करें, उदाहरण के लिए https://notes.example.com"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Enter the public origin your tunnel serves, for example https://notes.example.com"
+msgstr "वह सार्वजनिक ऑरिजिन दर्ज करें जिसे आपका tunnel सर्व करता है, उदाहरण के लिए https://notes.example.com"
+
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 msgid "Entry"
@@ -4998,6 +5086,10 @@ msgstr "{1}/ के भीतर मौजूद {0}/ फ़ोल्डरो�
 #: src/components/settings/LintingSection.tsx
 msgid "everything under any {0}/ folder"
 msgstr "किसी भी {0}/ फ़ोल्डर के अंतर्गत सब कुछ"
+
+#: src/components/ExcalidrawDocEditor.tsx
+msgid "Excalidraw canvas"
+msgstr "Excalidraw कैनवास"
 
 #: src/components/settings/SharingSection.tsx
 msgid "Exception: skills are shared"
@@ -5066,6 +5158,22 @@ msgstr "खोजें"
 msgid "Explore skills"
 msgstr "स्किल खोजें"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Expose and restart"
+msgstr "एक्सपोज़ करें और पुनः प्रारंभ करें"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Expose this project to the network?"
+msgstr "क्या इस प्रोजेक्ट को नेटवर्क पर एक्सपोज़ करें?"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Expose this project's server to a wider network through a tunnel you run (for example Tailscale). A viewer on the tunnel gets the editor and agent endpoint, editing live against this machine's server."
+msgstr "इस प्रोजेक्ट के सर्वर को आपके द्वारा चलाए जाने वाले tunnel (उदाहरण के लिए Tailscale) के माध्यम से एक व्यापक नेटवर्क पर एक्सपोज़ करें। tunnel पर मौजूद कोई दर्शक एडिटर और एजेंट endpoint प्राप्त करता है, जो इस मशीन के सर्वर के विरुद्ध लाइव संपादन करता है।"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Exposing pins a fixed port so the tunnel's target stays stable across restarts."
+msgstr "एक्सपोज़ करने पर एक निश्चित port पिन हो जाता है ताकि tunnel का target पुनः प्रारंभ के बीच स्थिर रहे।"
+
 #: src/components/empty-state/CreatePromptComposer.tsx
 #: src/components/handoff/AgentSplitButton.tsx
 #: src/components/handoff/OpenInAgentContextSubmenu.tsx
@@ -5086,6 +5194,10 @@ msgstr "बाहरी लिंक पूर्वावलोकन"
 #: src/components/settings/LinkPreviewsSection.tsx
 msgid "External link previews show a card with the site name, page title, and description when you hover a link."
 msgstr "जब आप किसी लिंक पर माउस ले जाते हैं तो बाहरी लिंक पूर्वावलोकन साइट का नाम, पेज शीर्षक और विवरण वाला एक कार्ड दिखाता है।"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "External origin"
+msgstr "बाहरी origin"
 
 #: src/editor/extensions/WikiLinkPropPanel.tsx
 msgid "External wiki link"
@@ -5117,12 +5229,12 @@ msgid "Failed to clean up pending {kind}"
 msgstr "लंबित {kind} की सफ़ाई करने में विफल"
 
 #: src/components/FileTree.tsx
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Failed to create file"
 msgstr "फ़ाइल बनाने में विफल"
 
 #: src/components/FileTree.tsx
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Failed to create folder"
 msgstr "फ़ोल्डर बनाने में विफल"
 
@@ -5447,7 +5559,6 @@ msgstr "फ़ील्ड"
 
 #: src/components/AppMenubar.tsx
 #: src/components/CommandPalette.tsx
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/share-metadata-rows.tsx
@@ -5584,6 +5695,10 @@ msgstr "{flatId} ठीक करें"
 msgid "Fix all with AI ({count})"
 msgstr "AI से सब ठीक करें ({count})"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Fixed"
+msgstr "निश्चित"
+
 #: src/lib/project-fix-sweep-store.ts
 msgid "Fixed {total, plural, one {# file} other {# files}}."
 msgstr "{total, plural, one {# फ़ाइल ठीक की गई} other {# फ़ाइलें ठीक की गईं}}।"
@@ -5591,6 +5706,10 @@ msgstr "{total, plural, one {# फ़ाइल ठीक की गई} other {#
 #: src/components/settings/AttachmentsSection.tsx
 msgid "Fixed folder in content root"
 msgstr "सामग्री रूट में निश्चित फ़ोल्डर"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Fixed port number"
+msgstr "निश्चित port संख्या"
 
 #. placeholder {0}: fixing.done
 #. placeholder {1}: fixing.total
@@ -5661,8 +5780,6 @@ msgstr "फ़ोल्डर साझा करने का लिंक क�
 msgid "Folder target: {linkTitle}. Click to open the overview."
 msgstr "फ़ोल्डर लक्ष्य: {linkTitle}. सिंहावलोकन खोलने के लिए क्लिक करें।"
 
-#: src/components/settings/AiToolsSection.tsx
-#: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/settings/SkillTargetsPicker.tsx
 msgid "Folders"
 msgstr "फ़ोल्डर"
@@ -5802,8 +5919,8 @@ msgid "Full sync — your edits are committed and pushed to your remote automati
 msgstr "पूर्ण सिंक — आपके संपादन अपने आप कमिट होकर आपके रिमोट पर भेज दिए जाते हैं।"
 
 #: src/components/OkBlobRunner.tsx
-msgid "Game over · press space to play again"
-msgstr "खेल समाप्त · फिर से खेलने के लिए स्पेस दबाएँ"
+msgid "Game over · press <0>Space</0> to play again"
+msgstr "खेल समाप्त · फिर से खेलने के लिए <0>स्पेस</0> दबाएँ"
 
 #: src/lib/keyboard-shortcuts.ts
 msgid "General"
@@ -5891,8 +6008,8 @@ msgid "Give the AI tools you use access to read and update your projects. Checki
 msgstr "आप जिन AI टूल का उपयोग करते हैं उन्हें अपने प्रोजेक्ट पढ़ने और अपडेट करने की पहुँच दें। बॉक्स चुनते ही यह तुरंत सेट हो जाता है; हटाने पर हट जाता है।"
 
 #: src/components/McpConsentDialogBody.tsx
-msgid "Give the AI tools you use access to read and update your projects. Pick what to set up below, and change it anytime in Settings > AI tools & CLI."
-msgstr "आप जिन AI टूल का उपयोग करते हैं उन्हें अपने प्रोजेक्ट पढ़ने और अपडेट करने की पहुँच दें। नीचे चुनें कि क्या सेट अप करना है, और इसे कभी भी Settings > AI tools & CLI में बदलें।"
+msgid "Give the AI tools you use access to read and update your projects. You can change any of this later in Settings > AI tools & CLI."
+msgstr "आप जिन AI टूल का उपयोग करते हैं उन्हें अपने प्रोजेक्ट पढ़ने और अपडेट करने की अनुमति दें। यह सब बाद में Settings > AI tools & CLI में बदला जा सकता है।"
 
 #: src/components/settings/LintingSection.tsx
 msgid "Glob patterns this schema applies to"
@@ -6030,13 +6147,6 @@ msgstr "सहायता"
 msgid "Helps coding agents choose OKF document types, preserve provenance, and avoid inventing unsupported metadata."
 msgstr "कोडिंग एजेंटों को OKF दस्तावेज़ प्रकार चुनने, उत्पत्ति को संरक्षित करने और असमर्थित मेटाडेटा का आविष्कार करने से बचने में मदद करता है।"
 
-#. Subtext for the open-knowledge-discovery skill row
-#. Subtext for the open-knowledge-discovery skill row
-#: src/components/McpConsentDialogBody.tsx
-#: src/components/settings/AiToolsSection.tsx
-msgid "Helps your coding agent recognize OpenKnowledge projects and route reads and writes through it."
-msgstr "आपके कोडिंग एजेंट को OpenKnowledge प्रोजेक्ट पहचानने और पढ़ने-लिखने का काम उसी के ज़रिए करने में मदद करता है।"
-
 #: src/components/OkBlobRunner.tsx
 msgid "HI"
 msgstr "उच्च"
@@ -6081,7 +6191,11 @@ msgstr "उन्नत छिपाएँ"
 msgid "Hide Agents"
 msgstr "Agents छिपाएँ"
 
+#. Collapses the list of files the setup writes to
+#. Collapses the list of project files the AI-tool setup writes
 #: src/components/acp/ThreadView.tsx
+#: src/components/CreateProjectDialog.tsx
+#: src/components/McpConsentDialogBody.tsx
 msgid "Hide details"
 msgstr "विवरण छिपाएँ"
 
@@ -6129,10 +6243,6 @@ msgstr "पैनल छिपाएँ"
 #: src/components/EditorToolbar.tsx
 msgid "Hide panel ({panelShortcutLabel})"
 msgstr "पैनल छिपाएँ ({panelShortcutLabel})"
-
-#: src/components/settings/ContentRulesSection.tsx
-msgid "Hide problem indicators"
-msgstr "समस्या संकेतक छिपाएँ"
 
 #: src/editor/find-replace/FindReplaceBar.tsx
 msgid "Hide replace"
@@ -6227,21 +6337,18 @@ msgid "How to push manually"
 msgstr "हाथ से कैसे भेजें"
 
 #. Link on an undetected tool row to its OpenKnowledge setup guide
-#. Link on an undetected tool row to its OpenKnowledge setup guide
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 msgid "How to set up"
 msgstr "सेट अप कैसे करें"
 
 #. placeholder {0}: editor.label
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 msgid "How to set up {0} (opens in browser)"
 msgstr "{0} कैसे सेट अप करें (ब्राउज़र में खुलता है)"
 
 #: src/components/settings/ContentRulesSection.tsx
-msgid "How validation findings surface across the project. These choices are committed to config.yml and shared with every collaborator via git."
-msgstr "सत्यापन के निष्कर्ष पूरे प्रोजेक्ट में कैसे सामने आते हैं। ये चुनाव config.yml में कमिट होते हैं और git के ज़रिए हर सहयोगी के साथ साझा किए जाते हैं।"
+msgid "How validation findings surface across the project."
+msgstr "सत्यापन के निष्कर्ष पूरे प्रोजेक्ट में कैसे सामने आते हैं।"
 
 #: src/editor/slash-command/embed-starter-items.tsx
 msgid "HTML"
@@ -6562,8 +6669,11 @@ msgid "Insert, delete, move, copy, and indent source editor lines through CodeMi
 msgstr "CodeMirror के डिफ़ॉल्ट कीमैप से स्रोत संपादक की पंक्तियाँ डालें, हटाएँ, हिलाएँ, कॉपी करें और अंदर करें।"
 
 #: src/components/InstallInClaudeDesktopDialog.tsx
+#: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/IntegrationsSection.tsx
+#: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/skill-actions.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
 #: src/components/SkillPreviewTab.tsx
 #: src/components/SkillsTree.tsx
 msgid "Install"
@@ -6577,6 +6687,11 @@ msgstr "{0} इंस्टॉल करें"
 #: src/components/handoff/OpenInAgentMenuItem.tsx
 msgid "Install {brand} →"
 msgstr "{brand} इंस्टॉल करें →"
+
+#: src/components/settings/AiToolsSection.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Install {name}"
+msgstr "{name} इंस्टॉल करें"
 
 #. placeholder {0}: res.error
 #: src/hooks/use-explore-preview-install.ts
@@ -6707,6 +6822,10 @@ msgstr "इंस्टॉल किया जा रहा है"
 #: src/components/acp/ThreadView.tsx
 msgid "Installing {agentName}…"
 msgstr "{agentName} इंस्टॉल किया जा रहा है…"
+
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Installs to"
+msgstr "यहाँ इंस्टॉल होगा"
 
 #: src/components/SkillDirectoryResult.tsx
 msgid "installs:"
@@ -6904,11 +7023,11 @@ msgstr "लेआउट"
 msgid "Layout options"
 msgstr "लेआउट विकल्प"
 
-#: src/components/settings/PluginSectionHeader.tsx
+#: src/components/settings/SettingsSectionHeader.tsx
 msgid "Learn more"
 msgstr "और जानें"
 
-#: src/components/settings/PluginSectionHeader.tsx
+#: src/components/settings/SettingsSectionHeader.tsx
 msgid "Learn more about {title}"
 msgstr "{title} के बारे में और जानें"
 
@@ -7068,6 +7187,10 @@ msgstr "दोनों संस्करण लोड हो रहे है�
 msgid "Loading branch state"
 msgstr "ब्रांच स्थिति लोड हो रही है"
 
+#: src/components/settings/SharingSection.tsx
+msgid "Loading config sharing"
+msgstr "कॉन्फ़िग साझाकरण लोड हो रहा है"
+
 #: src/components/DiffViewBoundary.tsx
 msgid "Loading conflict for {filePath}"
 msgstr "{filePath} का टकराव लोड हो रहा है"
@@ -7214,9 +7337,13 @@ msgstr "स्थानीय फ़ाइलें"
 msgid "Local path"
 msgstr "स्थानीय पथ"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Local server port"
+msgstr "स्थानीय सर्वर port"
+
 #: src/lib/install-onboarding-toast.ts
-msgid "Local-only requested but no git repository was created. Switch later via Settings → Config sharing once the project is in a git repo."
-msgstr "केवल-स्थानीय का अनुरोध किया गया था, लेकिन कोई git रिपॉजिटरी नहीं बनाई गई। प्रोजेक्ट के git रिपॉजिटरी में आ जाने पर आप सेटिंग्स → कॉन्फ़िग साझाकरण से बाद में बदल सकते हैं।"
+msgid "Local-only requested but no git repository was created. Switch later via Settings → Sync & sharing once the project is in a git repo."
+msgstr "केवल-स्थानीय का अनुरोध किया गया था, लेकिन कोई git रिपॉजिटरी नहीं बनाई गई। प्रोजेक्ट के git रिपॉजिटरी में आ जाने पर आप सेटिंग्स → सिंक और साझाकरण से बाद में बदल सकते हैं।"
 
 #: src/components/CreateProjectDialog.tsx
 msgid "Location"
@@ -7338,7 +7465,7 @@ msgstr "MCP स्वतः-मरम्मत विफल रही"
 
 #. Group label above the per-editor MCP list in Settings → AI tools & CLI — each row wires OpenKnowledge's MCP server into that tool
 #. Group label above the per-editor project MCP list in Settings → This project → AI tools
-#. Section label above the editor checkbox list in the first-launch dialog — each row wires OpenKnowledge's MCP server into that tool
+#. Heading above the per-tool MCP config paths in the disclosure
 #: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
@@ -7708,12 +7835,17 @@ msgstr "{path} में नेस्टेड .okignore त्रुटि"
 msgid "Nested fields"
 msgstr "नेस्टेड फ़ील्ड"
 
+#: src/components/settings/NetworkAccessSection.tsx
+#: src/components/settings/SettingsDialogShell.tsx
+msgid "Network access"
+msgstr "नेटवर्क एक्सेस"
+
 #: src/components/FileTree.tsx
 msgid "Network error - {kind} \"{createdPath}\" still exists on disk"
 msgstr "नेटवर्क त्रुटि - {kind} \"{createdPath}\" अब भी डिस्क पर मौजूद है"
 
 #: src/components/FileTree.tsx
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Network error — please try again"
 msgstr "नेटवर्क त्रुटि — कृपया फिर कोशिश करें"
 
@@ -7724,6 +7856,10 @@ msgstr "नेटवर्क त्रुटि (क्या `ok start` चल
 #: src/components/FileTree.tsx
 msgid "Network error during cleanup"
 msgstr "सफ़ाई के दौरान नेटवर्क त्रुटि"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Network settings not yet loaded — try again in a moment."
+msgstr "नेटवर्क सेटिंग्स अभी तक लोड नहीं हुईं — कुछ क्षण में पुनः प्रयास करें।"
 
 #: src/components/SyncStatusBadge.tsx
 msgid "never"
@@ -7741,8 +7877,8 @@ msgid "New {0} chat"
 msgstr "नई {0} चैट"
 
 #: src/components/OkBlobRunner.tsx
-msgid "New best · press space to play again"
-msgstr "नया रिकॉर्ड · फिर से खेलने के लिए स्पेस दबाएँ"
+msgid "New best · press <0>Space</0> to play again"
+msgstr "नया रिकॉर्ड · फिर से खेलने के लिए <0>स्पेस</0> दबाएँ"
 
 #: src/components/NewWorktreeDialog.tsx
 msgid "New branch <0>{trimmed}</0> will be created from <1>{currentBaseLabel}</1>, in its own worktree under <2>.ok/worktrees/</2>."
@@ -7904,6 +8040,10 @@ msgstr "अभी कोई <0>.markdownlint.*</0> फ़ाइल नहीं 
 msgid "No active or recent OpenKnowledge projects were found."
 msgstr "कोई सक्रिय या हाल का OpenKnowledge प्रोजेक्ट नहीं मिला।"
 
+#: src/components/SkillInstallMenu.tsx
+msgid "No agent folders yet"
+msgstr "अभी तक कोई एजेंट फ़ोल्डर नहीं"
+
 #: src/comments/use-comment-delivery.ts
 msgid "No agent is set up yet — opening Configure agents."
 msgstr "अभी कोई एजेंट सेट अप नहीं है — Configure agents खोला जा रहा है।"
@@ -7932,6 +8072,19 @@ msgstr "कोई एजेंट नहीं चुना गया — स्
 #: src/components/FileSidebar.tsx
 msgid "No AI agents installed"
 msgstr "कोई AI एजेंट इंस्टॉल नहीं है"
+
+#. Shown in place of the AI-tools checkbox when no AI tool was detected
+#: src/components/McpConsentDialogBody.tsx
+msgid "No AI tools detected yet. Once you install one, connect it from Settings > AI tools & CLI."
+msgstr "अभी तक कोई AI टूल नहीं मिला। एक इंस्टॉल करने के बाद उसे Settings > AI tools & CLI से जोड़ें।"
+
+#: src/components/CreateProjectDialog.tsx
+msgid "No AI tools detected yet. Once you install one, connect it from Settings > This project."
+msgstr "अभी तक कोई AI टूल नहीं मिला। एक इंस्टॉल करने के बाद उसे Settings > This project से जोड़ें।"
+
+#: src/components/SkillConsentRow.tsx
+msgid "No AI tools detected. Install one to use this skill."
+msgstr "कोई AI टूल नहीं मिला। इस स्किल को इस्तेमाल करने के लिए एक इंस्टॉल करें।"
 
 #: src/components/settings/SearchSection.tsx
 msgid "No API key is set for this endpoint. Add one above."
@@ -8236,10 +8389,6 @@ msgstr "कोई टेम्पलेट उपलब्ध नहीं"
 msgid "No templates found."
 msgstr "कोई टेम्पलेट नहीं मिला।"
 
-#: src/components/NewItemDialog.tsx
-msgid "No templates yet. Add one in this folder's Templates section, or in Settings → Templates."
-msgstr "अभी कोई टेम्पलेट नहीं। इस फ़ोल्डर के Templates अनुभाग में, या Settings → Templates में एक जोड़ें।"
-
 #: src/components/TemplatesCard.tsx
 msgid "No templates yet. Add one to give new docs in this folder a ready-made starting point."
 msgstr "अभी कोई टेम्पलेट नहीं। इस फ़ोल्डर के नए दस्तावेज़ों को एक तैयार शुरुआती बिंदु देने के लिए एक जोड़ें।"
@@ -8406,6 +8555,10 @@ msgstr "चालू — आपकी खोज क्वेरी और मे
 msgid "On <0>{address}</0>"
 msgstr "<0>{address}</0> पर"
 
+#: src/components/SkillCostValue.tsx
+msgid "on demand"
+msgstr "मांग पर"
+
 #: src/comments/PropertyCommentButton.tsx
 msgid "On selected text in <0>{address}</0>"
 msgstr "<0>{address}</0> में चयनित पाठ पर"
@@ -8413,6 +8566,10 @@ msgstr "<0>{address}</0> में चयनित पाठ पर"
 #: src/components/settings/LintingSection.tsx
 msgid "On the root index, okf_version is written as a quoted string like \"0.2\". Unquoted, YAML reads it as a number and 0.10 silently becomes 0.1."
 msgstr "रूट इंडेक्स पर, okf_version को \"0.2\" जैसी उद्धृत स्ट्रिंग के रूप में लिखा जाता है। अउद्धृत, YAML इसे एक संख्या के रूप में पढ़ता है और 0.10 चुपचाप 0.1 बन जाता है।"
+
+#: src/components/SkillCostValue.tsx
+msgid "on trigger"
+msgstr "ट्रिगर होने पर"
 
 #. Next step for a Cursor project MCP row — Cursor leaves project servers disabled
 #: src/components/settings/ProjectAiToolsSection.tsx
@@ -9096,6 +9253,10 @@ msgstr "बाहर जाने वाले"
 msgid "Outline"
 msgstr "रूपरेखा"
 
+#: src/components/SkillCostValue.tsx
+msgid "over the {budgetLabel} token budget"
+msgstr "{budgetLabel} टोकन बजट से अधिक"
+
 #: src/components/AutoSyncEnableWarning.tsx
 msgid "Overlapping edits"
 msgstr "आपस में टकराते संपादन"
@@ -9327,8 +9488,8 @@ msgid "Personal access token"
 msgstr "व्यक्तिगत पहुँच टोकन"
 
 #: src/components/settings/ScopeBadge.tsx
-msgid "Personal to this device — stored in your user config, not shared."
-msgstr "इस डिवाइस तक सीमित — आपके उपयोगकर्ता कॉन्फ़िग में सहेजा गया, साझा नहीं।"
+msgid "Personal to this device. Applies to every project you open here and is never shared with collaborators."
+msgstr "इस डिवाइस तक सीमित। यहाँ आप जो भी प्रोजेक्ट खोलें उस पर लागू होता है और कभी सहयोगियों के साथ साझा नहीं होता।"
 
 #: src/components/InstallInClaudeDesktopDialog.tsx
 msgid "Pick <0>openknowledge.skill</0> from your <1>Downloads</1> folder. It enables automatically."
@@ -9438,6 +9599,10 @@ msgstr "लोकप्रिय"
 msgid "Popular on skills.sh"
 msgstr "skills.sh पर लोकप्रिय"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Port {configuredPort} is in use, so the server is running on port {boundPort} instead. A tunnel forwarding to the fixed port won't reach it — free that port and apply again, or choose a different one."
+msgstr "पोर्ट {configuredPort} पहले से उपयोग में है, इसलिए सर्वर इसके बजाय पोर्ट {boundPort} पर चल रहा है। फिक्स्ड पोर्ट की ओर जाने वाला tunnel इस तक नहीं पहुँचेगा — उस पोर्ट को खाली करें और फिर से लागू करें, या कोई दूसरा चुनें।"
+
 #: src/components/settings/SettingsDialogBody.tsx
 #: src/components/settings/SettingsDialogShell.tsx
 msgid "Preferences"
@@ -9464,8 +9629,8 @@ msgid "Present a document as a slide deck in its own window. Works in the OpenKn
 msgstr "किसी दस्तावेज़ को अलग विंडो में स्लाइड डेक के रूप में प्रस्तुत करें। यह केवल OpenKnowledge डेस्कटॉप ऐप में काम करता है और इसके लिए Slidev CLI चाहिए, जिसे आप अलग से इंस्टॉल करते हैं। चालू होने पर यह साइडबार में Plugins के अंतर्गत दिखता है।"
 
 #: src/components/OkBlobRunner.tsx
-msgid "Press space or tap the blob to start"
-msgstr "शुरू करने के लिए स्पेस दबाएँ या blob पर टैप करें"
+msgid "Press <0>Space</0> or tap the blob to start"
+msgstr "शुरू करने के लिए <0>स्पेस</0> दबाएँ या blob पर टैप करें"
 
 #: src/components/EditorWorkspace.tsx
 msgid "Press Space to pick up a tab. Use the arrow keys to move it within a tab strip, then press Space or Enter to drop it. Press Shift+F10 or the Menu key to open the tab context menu for split, close, pin, and other tab actions."
@@ -9574,8 +9739,8 @@ msgid "Project name"
 msgstr "प्रोजेक्ट का नाम"
 
 #: src/components/settings/LintingSection.tsx
-msgid "Project plugins are your project's authoring standard — turn them on or off here. The choice is committed to config.yml and shared with every collaborator via git. Each enabled plugin gets its own page under Plugins in the settings sidebar."
-msgstr "प्रोजेक्ट प्लगइन आपके प्रोजेक्ट का लेखन मानक हैं — उन्हें यहाँ चालू या बंद करें। यह चुनाव config.yml में कमिट होता है और git के ज़रिए हर सहयोगी के साथ साझा होता है। हर सक्षम प्लगइन को सेटिंग साइडबार में Plugins के अंतर्गत अपना पेज मिलता है।"
+msgid "Project plugins are your project's authoring standard — turn them on or off here. Each enabled plugin gets its own page under Plugins in the settings sidebar."
+msgstr "प्रोजेक्ट प्लगइन आपके प्रोजेक्ट का लेखन मानक हैं — उन्हें यहाँ चालू या बंद करें। हर सक्षम प्लगइन को सेटिंग साइडबार में Plugins के अंतर्गत अपना पेज मिलता है।"
 
 #: src/components/FileTree.tsx
 #: src/components/SeedRootPicker.tsx
@@ -10046,10 +10211,9 @@ msgstr "\"{0}\" को बाकी हर स्थान से हटा द�
 msgid "Removed \"{projectName}\" from recent projects. Its folder no longer exists."
 msgstr "\"{projectName}\" को हाल के प्रोजेक्ट से हटा दिया गया। इसका फ़ोल्डर अब मौजूद नहीं है।"
 
-#. Warning shown when the user unchecks an already-installed skill
-#: src/components/McpConsentDialogBody.tsx
-msgid "Removes this skill from your editors."
-msgstr "इस स्किल को आपके संपादकों से हटाता है।"
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Removes from"
+msgstr "यहाँ से हटेगा"
 
 #: src/components/CreateProjectDialog.tsx
 msgid "Removing"
@@ -10205,6 +10369,11 @@ msgstr "इन प्रतियों को स्रोत के सिम�
 msgid "Replace these symlinks with independent copies?"
 msgstr "इन सिमलिंक को स्वतंत्र प्रतियों से बदलें?"
 
+#. placeholder {0}: formatToolList( replacing.map((e) => e.label), i18n.locale, )
+#: src/components/McpConsentDialogBody.tsx
+msgid "Replaces the existing OpenKnowledge entry in {0}"
+msgstr "{0} में मौजूदा OpenKnowledge प्रविष्टि को बदल देगा"
+
 #: src/components/BugReportHistory.tsx
 #: src/components/command-palette-commands.ts
 #: src/components/HelpPopover.tsx
@@ -10355,6 +10524,10 @@ msgstr "पुनः आरंभ किया जा रहा है"
 #: src/lib/install-server-drift-listener.ts
 msgid "Restarting closes this project's server. Connected agents (Claude Code, Codex, Cursor) will see their OpenKnowledge MCP connection close unexpectedly — you may need to restart the agent, or toggle its OpenKnowledge MCP server off and on, to reconnect."
 msgstr "पुनः आरंभ करने पर इस प्रोजेक्ट का सर्वर बंद हो जाता है। जुड़े हुए एजेंट (Claude Code, Codex, Cursor) अपना OpenKnowledge MCP कनेक्शन अप्रत्याशित रूप से बंद होते देखेंगे — फिर से जुड़ने के लिए आपको एजेंट पुनः आरंभ करना पड़ सकता है, या उसका OpenKnowledge MCP सर्वर बंद करके फिर चालू करना पड़ सकता है।"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Restarting the server is only available in the desktop app."
+msgstr "सर्वर को पुनः प्रारंभ करना केवल डेस्कटॉप ऐप में उपलब्ध है।"
 
 #: src/lib/install-server-drift-listener.ts
 msgid "Restarting the server…"
@@ -10832,6 +11005,10 @@ msgstr "सभी {0} स्टार्टर पैक देखें"
 msgid "See the full install guide"
 msgstr "पूरी इंस्टॉल मार्गदर्शिका देखें"
 
+#: src/components/PackCardGrid.tsx
+msgid "See what's added"
+msgstr "देखें क्या जुड़ेगा"
+
 #. placeholder {0}: BASE16_SLOT_ROLES[slot]
 #: src/components/settings/CustomThemeEditor.tsx
 msgid "Select {slot} — {0}"
@@ -10995,7 +11172,7 @@ msgstr "विभाजक"
 msgid "Server can't open documents"
 msgstr "सर्वर दस्तावेज़ नहीं खोल सकता"
 
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Server error (HTTP {status})"
 msgstr "सर्वर त्रुटि (HTTP {status})"
 
@@ -11072,6 +11249,11 @@ msgstr "इसे Plugins के अंतर्गत इसके अपने
 msgid "Set the sync default for users opening this project for the first time. This setting is committed to your repository."
 msgstr "इस प्रोजेक्ट को पहली बार खोलने वाले उपयोगकर्ताओं के लिए सिंक का डिफ़ॉल्ट तय करें। यह सेटिंग आपकी रिपॉज़िटरी में कमिट होती है।"
 
+#. placeholder {0}: formatToolList( editors.map((e) => e.label), i18n.locale, )
+#: src/components/McpConsentDialogBody.tsx
+msgid "Set up {0}"
+msgstr "{0} सेट अप करें"
+
 #: src/components/command-palette-commands.ts
 msgid "Set up OpenKnowledge integrations"
 msgstr "OpenKnowledge एकीकरण सेट अप करें"
@@ -11107,6 +11289,10 @@ msgstr "सेटिंग सामग्री"
 #: src/components/settings/SettingsDialogErrorBoundary.tsx
 msgid "Settings failed to load"
 msgstr "सेटिंग लोड नहीं हो सकीं"
+
+#: src/components/settings/SettingsDialogBody.tsx
+msgid "Settings for this project. Some are shared with every collaborator through git; others apply only on this computer."
+msgstr "इस प्रोजेक्ट की सेटिंग्स। कुछ git के ज़रिए हर सहयोगी के साथ साझा होती हैं; बाक़ी केवल इस कंप्यूटर पर लागू होती हैं।"
 
 #: src/components/settings/SettingsDialogShell.tsx
 msgid "Settings sections"
@@ -11178,8 +11364,8 @@ msgid "Shared repositories"
 msgstr "साझा रिपॉज़िटरी"
 
 #: src/components/settings/ScopeBadge.tsx
-msgid "Shared with everyone on this project — committed to config.yml via git."
-msgstr "इस प्रोजेक्ट के हर व्यक्ति के साथ साझा — git के ज़रिए config.yml में कमिट किया गया।"
+msgid "Shared with everyone on this project. Stored in the project folder and travels with it through git."
+msgstr "इस प्रोजेक्ट के सभी लोगों के साथ साझा। प्रोजेक्ट फ़ोल्डर में सहेजा जाता है और git के ज़रिए उसी के साथ जाता है।"
 
 #: src/components/PublishToGitHubDialog.tsx
 msgid "Sharing a doc needs a GitHub repository. Create one for this project."
@@ -11217,13 +11403,14 @@ msgstr "{0} और दिखाएँ"
 msgid "Show {hidden} more"
 msgstr "{hidden} और दिखाएँ"
 
+#: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ConfigureAgentsSection.tsx
-msgid "Show {inAppHiddenCount} more"
-msgstr "{inAppHiddenCount} और दिखाएँ"
+msgid "Show {hiddenCount} more"
+msgstr "{hiddenCount} और दिखाएँ"
 
 #: src/components/settings/LinkPreviewsSection.tsx
-msgid "Show a preview card when you hover an external link in the editor. This setting applies only to this computer."
-msgstr "संपादक में किसी बाहरी लिंक पर माउस ले जाने पर एक पूर्वावलोकन कार्ड दिखाएँ। यह सेटिंग केवल इसी कंप्यूटर पर लागू होती है।"
+msgid "Show a preview card when you hover an external link in the editor."
+msgstr "संपादक में किसी बाहरी लिंक पर माउस ले जाने पर एक पूर्वावलोकन कार्ड दिखाएँ।"
 
 #: src/components/settings/OkignoreSection.tsx
 msgid "Show advanced"
@@ -11254,9 +11441,7 @@ msgstr "दस्तावेज़ पैनल दिखाएँ"
 msgid "Show external URL nodes"
 msgstr "बाहरी URL नोड दिखाएँ"
 
-#. Collapses the undetected AI tools back behind the toggle
 #: src/components/LinksPanel.tsx
-#: src/components/McpConsentDialogBody.tsx
 msgid "Show fewer"
 msgstr "कम दिखाएँ"
 
@@ -11285,6 +11470,7 @@ msgid "Show in Explorer"
 msgstr "Explorer में दिखाएँ"
 
 #: src/components/PackCardGrid.tsx
+#: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ConfigureAgentsSection.tsx
 msgid "Show less"
 msgstr "कम दिखाएँ"
@@ -11320,10 +11506,6 @@ msgstr "पैनल दिखाएँ"
 #: src/components/EditorToolbar.tsx
 msgid "Show panel ({panelShortcutLabel})"
 msgstr "पैनल दिखाएँ ({panelShortcutLabel})"
-
-#: src/components/settings/ContentRulesSection.tsx
-msgid "Show problem indicators"
-msgstr "समस्या संकेतक दिखाएँ"
 
 #: src/editor/find-replace/FindReplaceBar.tsx
 msgid "Show replace"
@@ -11477,6 +11659,11 @@ msgstr "स्किल"
 msgid "Skills are now shared. Commit .ok/skills to share them with your team."
 msgstr "स्किल अब साझा हैं। अपनी टीम के साथ साझा करने के लिए .ok/skills कमिट करें।"
 
+#. Tells the user a skill installs to every detected AI tool, independent of the per-tool MCP connections listed above
+#: src/components/settings/AiToolsSection.tsx
+msgid "Skills install to every AI tool detected on this machine, independent of the MCP connections you chose above."
+msgstr "स्किल इस मशीन पर मिले हर AI टूल में इंस्टॉल होती हैं, चाहे आपने ऊपर कोई भी MCP कनेक्शन चुना हो।"
+
 #: src/components/AppMenubar.tsx
 #: src/components/command-palette-commands.ts
 #: src/components/FileSidebar.tsx
@@ -11499,11 +11686,6 @@ msgstr "skills.sh अनुपलब्ध है; GitHub के परिणा
 #: src/uninstall/UninstallSurveyScreen.tsx
 msgid "Skip"
 msgstr "छोड़ें"
-
-#. Secondary button — dismisses the dialog without wiring any tools
-#: src/components/McpConsentDialogBody.tsx
-msgid "Skip for now"
-msgstr "अभी के लिए छोड़ें"
 
 #. placeholder {0}: item.displayName
 #: src/components/acp/ThreadView.tsx
@@ -11660,10 +11842,6 @@ msgstr "स्रोत खोज"
 #: src/lib/keyboard-shortcuts.ts
 msgid "Source undo or redo"
 msgstr "स्रोत में पूर्ववत या फिर से करें"
-
-#: src/components/OkBlobRunner.tsx
-msgid "Space to jump · down arrow to duck"
-msgstr "कूदने के लिए स्पेस · झुकने के लिए नीचे तीर"
 
 #: src/components/OkBlobRunnerPage.tsx
 msgid "Space to jump, down arrow to duck. That is the whole game."
@@ -11951,11 +12129,15 @@ msgstr "स्किल को {0} पर सिमलिंक करता ह
 msgid "Symlinks the skill to {path}"
 msgstr "स्किल को {path} पर सिमलिंक करता है"
 
-#: src/components/settings/SettingsDialogShell.tsx
 #: src/components/settings/SyncSection.tsx
 #: src/components/SyncStatusBadge.tsx
 msgid "Sync"
 msgstr "सिंक"
+
+#: src/components/settings/SettingsDialogBody.tsx
+#: src/components/settings/SettingsDialogShell.tsx
+msgid "Sync & sharing"
+msgstr "सिंक और साझाकरण"
 
 #: src/components/SyncStatusBadge.tsx
 msgid "Sync disabled"
@@ -12115,7 +12297,6 @@ msgstr "कार्य सूची"
 msgid "Task List"
 msgstr "कार्य सूची"
 
-#. Subtext for the project runtime-skill row
 #: src/components/settings/ProjectAiToolsSection.tsx
 msgid "Teaches coding agents in this project to read and write through OpenKnowledge."
 msgstr "इस प्रोजेक्ट के कोडिंग एजेंट को OpenKnowledge के ज़रिए पढ़ना और लिखना सिखाता है।"
@@ -12337,6 +12518,10 @@ msgstr "डिफ़ॉल्ट स्किल फ़ोल्डर (सह�
 msgid "The desktop app isn't responding. Refresh and try again."
 msgstr "डेस्कटॉप ऐप प्रतिक्रिया नहीं दे रहा। ताज़ा करें और फिर कोशिश करें।"
 
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "The destinations changed. Review the list, then confirm."
+msgstr "गंतव्य बदल गए हैं। सूची देखें, फिर पुष्टि करें।"
+
 #. placeholder {0}: summary.target
 #: src/components/settings/LintingSection.tsx
 msgid "the doc {0}"
@@ -12432,6 +12617,10 @@ msgstr "प्रदाता ने अनुरोध अस्वीकार
 msgid "The provider rejected the request. Check the API key and the model id."
 msgstr "प्रदाता ने अनुरोध अस्वीकार कर दिया। API कुंजी और मॉडल id जाँचें।"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "The public URL your tunnel serves. The server admits requests for this host and advertises it in the URLs it issues."
+msgstr "वह सार्वजनिक URL जिसे आपका tunnel सर्व करता है। सर्वर इस host के लिए अनुरोध स्वीकार करता है और अपने द्वारा जारी किए गए URL में इसका विज्ञापन करता है।"
+
 #: src/components/ReportBugDialogBody.tsx
 msgid "The report service couldn't be reached."
 msgstr "रिपोर्ट सेवा तक नहीं पहुँचा जा सका।"
@@ -12455,6 +12644,11 @@ msgstr "स्कीमा फ़ाइल मौजूद नहीं है �
 #: src/components/ConnectingBanner.tsx
 msgid "the server responded but server.lock has no port yet"
 msgstr "सर्वर ने जवाब दिया लेकिन server.lock में अभी कोई पोर्ट नहीं है"
+
+#. placeholder {0}: origin.trim()
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "The server will accept requests for {0} with no built-in authentication. Anyone who can reach your tunnel will have full control of this knowledge base — including sync, GitHub credentials, and local operations. Make sure the tunnel's edge restricts who can connect."
+msgstr "सर्वर {0} के लिए अनुरोध बिना किसी अंतर्निहित प्रमाणीकरण के स्वीकार करेगा। जो कोई भी आपके tunnel तक पहुंच सकता है उसका इस ज्ञान आधार पर पूर्ण नियंत्रण होगा — जिसमें sync, GitHub क्रेडेंशियल्स, और स्थानीय ऑपरेशन शामिल हैं। सुनिश्चित करें कि tunnel का edge यह प्रतिबंधित करे कि कौन कनेक्ट कर सकता है।"
 
 #: src/components/settings/LintingSection.tsx
 msgid "The shapes of title, description, resource, and tags when you use them. None are required; declaring one only pins its type, so tags written as a comma-separated string is flagged."
@@ -12505,6 +12699,10 @@ msgstr "टर्मिनल अप्रत्याशित रूप से
 #: src/components/AuthModal.tsx
 msgid "The token needs the repo and read:user scopes."
 msgstr "टोकन को repo और read:user स्कोप चाहिए।"
+
+#: src/lib/tab-session-restore-recovery-notice.ts
+msgid "The workspace opened without it so the app could start."
+msgstr "ऐप शुरू हो सके इसलिए कार्यक्षेत्र उसके बिना खुला।"
 
 #: src/components/settings/settings-fields.ts
 msgid "Theme"
@@ -12766,6 +12964,10 @@ msgstr "यह आइटम"
 msgid "This looks like a drive root (e.g., C:\\). Scaffolding here will scan an entire drive."
 msgstr "यह किसी ड्राइव का रूट लगता है (जैसे C:\\)। यहाँ ढाँचा बनाने पर पूरी ड्राइव स्कैन होगी।"
 
+#: src/components/settings/ScopeBadge.tsx
+msgid "This machine"
+msgstr "यह मशीन"
+
 #: src/uninstall/UninstallProgressScreen.tsx
 msgid "This may take a moment. Your markdown content is kept."
 msgstr "इसमें कुछ समय लग सकता है। आपकी markdown सामग्री सुरक्षित रहती है।"
@@ -12908,6 +13110,10 @@ msgstr "यह सामग्री आपकी मशीन से बाह�
 msgid "This sends the link's address off your machine"
 msgstr "यह लिंक का पता आपकी मशीन से बाहर भेजता है"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "This server has no built-in authentication. Anyone who can reach the tunnel gets full control of this knowledge base — restrict access at the tunnel's edge (a Tailscale ACL, a reverse proxy with auth, or a firewall)."
+msgstr "इस सर्वर में कोई अंतर्निहित प्रमाणीकरण नहीं है। जो कोई भी tunnel तक पहुंच सकता है उसे इस ज्ञान आधार पर पूर्ण नियंत्रण मिल जाता है — tunnel के edge पर एक्सेस प्रतिबंधित करें (एक Tailscale ACL, प्रमाणीकरण के साथ एक रिवर्स प्रॉक्सी, या एक फ़ायरवॉल)।"
+
 #: src/components/settings/LinkPreviewsSection.tsx
 msgid "This setting is per-machine and isn't shared with collaborators."
 msgstr "यह सेटिंग हर मशीन के लिए अलग है और सहयोगियों के साथ साझा नहीं होती।"
@@ -12915,6 +13121,11 @@ msgstr "यह सेटिंग हर मशीन के लिए अलग
 #: src/components/settings/SearchSection.tsx
 msgid "This setting is per-machine and isn't shared with collaborators. It needs an API key (set below) unless your endpoint is a local server that doesn't require one."
 msgstr "यह सेटिंग हर मशीन के लिए अलग है और सहयोगियों के साथ साझा नहीं होती। इसके लिए एक API कुंजी चाहिए (नीचे सेट करें), बशर्ते आपका एंडपॉइंट कोई ऐसा स्थानीय सर्वर न हो जिसे इसकी ज़रूरत न हो।"
+
+#. Tells the user the project skill is committed to the repo, unlike the user-global skills
+#: src/components/settings/ProjectAiToolsSection.tsx
+msgid "This skill lives in the project folder, so it installs for everyone who opens this project — not just you."
+msgstr "यह स्किल प्रोजेक्ट फ़ोल्डर में रहती है, इसलिए यह हर उस व्यक्ति के लिए इंस्टॉल होती है जो इस प्रोजेक्ट को खोलता है, सिर्फ़ आपके लिए नहीं।"
 
 #: src/components/ImportSkillForm.tsx
 msgid "This source bundles several skills — choose one, then Import."
@@ -13080,6 +13291,11 @@ msgstr "रेखांकित फ़ॉर्मैटिंग चालू 
 #: src/components/settings/applies-to-folder-picker.tsx
 msgid "Toggles the pattern {0}/**"
 msgstr "पैटर्न {0}/** टॉगल करें"
+
+#: src/components/SkillBundlePreview.tsx
+#: src/components/SkillProperties.tsx
+msgid "tokens"
+msgstr "टोकन"
 
 #: src/components/FeedbackForm.tsx
 msgid "Too slow"
@@ -13271,6 +13487,17 @@ msgstr "इस संपादन तक पूर्ववत करें?"
 #: src/lib/keyboard-shortcuts.ts
 msgid "Undo, redo, or step through selection changes in the Edit source pane or a code-shaped property field."
 msgstr "Edit source पैनल या कोड जैसी किसी प्रॉपर्टी फ़ील्ड में चयन के बदलाव पूर्ववत करें, फिर से करें, या एक-एक करके देखें।"
+
+#: src/components/settings/AiToolsSection.tsx
+#: src/components/settings/ProjectAiToolsSection.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Uninstall"
+msgstr "अनइंस्टॉल करें"
+
+#: src/components/settings/AiToolsSection.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Uninstall {name}"
+msgstr "{name} अनइंस्टॉल करें"
 
 #: src/lib/native-menu-catalog.ts
 #: src/uninstall/UninstallPickerScreen.tsx
@@ -13562,6 +13789,10 @@ msgstr "कोई स्टार्टर पैक उपयोग करे�
 msgid "Use a token instead"
 msgstr "इसके बजाय कोई टोकन उपयोग करें"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Use an http:// or https:// origin."
+msgstr "एक http:// या https:// origin का उपयोग करें।"
+
 #: src/components/settings/SearchSection.tsx
 msgid "Use an https:// URL — http:// is only allowed for localhost."
 msgstr "कोई https:// URL उपयोग करें — http:// केवल localhost के लिए अनुमत है।"
@@ -13589,8 +13820,8 @@ msgid "User"
 msgstr "उपयोगकर्ता"
 
 #: src/components/settings/LintingSection.tsx
-msgid "User plugins are personal to this device — turn them on or off here. The choice lives in your user config and is never committed to the project. Each enabled plugin gets its own page under Plugins in the settings sidebar."
-msgstr "उपयोगकर्ता प्लगइन इस डिवाइस तक सीमित हैं — उन्हें यहाँ चालू या बंद करें। यह चुनाव आपके उपयोगकर्ता कॉन्फ़िग में रहता है और कभी प्रोजेक्ट में कमिट नहीं होता। हर सक्षम प्लगइन को सेटिंग साइडबार में Plugins के अंतर्गत अपना पेज मिलता है।"
+msgid "User plugins are personal to this device — turn them on or off here. Each enabled plugin gets its own page under Plugins in the settings sidebar."
+msgstr "उपयोगकर्ता प्लगइन इस डिवाइस तक सीमित हैं — उन्हें यहाँ चालू या बंद करें। हर सक्षम प्लगइन को सेटिंग साइडबार में Plugins के अंतर्गत अपना पेज मिलता है।"
 
 #: src/components/settings/SearchSection.tsx
 msgid "Using the <0>OK_EMBEDDINGS_API_KEY</0> environment variable (managed outside OpenKnowledge)."
@@ -13785,11 +14016,13 @@ msgstr "AI को क्या करना चाहिए? (वैकल्प
 msgid "What the agent may read, write, and surface."
 msgstr "एजेंट क्या पढ़, लिख और सामने ला सकता है।"
 
+#. Expands the list of files the setup writes to
+#. Expands the list of project files the AI-tool setup writes
+#: src/components/CreateProjectDialog.tsx
 #: src/components/McpConsentDialogBody.tsx
 msgid "What this changes"
 msgstr "यह क्या बदलता है"
 
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 msgid "What this checkbox changes"
@@ -13882,11 +14115,6 @@ msgstr "यहाँ बनाया जाएगा: <0>{targetPreview}</0>"
 #: src/components/CreateProjectDialog.tsx
 msgid "Will be saved as <0>{sanitized}</0>."
 msgstr "<0>{sanitized}</0> के रूप में सहेजा जाएगा।"
-
-#. Disclosure that Add will overwrite the tool's existing OpenKnowledge MCP entry
-#: src/components/McpConsentDialogBody.tsx
-msgid "Will replace existing OpenKnowledge entry"
-msgstr "मौजूदा OpenKnowledge प्रविष्टि की जगह ले लेगा"
 
 #: src/components/AppMenubar.tsx
 #: src/lib/native-menu-catalog.ts
@@ -14100,6 +14328,10 @@ msgstr "आपके GitHub टोकन में आवश्यक स्क�
 #: src/components/PublishToGitHubDialog.tsx
 msgid "Your knowledge base is now on GitHub at <0>{ownerLogin}/{repoName}</0>."
 msgstr "आपका ज्ञान आधार अब GitHub पर <0>{ownerLogin}/{repoName}</0> पर है।"
+
+#: src/lib/tab-session-restore-recovery-notice.ts
+msgid "Your last open document couldn't be restored."
+msgstr "आपका पिछला खुला दस्तावेज़ पुनर्स्थापित नहीं किया जा सका।"
 
 #: src/components/share-receive-miss-content.tsx
 msgid "Your local copy is behind."

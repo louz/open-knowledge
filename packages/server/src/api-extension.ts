@@ -480,7 +480,11 @@ import {
   isInternalBundleSkillName,
   USER_GLOBAL_BUNDLE_IDS,
 } from './skill-bundles.ts';
-import { buildAndOpenSkill, detectUserSkillHosts } from './skill-install.ts';
+import {
+  buildAndOpenSkill,
+  detectProjectSkillEditors,
+  detectUserSkillHosts,
+} from './skill-install.ts';
 import {
   projectSkill,
   readSkillBundledFiles,
@@ -614,6 +618,7 @@ import { validateBody, withValidation } from './http/request-validation.ts';
 import { successResponse } from './http/success-response.ts';
 import {
   aliasedSourceRoots,
+  isActivatedSkillRoot,
   knownSkillRootsFor,
   removableSkillOccurrenceDirs,
   resolveDefaultSkillHomeRel,
@@ -14616,13 +14621,25 @@ export function createApiExtension(
         const projectSkillsRoot = resolveSkillsRoot('project');
         const project = resolveSkillsList(projectSkillsRoot, 'project');
         const globalSkills = resolveSkillsList(resolveSkillsRoot('global'), 'global');
-        // Editors the install menu may OFFER per scope on THIS machine.
-        // Project: every editor with a project skill root — install creates the
-        // dir, so all are installable. Global: only editors whose user-home skill
-        // dir EXISTS (`detectUserSkillHosts`) — a global install never creates a
-        // host home, so offering an undetected editor (e.g. Copilot with no
-        // `~/.copilot`) just no-ops and the checkmark reverts.
-        const projectInstallableEditors: string[] = [...PROJECT_SKILL_EDITOR_IDS];
+        // Editors the install menu may OFFER per scope on THIS machine — both
+        // scopes now gate on the SAME rule: the editor's home already exists.
+        // Global uses `detectUserSkillHosts`, project `detectProjectSkillEditors`.
+        // Offering an undetected editor either no-ops and reverts the checkmark,
+        // or worse, succeeds by creating a dotdir for a tool the user does not
+        // have — which OK's own detection then reports as installed.
+        //
+        // "Install creates the dir, so all are installable" describes the
+        // behaviour; it does not justify it. Both scopes gate.
+        //
+        // Probed against `projectDir`, not `contentDir`, because that is what
+        // `skillInstallBase('project')` resolves to — so this gate asks about the
+        // same base the install it gates will actually write into. The sibling
+        // gate on `folders[]` below uses `contentDir` instead, matching the scan
+        // it filters. The two coincide unless `content.dir` names a subdirectory
+        // of the project.
+        const projectInstallableEditors: string[] = projectDir
+          ? detectProjectSkillEditors(projectDir)
+          : [];
         const globalInstallableEditors: string[] = detectUserSkillHosts(skillsHome).map(
           (h) => h.editorId,
         );
@@ -14776,6 +14793,7 @@ export function createApiExtension(
                 absolutePath: resolve(contentDir, s.dir, 'SKILL.md'),
                 installed: true,
                 hosts: [...s.hosts],
+                size: s.size,
                 installableEditors: projectInstallableEditors,
                 ...(s.linkedHosts.length > 0 ? { symlinkedHosts: [...s.linkedHosts] } : {}),
                 ...(Object.keys(projectAliases).length > 0 ? { hostAliases: projectAliases } : {}),
@@ -14840,6 +14858,7 @@ export function createApiExtension(
             absolutePath: resolve(skillsHome, s.dir, 'SKILL.md'),
             installed: true,
             hosts: [...s.hosts],
+            size: s.size,
             installableEditors: globalInstallableEditors,
             ...(s.linkedHosts.length > 0 ? { symlinkedHosts: [...s.linkedHosts] } : {}),
             ...(Object.keys(globalAliases).length > 0 ? { hostAliases: globalAliases } : {}),
@@ -17898,7 +17917,13 @@ export function createApiExtension(
             : skillLiveDocName(body.scope, body.name);
         await flushDiskAndDetectOutcome(liveSkillDoc);
 
-        const validity = validateSkillForInstall(skillDir, body.name);
+        // Lifecycle verbs are ordinary for OK's own bundles: the reserved-name
+        // gate exists to stop a user AUTHORING over them, not to stop them being
+        // installed or uninstalled. Without this an uninstall of a built-in is
+        // refused as INVALID_SKILL_SOURCE and its placement can never be edited.
+        const validity = validateSkillForInstall(skillDir, body.name, {
+          allowReservedName: isInternalBundleSkillName(body.name),
+        });
         if (!validity.ok) {
           errorResponse(
             res,
@@ -18718,23 +18743,28 @@ export function createApiExtension(
           {
             targets,
             configured: false,
+            // Only folders OK may actually write to on this machine. A row here
+            // is a destination — the Folders surface links and unlinks it — so a
+            // root under a dotdir that does not exist is an offer to create that
+            // dotdir for a tool the user never installed. Custom roots are always
+            // kept; see `isActivatedSkillRoot`.
             folders: [
               ...(projectDir
-                ? scanSkillFolderStates(contentDir, knownSkillRootsFor(contentDir, 'project')).map(
-                    (f) => ({
+                ? scanSkillFolderStates(contentDir, knownSkillRootsFor(contentDir, 'project'))
+                    .filter((f) => isActivatedSkillRoot(contentDir, 'project', f.root))
+                    .map((f) => ({
                       ...f,
                       scope: 'project' as const,
                       ...withDrift(contentDir, f),
-                    }),
-                  )
+                    }))
                 : []),
-              ...scanSkillFolderStates(skillsHome, knownSkillRootsFor(skillsHome, 'global')).map(
-                (f) => ({
+              ...scanSkillFolderStates(skillsHome, knownSkillRootsFor(skillsHome, 'global'))
+                .filter((f) => isActivatedSkillRoot(skillsHome, 'global', f.root))
+                .map((f) => ({
                   ...f,
                   scope: 'global' as const,
                   ...withDrift(skillsHome, f),
-                }),
-              ),
+                })),
             ],
           },
           { handler: 'skill-targets-get' },
@@ -19932,14 +19962,14 @@ export function createApiExtension(
         if (contentRel === null) {
           throw new Error('content dir is not contained within the project dir');
         }
-        // Known limitation: when `content.dir !== '.'`, a NON-root doc/folder
-        // share URL omits the content.dir prefix, so the raw github.com link
-        // points one level too shallow. A correct fix needs receiver-side
-        // content.dir resolution — the in-app receive nav is content-relative
-        // and lands correctly, so prefixing the URL here would double-count
-        // against it. Until that lands, warn so the mis-point is discoverable
-        // in ops rather than silent. The dominant `content.dir === '.'` case
-        // (contentRel === '') is fully correct.
+        // A non-root content.dir link keeps its historical shallow source URL:
+        // the content-relative target is NOT prefixed with content.dir. Older
+        // installed apps treat a received URL as the content-relative path
+        // directly, and in-app receive navigation is already content-relative and
+        // lands correctly — so prefixing content.dir into the source here would
+        // double-count against the receiver. The tradeoff is that the raw
+        // github.com link may point one level too shallow; warn so that mis-point
+        // is observable in ops rather than silent.
         const sharingNonRootTarget =
           body.kind === 'doc' ? body.docPath !== '' : body.folderPath !== '';
         if (contentRel !== '' && sharingNonRootTarget) {
@@ -20061,6 +20091,9 @@ export function createApiExtension(
           );
           return;
         }
+        // The desktop sends the URL-derived repository coordinate explicitly.
+        // V1 has no mount metadata and must never be re-rooted from receiver
+        // config; v2 already projected its separate content target at decode.
         const info = await computeBranchInfo(projectDir, branch, path, kind);
         successResponse(res, 200, BranchInfoResponseSchema, info, {
           handler: BRANCH_INFO_HANDLER_TAG,
@@ -20093,6 +20126,22 @@ export function createApiExtension(
    * Updates only remote-tracking refs, no CRDT mutation — so the
    * attribution-sweep meta-test exempts it (see EXEMPT_HANDLERS).
    */
+  function projectRenamedShareTarget(
+    repositoryPath: string,
+    renamedRepositoryPath: string,
+    contentRootDepth: number,
+  ): { verdict: 'renamed'; renamedTo: string } | { verdict: 'unknown' } {
+    const originalSegments = repositoryPath.split('/');
+    const renamedSegments = renamedRepositoryPath.split('/');
+    if (contentRootDepth >= originalSegments.length || contentRootDepth >= renamedSegments.length) {
+      return { verdict: 'unknown' };
+    }
+    for (let index = 0; index < contentRootDepth; index += 1) {
+      if (originalSegments[index] !== renamedSegments[index]) return { verdict: 'unknown' };
+    }
+    return { verdict: 'renamed', renamedTo: renamedSegments.slice(contentRootDepth).join('/') };
+  }
+
   const handleShareTargetStatus = withValidation(
     ShareTargetStatusRequestSchema,
     async (_req, res, body) => {
@@ -20120,21 +20169,17 @@ export function createApiExtension(
           });
           return;
         }
-        // The target lives under content.dir; map the content-relative request
-        // path to the repo-relative path git reads (same join as construct-url;
-        // '' for the dominant content.dir === '.' case).
-        const contentRel = toGitRelativePath(projectDir, contentDir);
-        if (contentRel === null) {
-          throw new Error('content dir is not contained within the project dir');
-        }
-        const gitPath =
-          contentRel === ''
-            ? body.path
-            : body.path === ''
-              ? contentRel
-              : `${contentRel}/${body.path}`;
-        const status = await computeShareTargetStatus(projectDir, body.branch, gitPath, body.kind);
-        successResponse(res, 200, ShareTargetStatusResponseSchema, status, {
+        const status = await computeShareTargetStatus(
+          projectDir,
+          body.branch,
+          body.path,
+          body.kind,
+        );
+        const contentStatus =
+          status.verdict !== 'renamed' || body.contentRootDepth === undefined
+            ? status
+            : projectRenamedShareTarget(body.path, status.renamedTo, body.contentRootDepth);
+        successResponse(res, 200, ShareTargetStatusResponseSchema, contentStatus, {
           handler: SHARE_TARGET_STATUS_HANDLER_TAG,
         });
       } catch (err) {

@@ -24,7 +24,9 @@ import {
   EDITOR_PROJECT_SKILL_ROOT,
   EDITOR_USER_SKILL_ROOT,
   type EditorId,
+  estimateSkillCost,
   LEGACY_SKILL_STORE_ROOT,
+  type SkillCostTiers,
   type SkillScope,
   skillRootActivationPath,
 } from '@inkeep/open-knowledge-core';
@@ -86,10 +88,15 @@ export interface InPlaceSkill {
   readonly copyDirs: readonly string[];
   /** `parseSkillDir` bundle hash of the canonical — the dedup/Modified identity. */
   readonly contentHash: string;
+  /** Three-tier context cost of the canonical bundle (always-on / on-trigger /
+   *  on-demand), estimated in the same parse the hash rides so no second walk
+   *  reads the bytes. */
+  readonly size: SkillCostTiers;
 }
 
 interface ScanOccurrence extends LocatedSkillOccurrence {
   readonly description: string;
+  readonly size: SkillCostTiers;
   readonly viaLink: boolean;
   /** The occurrence lives under an ALIASED root (the folder or a parent is a
    *  symlink) — a VIEW of another location. Never electable as canonical
@@ -188,6 +195,32 @@ export function knownSkillRootsFor(
 export function standardSkillRoots(scope: SkillScope): ReadonlySet<string> {
   const roots = scope === 'project' ? EDITOR_SKILL_ROOTS : USER_SKILL_ROOTS;
   return new Set(roots.map((r) => r.root));
+}
+
+/**
+ * Is this root a place OK may offer to write, on THIS machine, right now?
+ *
+ * A standard host root qualifies once its activation path exists — the agent's
+ * own dotdir for an agent-owned root, the whole root for a shared one like
+ * `.github/skills` (see `skillRootActivationPath`). A root under a dotdir that
+ * is not there belongs to a tool the user does not have, and offering it is
+ * offering to CREATE that dotdir, which OK does not do.
+ * Directory-based detection then reads what we created back as "installed", so
+ * a single accepted offer manufactures its own evidence.
+ *
+ * Custom roots always qualify. A custom root exists only because a human typed
+ * it into "Add custom path"; that declaration IS the consent, and gating it on
+ * disk state would break the one escape hatch these surfaces have for wiring up
+ * a folder before its tool arrives.
+ *
+ * Deliberately NOT folded into `knownSkillRootsFor`: cleanup paths
+ * (`removableSkillOccurrenceDirs`, the reclaim sweeps) must keep seeing every
+ * root, or a stray bundle under a since-removed dotdir becomes unreachable.
+ * This gates what is OFFERED, never what is SEEN.
+ */
+export function isActivatedSkillRoot(base: string, scope: SkillScope, root: string): boolean {
+  if (!standardSkillRoots(scope).has(root)) return true;
+  return existsSync(join(base, skillRootActivationPath(root)));
 }
 
 /**
@@ -332,16 +365,30 @@ function bundleStamp(absDir: string): string | null {
  *  `~/.claude/skills` at global tier) — the reported UI slowness. Unchanged
  *  bundles (stamp match) skip the content read entirely. Bounded in practice
  *  by the number of skill dirs on the machine. */
-const parseCache = new Map<string, { stamp: string; contentHash: string; description: string }>();
+const parseCache = new Map<
+  string,
+  { stamp: string; contentHash: string; description: string; size: SkillCostTiers }
+>();
 
-function parseSkillDirCached(absDir: string): { contentHash: string; description: string } | null {
+function parseSkillDirCached(
+  absDir: string,
+): { contentHash: string; description: string; size: SkillCostTiers } | null {
   const stamp = bundleStamp(absDir);
   if (stamp === null) return null;
   const hit = parseCache.get(absDir);
   if (hit !== undefined && hit.stamp === stamp) return hit;
   const parsed = parseSkillDir(absDir);
   if (!parsed) return null;
-  const entry = { stamp, contentHash: parsed.contentHash, description: parsed.description };
+  // `parsed` already holds every bundle byte the hash was computed over, so the
+  // cost estimate is a pure pass over it — the size rides the parse, never a
+  // second read of the tree. Cached under the same stamp, so a byte change on
+  // disk invalidates the size alongside the hash.
+  const entry = {
+    stamp,
+    contentHash: parsed.contentHash,
+    description: parsed.description,
+    size: estimateSkillCost(parsed),
+  };
   parseCache.set(absDir, entry);
   return entry;
 }
@@ -388,6 +435,7 @@ function scanBase(base: string, scope: SkillScope): InPlaceSkill[] {
           contentHash: parsed.contentHash,
           dir: `${root}/${entry}`,
           description: parsed.description,
+          size: parsed.size,
           viaLink: rootAliased || lstatSync(absDir).isSymbolicLink(),
           ...(rootAliased ? { aliasRooted: true } : {}),
           ...(sourcePrefs[entry] === editor ? { preferredSource: true } : {}),
@@ -459,6 +507,7 @@ function scanBase(base: string, scope: SkillScope): InPlaceSkill[] {
           conflictHosts,
           copyDirs: realCopies.filter((c) => !c.viaLink).map((c) => c.dir),
           contentHash: g.contentHash,
+          size: g.canonical.size,
         };
       })
   );

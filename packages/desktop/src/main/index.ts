@@ -55,6 +55,7 @@ import {
   getOkArtifactPaths,
   isEntryUpToDate,
   isOwnManagedEntry,
+  loadConfig,
   type McpInstallOptions,
   okBugReportsDir,
   type ProjectAiIntegrationsResult,
@@ -74,6 +75,7 @@ import {
 import {
   AGENTS_SKILLS_ROOT,
   CLIENT_VERSION_HEADER,
+  estimateSkillCost,
   hasUninstallFeedbackContent,
   type LanguagePreference,
   OPENKNOWLEDGE_SKILLS_REPO,
@@ -92,6 +94,7 @@ import type {
   OkTerminalDockStateWriteResult,
   OkTerminalRestartSnapshot,
 } from '@inkeep/open-knowledge-core/desktop-bridge';
+import { parseSkillDir } from '@inkeep/open-knowledge-core/skills-catalog';
 import {
   assertGitAvailable,
   BUNDLE_SKILL_NAME,
@@ -107,13 +110,16 @@ import {
   initContent,
   isProcessAlive,
   normalizeFsPath,
+  ONBOARDING_BUNDLE_IDS,
   prepareSingleFileOpen,
+  type ResolvedSkillHost,
   RUNTIME_VERSION,
   readBundleDecision,
   readServerLock,
   readServerPackageVersion,
   recordSkillInstallEvent,
   reportSkillInstall,
+  resolveBuiltinSkillHosts,
   resolveBundledSkillDir,
   resolveLockDir,
   resolveSkillInstallReportSettings,
@@ -203,6 +209,7 @@ import {
   checkProjectDirExists,
   checkTargetExists as checkTargetExistsImpl,
   computeShareTargetMissing,
+  resolveTargetProbeCoordinate,
 } from './check-target-exists.ts';
 import {
   cliProbeArgs,
@@ -521,6 +528,66 @@ import {
 const VIBRANCY_DEFAULT: VibrancyMaterial = 'sidebar';
 
 const AGENTS_HUB_DIR = AGENTS_SKILLS_ROOT.split('/')[0] ?? '.agents';
+
+/**
+ * The skills roots a confirmed install actually writes, `~`-relative and in
+ * disclosure order. One walk feeds all three consumers - the destination list,
+ * the install state, and the post-install verification - because those three
+ * disagreeing is exactly the bug this replaced: `installed` probed only the
+ * central store, while the reclaim writes that store solely when `~/.agents`
+ * already exists (it never creates the hub). A user with a detected editor and
+ * no hub installed successfully, failed verification, got
+ * "Couldn't install <name>.", and kept a permanent Install button.
+ *
+ * Mapped by `skillsRoot`, not `hostDir + '/skills'` - Pi's user root is
+ * `.pi/agent/skills`, which the naive shape renders wrong.
+ */
+function installedSkillRoots(home: string): string[] {
+  return [
+    ...(existsSync(join(home, AGENTS_HUB_DIR)) ? [AGENTS_SKILLS_ROOT] : []),
+    ...USER_SKILL_HOSTS.filter((h) => existsSync(join(home, h.hostDir))).map((h) => h.skillsRoot),
+  ];
+}
+
+/** True when `name` occupies any root a confirmed install would have written. */
+function builtinSkillInstalled(home: string, name: string): boolean {
+  return installedSkillRoots(home).some((root) => existsSync(join(home, root, name)));
+}
+
+/**
+ * One derivation of a built-in skill's install disclosure — its own
+ * description, three-tier cost, install state, and the exact destination paths
+ * a confirmed install writes. Shared by the persistent Settings status and the
+ * first-launch consent descriptor so both surfaces disclose the same skill the
+ * same way and a destination-list drift between them is structurally impossible.
+ *
+ * `paths` mirrors the reclaim's own destination set and BOTH its gates: the hub
+ * entry only when `~/.agents` already exists (the reclaim never creates it), and
+ * `USER_SKILL_HOSTS` mapped by `skillsRoot` (not `hostDir + '/skills'` — Pi's
+ * user root is `.pi/agent/skills`, which the naive shape renders wrong). Both
+ * degrade fail-soft: a missing packaged asset gives an empty `sourceDir` (no
+ * preview link, no cost), an unreadable bundle a null parse (no description, no
+ * cost) — never a thrown group.
+ */
+function computeBuiltinSkillDisclosure(home: string, id: (typeof USER_GLOBAL_BUNDLE_IDS)[number]) {
+  const name = BUNDLE_SKILL_NAME[id];
+  let sourceDir: string;
+  try {
+    sourceDir = resolveBundledSkillDir(id, { checkDesktop: false });
+  } catch {
+    sourceDir = '';
+  }
+  const parsed = sourceDir ? parseSkillDir(sourceDir) : null;
+  const roots = installedSkillRoots(home);
+  return {
+    name,
+    description: parsed?.description ?? '',
+    size: parsed ? estimateSkillCost(parsed) : undefined,
+    installed: roots.some((root) => existsSync(join(home, root, name))),
+    sourceDir,
+    paths: roots.map((root) => `~/${root}/${name}`),
+  };
+}
 
 // Chrome stack is per-platform. Electron applies `titleBarStyle:
 // 'hiddenInset'` / `vibrancy` / `visualEffectState` / `transparent` /
@@ -2107,7 +2174,12 @@ const BOOT_BUDGET_FILE_CAP = 10_000;
 async function openProject(
   projectPath: string,
   entryPoint: EntryPoint,
-  pendingDeepLinkTarget?: { kind: 'doc' | 'folder'; path: string },
+  pendingDeepLinkTarget?: {
+    kind: 'doc' | 'folder';
+    path: string;
+    repositoryPath?: string;
+    contentRootDepth?: number;
+  },
   pendingBranch?: string | null,
   pendingMultiCandidate?: boolean,
   pendingShareBranchSwitch?: ShareDeepLinkBranchSwitchPayload,
@@ -2607,7 +2679,12 @@ function pruneRecentIfMissing(projectPath: string): { removed: boolean; name: st
 async function openProjectOrFallbackToNavigator(
   projectPath: string,
   entryPoint: EntryPoint,
-  pendingDeepLinkTarget?: { kind: 'doc' | 'folder'; path: string },
+  pendingDeepLinkTarget?: {
+    kind: 'doc' | 'folder';
+    path: string;
+    repositoryPath?: string;
+    contentRootDepth?: number;
+  },
   pendingBranch?: string | null,
   pendingMultiCandidate?: boolean,
   pendingShareBranchSwitch?: ShareDeepLinkBranchSwitchPayload,
@@ -4379,6 +4456,32 @@ function buildReclaimUserSkillsOpts(): Parameters<typeof reclaimUserSkillsOnLaun
   };
 }
 
+/**
+ * Every destination a user-global bundle install writes to, tildified for
+ * display. Mirrors the reclaim's own destination set and BOTH its gates, so no
+ * surface can advertise a copy that will not be written:
+ *
+ *   - `USER_SKILL_HOSTS`, not the project-shaped host list — that one drops
+ *     Copilot and Pi by design, silently omitting `~/.copilot`, `~/.pi/agent`
+ *     and `~/.gemini` from a list users read as complete.
+ *   - `skillsRoot`, not `hostDir + '/skills'` — Pi's user root is
+ *     `.pi/agent/skills`, which the naive shape renders as a nonexistent
+ *     `~/.pi/skills`.
+ *   - The `.agents` hub only when it already exists; the reclaim writes that
+ *     copy but never creates the hub.
+ *
+ * Single source for the first-launch consent disclosure AND the Settings row,
+ * so the two cannot drift apart the way a hand-maintained second list did.
+ */
+function userGlobalSkillDestinations(home: string, name: string): string[] {
+  return [
+    ...(existsSync(join(home, AGENTS_HUB_DIR)) ? [`~/${AGENTS_SKILLS_ROOT}/${name}`] : []),
+    ...USER_SKILL_HOSTS.filter((h) => existsSync(join(home, h.hostDir))).map(
+      (h) => `~/${h.skillsRoot}/${name}`,
+    ),
+  ];
+}
+
 function createMcpWiringOpts(opts: ArmMcpWiringOpts = {}) {
   return {
     isPackaged: app.isPackaged,
@@ -4417,20 +4520,20 @@ function createMcpWiringOpts(opts: ArmMcpWiringOpts = {}) {
         return { ok: true as const };
       },
     },
-    // Skills leg of the first-launch consent dialog: per-bundle rows for the
-    // show payload + the confirm finalizer. `applyConsent` records every
-    // bundle's decision, then reuses the launch reclaim (now decision-gated)
-    // to install the enabled set and tear down any declined-but-present
-    // bundle — one code path for install + removal.
+    // Skills leg of the first-launch consent dialog: the bundles onboarding
+    // offers + the confirm finalizer. `applyConsent` records each OFFERED
+    // bundle's decision, then reuses the launch reclaim (decision-gated) to
+    // install the enabled set and tear down any declined-but-present bundle —
+    // one code path for install + removal. Bundles outside the onboarding set
+    // are never touched here: no decision recorded, nothing installed, and an
+    // existing copy left alone.
     skills: {
       computeDescriptors: () =>
-        USER_GLOBAL_BUNDLE_IDS.map((id) => ({
-          id,
-          name: BUNDLE_SKILL_NAME[id],
-          alreadyInstalled: existsSync(
-            join(osHomedir(), '.agents', 'skills', BUNDLE_SKILL_NAME[id]),
-          ),
-        })),
+        ONBOARDING_BUNDLE_IDS.map((id) => {
+          const home = osHomedir();
+          const name = BUNDLE_SKILL_NAME[id];
+          return { id, name, paths: userGlobalSkillDestinations(home, name) };
+        }),
       applyConsent: async (enabledIds: readonly string[]) => {
         const home = osHomedir();
         // The consent dialog is the trust boundary: a failed decision write
@@ -4439,7 +4542,7 @@ function createMcpWiringOpts(opts: ArmMcpWiringOpts = {}) {
         // to enabled, and still return ok — silently losing the user's
         // decline. Surface {ok:false} so mcp-wiring defers the marker and the
         // dialog re-fires for a retry (same as a failed PATH/editor write).
-        for (const id of USER_GLOBAL_BUNDLE_IDS) {
+        for (const id of ONBOARDING_BUNDLE_IDS) {
           try {
             await writeBundleDecision(home, BUNDLE_SKILL_NAME[id], enabledIds.includes(id));
           } catch (err) {
@@ -4641,18 +4744,20 @@ function resolveTerminalCliOnPath(cli: TerminalCli): Promise<CliReadiness> {
  * just-installed CLI shows up within a minute.
  */
 const CLI_INSTALLED_MAP_TTL_MS = 60_000;
-let cliInstalledMapCache: { at: number; value: Promise<Record<TerminalCli, boolean>> } | null =
-  null;
+let cliInstalledMapCache: {
+  at: number;
+  value: Promise<Partial<Record<TerminalCli, boolean>>>;
+} | null = null;
 
 /**
- * Batched on-PATH readiness for all four CLIs, cached ~60s. Caches the in-flight
- * Promise (not the resolved value) so concurrent New-chat clicks share one probe
- * batch. `resolveCliInstalledMap` never rejects today (each entry degrades to
- * not-installed); the defensive `.catch` below evicts the cache if a future
- * change ever lets one through, so a transient failure becomes an immediate
- * retry rather than a 60s-cached rejection.
+ * Batched on-PATH readiness for all registry CLIs, cached ~60s. Caches the
+ * in-flight Promise (not the resolved value) so concurrent New-chat clicks share
+ * one probe batch. `resolveCliInstalledMap` never rejects today (each entry
+ * degrades to an omitted unverified key); the defensive `.catch` below evicts
+ * the cache if a future change ever lets one through, so a transient failure
+ * becomes an immediate retry rather than a 60s-cached rejection.
  */
-function resolveTerminalCliInstalledMap(): Promise<Record<TerminalCli, boolean>> {
+function resolveTerminalCliInstalledMap(): Promise<Partial<Record<TerminalCli, boolean>>> {
   const now = Date.now();
   if (cliInstalledMapCache && now - cliInstalledMapCache.at < CLI_INSTALLED_MAP_TTL_MS) {
     return cliInstalledMapCache.value;
@@ -5003,9 +5108,12 @@ function registerIpcHandlers() {
     return resolveTerminalCliOnPath(req.cli);
   });
 
-  handle('ok:terminal:cli-installed-map', async (): Promise<Record<TerminalCli, boolean>> => {
-    return resolveTerminalCliInstalledMap();
-  });
+  handle(
+    'ok:terminal:cli-installed-map',
+    async (): Promise<Partial<Record<TerminalCli, boolean>>> => {
+      return resolveTerminalCliInstalledMap();
+    },
+  );
 
   handle('ok:terminal:dock-state', async (event) => {
     const win = BrowserWindow.fromWebContents(event.sender);
@@ -6008,9 +6116,21 @@ function registerIpcHandlers() {
     // moved/deleted target flags `targetMissing` and the editor renders the
     // honest verdict panel instead of the create-mode editor. Synchronous native
     // probe — no new IPC — computed once for both the warm and cold branches.
-    const targetMissing =
-      request.pendingDeepLinkTarget !== undefined &&
-      computeShareTargetMissing(checkTargetExistsImpl, request.path, request.pendingDeepLinkTarget);
+    const targetMissing = (() => {
+      const target = request.pendingDeepLinkTarget;
+      if (target === undefined) return false;
+      const probeCoordinate = resolveTargetProbeCoordinate(
+        request.path,
+        target,
+        (projectPath) => loadConfig(projectPath).config.content.dir,
+        getLogger('share-receive'),
+      );
+      return computeShareTargetMissing(
+        checkTargetExistsImpl,
+        probeCoordinate.root,
+        probeCoordinate.target,
+      );
+    })();
     // Warm-focus path for share-receive: when an existing window holds the
     // requested project, focus it and dispatch the deep-link directly. Mirrors
     // the URL-scheme warm path in url-scheme.ts so the IPC and the deep-link
@@ -6025,6 +6145,12 @@ function registerIpcHandlers() {
           kind: request.pendingDeepLinkTarget.kind,
           branch: request.pendingBranch ?? null,
           multiCandidate: request.pendingMultiCandidate === true,
+          ...(request.pendingDeepLinkTarget.repositoryPath === undefined
+            ? {}
+            : { repositoryPath: request.pendingDeepLinkTarget.repositoryPath }),
+          ...(request.pendingDeepLinkTarget.contentRootDepth === undefined
+            ? {}
+            : { contentRootDepth: request.pendingDeepLinkTarget.contentRootDepth }),
           // Only carry the flag when set — keeps the common (present) case's
           // payload identical to the pre-gate shape.
           ...(targetMissing ? { targetMissing: true } : {}),
@@ -6619,7 +6745,6 @@ function registerIntegrationsSettingsIpc(): void {
       // and startup repair sweep's scope filter in `mcp-wiring.ts`.
       allEditorIds: ALL_EDITOR_IDS.filter((id) => EDITOR_TARGETS[id].scope === 'global'),
       editorLabel: (editorId) => EDITOR_TARGETS[editorId].label,
-      detectInstalledEditors: (cwd, home) => detectInstalledEditors(cwd, home),
       classifyExistingMcpEntry: (editorId, home) =>
         classifyExistingMcpEntry(EDITOR_TARGETS[editorId], '', home),
       // The removal gate: `isEntryUpToDate` recognizes both the resolver-chain
@@ -6633,6 +6758,35 @@ function registerIntegrationsSettingsIpc(): void {
       writeUserMcpConfigs: (writeOpts) => writeUserMcpConfigs(writeOpts),
       removeUserMcpEntry: (editorId) =>
         removeOwnMcpEntry(EDITOR_TARGETS[editorId], '', osHomedir()),
+    },
+    // Reuses the probes the launcher surfaces already run and cache (~60s), so
+    // opening Settings costs no extra shell spawns and every surface answers the
+    // same question the same way.
+    probeEditorPresence: async () => {
+      const [cliOnPath, ...schemes] = await Promise.all([
+        resolveTerminalCliInstalledMap().catch(() => ({}) as Record<TerminalCli, boolean>),
+        ...(['claude', 'codex', 'cursor'] as const).map((scheme) =>
+          detectProtocolImpl(
+            {
+              platform: process.platform,
+              getApplicationInfoForProtocol: (url) => app.getApplicationInfoForProtocol(url),
+            },
+            scheme,
+          )
+            .then((r) => r.installed)
+            .catch(() => false),
+        ),
+      ]);
+      return {
+        cliOnPath,
+        // `claude-code` is the handoff-target id for the Claude desktop app; the
+        // other two share their scheme name with their target id.
+        schemeHandler: {
+          'claude-code': schemes[0] ?? false,
+          codex: schemes[1] ?? false,
+          cursor: schemes[2] ?? false,
+        },
+      };
     },
     path: {
       computeStatus: () => {
@@ -6676,35 +6830,32 @@ function registerIntegrationsSettingsIpc(): void {
       },
     },
     skills: {
-      computeStatuses: () =>
-        USER_GLOBAL_BUNDLE_IDS.map((id) => {
-          const home = osHomedir();
-          const name = BUNDLE_SKILL_NAME[id];
+      computeStatuses: () => {
+        const home = osHomedir();
+        // Resolve reach once — the target set is identical for every built-in.
+        // The ledger read touches the filesystem (realpath containment), so a
+        // throw degrades to zero hosts, keeping the skill rows visible instead
+        // of emptying the whole group.
+        let resolvedHosts: ResolvedSkillHost[];
+        try {
+          resolvedHosts = resolveBuiltinSkillHosts(home);
+        } catch {
+          resolvedHosts = [];
+        }
+        return USER_GLOBAL_BUNDLE_IDS.map((id) => {
+          const d = computeBuiltinSkillDisclosure(home, id);
           return {
             id,
-            name,
-            installed: existsSync(join(home, '.agents', 'skills', name)),
-            // Mirror the reclaim's own destination set and BOTH its gates, so
-            // this row can never advertise a copy that will not be written.
-            //
-            // USER_SKILL_HOSTS, not the project-shaped host list: that one drops
-            // Copilot and Pi by design, which silently omitted `~/.copilot`,
-            // `~/.pi/agent` and `~/.gemini` from a list users read as complete.
-            // And map `skillsRoot`, not `hostDir + '/skills'`: Pi's user root is
-            // `.pi/agent/skills`, which the naive shape renders as a `~/.pi/skills`
-            // that does not exist.
-            paths: [
-              // The hub is written only when it already exists — the reclaim
-              // never creates it. Same gate here.
-              ...(existsSync(join(home, AGENTS_HUB_DIR))
-                ? [`~/${AGENTS_SKILLS_ROOT}/${name}`]
-                : []),
-              ...USER_SKILL_HOSTS.filter((h) => existsSync(join(home, h.hostDir))).map(
-                (h) => `~/${h.skillsRoot}/${name}`,
-              ),
-            ],
+            name: d.name,
+            description: d.description,
+            installed: d.installed,
+            size: d.size,
+            sourceDir: d.sourceDir,
+            resolvedHosts,
+            paths: d.paths,
           };
-        }),
+        });
+      },
       setEnabled: async (bundleId, enabled) => {
         const home = osHomedir();
         const id = USER_GLOBAL_BUNDLE_IDS.find((b) => b === bundleId);
@@ -6739,10 +6890,11 @@ function registerIntegrationsSettingsIpc(): void {
         } catch (err) {
           return { ok: false as const, error: formatUnknownError(err) };
         }
-        // Verify by effect — the reclaim reports per-target entries, but the
-        // central-store dir is the definitive "installed" signal every other
-        // surface reads.
-        if (!existsSync(join(home, '.agents', 'skills', name))) {
+        // Verify by effect against the same roots the disclosure lists. The
+        // central store alone is NOT the signal: the reclaim skips it entirely
+        // when `~/.agents` does not already exist, so probing only there failed
+        // every install on a machine without the hub.
+        if (!builtinSkillInstalled(home, name)) {
           return { ok: false as const, error: `Couldn't install ${name}.` };
         }
         return { ok: true as const };
@@ -6791,6 +6943,19 @@ function registerProjectIntegrationsSettingsIpc(): void {
     projectConfigPath: (id, projectDir) =>
       EDITOR_TARGETS[id].projectConfigPath?.(projectDir) ?? null,
     projectSkillPath: (id, projectDir) => EDITOR_TARGETS[id].projectSkillPath?.(projectDir) ?? null,
+    // Same read the user-global rows use: parse the shipped bundle and price it
+    // from its own bytes, so the project row cannot quote a stale figure.
+    projectSkillBundle: () => {
+      // resolveBundledSkillDir throws when the bundled asset is missing (a dev
+      // tree that never ran the bundle build). Let it propagate: the caller
+      // already catches it, logs the cause, and degrades the row to no cost
+      // line - catching it here produced the same degraded row with no log at
+      // all, which made the caller's warn dead code for this path.
+      const sourceDir = resolveBundledSkillDir('project', { checkDesktop: false });
+      const parsed = sourceDir ? parseSkillDir(sourceDir) : null;
+      if (!parsed) return null;
+      return { sourceDir, description: parsed.description ?? '', size: estimateSkillCost(parsed) };
+    },
     entryLocator: (id) => {
       const target = EDITOR_TARGETS[id];
       // `format: 'file'` targets (Pi) own a whole managed file, not a keyed
@@ -7989,6 +8154,7 @@ function bootPrimaryInstance(): void {
       // arrived somewhere, so opening a `/continue` browser tab would be noise.
       // Every failure mode degrades to the splash re-click recovery.
       if (isTrueFirstRun && decision.action === 'navigator') {
+        const shareReceiveLogger = getLogger('share-receive');
         startFirstRunHandshake({
           isFirstRun: () => true,
           createServer: (handler) => {
@@ -8008,16 +8174,17 @@ function bootPrimaryInstance(): void {
           },
           openExternal: (url) => {
             void shell.openExternal(url).catch((err) => {
-              console.warn('[main] deferred-share openExternal failed', {
-                err: err instanceof Error ? err.message : String(err),
-              });
+              shareReceiveLogger.warn(
+                { errorKind: err instanceof Error ? err.name : typeof err },
+                'deferred-share openExternal failed',
+              );
             });
           },
           routeShareUrl: (url) => protocolControl.routeUrl(url),
           recordOutcome: (outcome) => recordFirstRunShareHandoff(outcome),
           log: {
-            warn: (obj, msg) => console.warn(msg, obj),
-            info: (obj, msg) => console.info(msg, obj),
+            warn: (obj, msg) => shareReceiveLogger.warn({ ...obj }, msg),
+            info: (obj, msg) => shareReceiveLogger.info({ ...obj }, msg),
           },
         });
       }

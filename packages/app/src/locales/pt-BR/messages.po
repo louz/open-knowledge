@@ -100,6 +100,11 @@ msgstr "\"{trimmed}\" já existe aqui"
 msgid "\"frontmatter\" is a reserved property name"
 msgstr "\"frontmatter\" é um nome de propriedade reservado"
 
+#. placeholder {0}: item.attempts
+#: src/components/acp/ThreadView.tsx
+msgid "({0, plural, one {# attempt} other {# attempts}})"
+msgstr "({0, plural, one {# tentativa} many {# tentativas} other {# tentativas}})"
+
 #: src/components/settings/LintingSection.tsx
 msgid "(a bare folder name needs /** after it to match what's inside)"
 msgstr "(um nome de pasta sozinho precisa de /** depois para corresponder ao seu conteúdo)"
@@ -184,10 +189,20 @@ msgstr "{0, plural, one {# documento} many {# documentos} other {# documentos}}"
 msgid "{0, plural, one {# error} other {# errors}}"
 msgstr "{0, plural, one {# erro} many {# erros} other {# erros}}"
 
+#. placeholder {0}: pack.entryCounts.files
+#: src/components/PackCardGrid.tsx
+msgid "{0, plural, one {# file} other {# files}}"
+msgstr "{0, plural, one {# arquivo} many {# arquivos} other {# arquivos}}"
+
 #. placeholder {0}: selected.size
 #: src/components/settings/applies-to-folder-picker.tsx
 msgid "{0, plural, one {# folder picked} other {# folders picked}}"
 msgstr "{0, plural, one {# pasta selecionada} many {# pastas selecionadas} other {# pastas selecionadas}}"
+
+#. placeholder {0}: pack.entryCounts.folders
+#: src/components/PackCardGrid.tsx
+msgid "{0, plural, one {# folder} other {# folders}}"
+msgstr "{0, plural, one {# pasta} many {# pastas} other {# pastas}}"
 
 #. placeholder {0}: value.length
 #: src/components/ArrayOfObjectsWidget.tsx
@@ -267,11 +282,6 @@ msgstr "{0, plural, one {Nenhum problema em # documento.} many {Nenhum problema 
 #: src/components/CreatedItemsList.tsx
 msgid "{0, plural, one {Plugin} other {Plugins}}"
 msgstr "{0, plural, one {Plugin} many {Plugins} other {Plugins}}"
-
-#. placeholder {0}: editorList.hiddenCount
-#: src/components/McpConsentDialogBody.tsx
-msgid "{0, plural, one {Show # more tool} other {Show # more tools}}"
-msgstr "{0, plural, one {Mostrar mais # ferramenta} many {Mostrar mais # ferramentas} other {Mostrar mais # ferramentas}}"
 
 #. placeholder {0}: skillRows.length
 #: src/components/CreatedItemsList.tsx
@@ -983,6 +993,10 @@ msgstr "<0>Fonte do espelho removida.</0> O documento <1>{src}</1> não está ma
 msgid "<0>ok</0> won't run in external terminals until you add it later from the File menu. OpenKnowledge's built-in terminal and AI tools keep working."
 msgstr "<0>ok</0> não vai funcionar em terminais externos até você adicioná-lo depois pelo menu Arquivo. O terminal integrado e as ferramentas de IA do OpenKnowledge continuam funcionando."
 
+#: src/components/OkBlobRunner.tsx
+msgid "<0>Space</0> to jump · <1>↓</1> to duck"
+msgstr "<0>Espaço</0> para pular · <1>↓</1> para agachar"
+
 #: src/components/settings/SkillTargetsPicker.tsx
 msgid "~/.myteam/skills"
 msgstr "~/.myteam/skills"
@@ -1184,10 +1198,6 @@ msgstr "Sobre o {appName}"
 msgid "Above"
 msgstr "Acima"
 
-#: src/components/settings/SkillTargetsPicker.tsx
-msgid "absent"
-msgstr "ausente"
-
 #: src/components/DiffView.tsx
 msgid "Accept"
 msgstr "Aceitar"
@@ -1324,8 +1334,8 @@ msgid "Add link"
 msgstr "Adicionar link"
 
 #: src/components/settings/SearchSection.tsx
-msgid "Add meaning-based ranking to search so conceptually-related pages surface even when they share no keywords. This setting applies only to this computer."
-msgstr "Adiciona à busca uma classificação por significado para que páginas relacionadas conceitualmente apareçam mesmo sem palavras-chave em comum. Este ajuste vale só para este computador."
+msgid "Add meaning-based ranking to search so conceptually-related pages surface even when they share no keywords."
+msgstr "Adiciona à busca uma classificação por significado para que páginas relacionadas conceitualmente apareçam mesmo sem palavras-chave em comum."
 
 #: src/components/settings/OkignoreSection.tsx
 msgid "Add pattern"
@@ -1393,13 +1403,6 @@ msgstr "Adicione seus comentários a esta mensagem"
 msgid "Added"
 msgstr "Adicionado"
 
-#. Subtext for the open-knowledge-write-skill skill row
-#. Subtext for the open-knowledge-write-skill skill row
-#: src/components/McpConsentDialogBody.tsx
-#: src/components/settings/AiToolsSection.tsx
-msgid "Adds a guided workflow for authoring new Agent Skills."
-msgstr "Adiciona um fluxo guiado para criar novas Habilidades de agente."
-
 #: src/components/settings/AiToolsSection.tsx
 msgid "Adds a managed block to"
 msgstr "Adiciona um bloco gerenciado a"
@@ -1410,6 +1413,21 @@ msgstr "Adiciona um bloco gerenciado a"
 #: src/components/settings/AiToolsSection.tsx
 msgid "Adds a managed block to {0}"
 msgstr "Adiciona um bloco gerenciado a {0}"
+
+#. Subtext under the create-project AI-tools checkbox
+#: src/components/CreateProjectDialog.tsx
+msgid "Adds an OpenKnowledge MCP entry and the project skill, so each tool can read and update these notes."
+msgstr "Adiciona uma entrada MCP do OpenKnowledge e a habilidade do projeto, para que cada ferramenta possa ler e atualizar estes documentos."
+
+#. Subtext under the single AI-tools checkbox when a skill is also installed
+#: src/components/McpConsentDialogBody.tsx
+msgid "Adds OpenKnowledge's MCP connection to each, plus the open-knowledge-discovery skill so your agents recognize OpenKnowledge projects."
+msgstr "Adiciona a conexão MCP do OpenKnowledge a cada uma, mais a habilidade open-knowledge-discovery para que seus agentes reconheçam projetos do OpenKnowledge."
+
+#. Subtext under the single AI-tools checkbox when only MCP is wired
+#: src/components/McpConsentDialogBody.tsx
+msgid "Adds OpenKnowledge's MCP connection to each."
+msgstr "Adiciona a conexão MCP do OpenKnowledge a cada uma."
 
 #: src/components/ReportBugDialogBody.tsx
 msgid "Adds telemetry, server state, and runtime info when available. Credentials are always removed; document names, if included, appear in cleartext (not redacted)."
@@ -1466,9 +1484,12 @@ msgstr "O painel de agentes foi fechado para manter o Terminal legível."
 msgid "Agent settings"
 msgstr "Configurações do agente"
 
-#. Group label above the skill rows in Settings → AI tools & CLI
-#. Section label above the skill checkboxes in the first-launch dialog
+#. Heading above the skill install destinations in the disclosure
 #: src/components/McpConsentDialogBody.tsx
+msgid "Agent Skill"
+msgstr "Habilidade de agente"
+
+#. Group label above the skill rows in Settings → AI tools & CLI
 #: src/components/settings/AiToolsSection.tsx
 msgid "Agent Skills"
 msgstr "Habilidades de agente"
@@ -1485,6 +1506,8 @@ msgstr "Agentes"
 msgid "AI tool management is only available in the OpenKnowledge desktop app."
 msgstr "O gerenciamento de ferramentas de IA só está disponível no app de desktop do OpenKnowledge."
 
+#. Section label above the AI-tools checkbox in the first-launch dialog
+#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/settings/SettingsDialogShell.tsx
 msgid "AI tools"
@@ -1530,6 +1553,10 @@ msgstr "Todos os trechos resolvidos"
 #: src/components/CommandPalette.tsx
 msgid "All tags"
 msgstr "Todas as tags"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Allow external access"
+msgstr "Permitir acesso externo"
 
 #: src/components/settings/frontmatter-schema-field-editor.tsx
 msgid "Allowed element values (empty = any)"
@@ -1582,6 +1609,15 @@ msgstr "Já fez login?"
 #: src/components/ReportBugDialogBody.tsx
 msgid "Always included"
 msgstr "Sempre incluído"
+
+#: src/components/SkillCostValue.tsx
+msgid "always-on"
+msgstr "sempre ativo"
+
+#. Suffix on a skill directory card's context-cost figure
+#: src/components/SkillDirectoryResult.tsx
+msgid "always-on tokens"
+msgstr "tokens sempre ativos"
 
 #: src/components/AppErrorBoundary.tsx
 #: src/components/DocumentErrorBoundary.tsx
@@ -1661,13 +1697,29 @@ msgstr "Aplica-se a (globs — um ! inicial exclui; vazio significa todos os doc
 msgid "Applies to all projects on this machine. Claude and Codex, started from the built-in terminal, auto-approve OpenKnowledge's read and write tools (Claude also auto-runs \"ok open\"). Deleting, moving, sharing, importing or installing skills, other commands, and non-OpenKnowledge file edits still ask. Cursor, OpenCode, and Pi are unaffected. Best-effort per agent."
 msgstr "Aplica-se a todos os projetos deste computador. Claude e Codex, iniciados pelo terminal integrado, aprovam automaticamente as ferramentas de leitura e escrita do OpenKnowledge (o Claude também executa \"ok open\" sozinho). Excluir, mover, compartilhar, importar ou instalar habilidades, outros comandos e edições de arquivos fora do OpenKnowledge continuam perguntando. Cursor, OpenCode e Pi não são afetados. É um esforço por agente, sem garantias."
 
+#: src/components/settings/ScopeBadge.tsx
+msgid "Applies to this project on this computer only. Stored in .ok/local, not shared via git."
+msgstr "Aplica-se a este projeto somente neste computador. Guardado em .ok/local, não compartilhado pelo git."
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Apply and restart project server"
+msgstr "Aplicar e reiniciar o servidor do projeto"
+
 #: src/editor/bubble-menu/LinkEditPopover.tsx
 msgid "Apply link"
 msgstr "Aplicar link"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Applying restarts this project's server."
+msgstr "Aplicar reinicia o servidor deste projeto."
+
 #: src/components/settings/SearchSection.tsx
 msgid "Applying your change"
 msgstr "Aplicando sua alteração"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Applying…"
+msgstr "Aplicando…"
 
 #: src/components/acp/ThreadView.tsx
 msgid "Approved"
@@ -1682,11 +1734,11 @@ msgid "Are you sure you want to convert this file into a template? The original 
 msgstr "Tem certeza de que quer converter este arquivo em um modelo? O arquivo original será excluído. Esta ação não pode ser desfeita."
 
 #: src/components/file-tree-trash-copy.ts
-msgid "Are you sure you want to delete '{name}' and its contents?"
+msgid "Are you sure you want to delete \"{name}\" and its contents?"
 msgstr "Tem certeza de que deseja excluir \"{name}\" e seu conteúdo?"
 
 #: src/components/file-tree-trash-copy.ts
-msgid "Are you sure you want to delete '{name}'?"
+msgid "Are you sure you want to delete \"{name}\"?"
 msgstr "Tem certeza de que deseja excluir \"{name}\"?"
 
 #: src/components/FileTree.tsx
@@ -1786,6 +1838,7 @@ msgid "Attach the file in an email to <0/>"
 msgstr "Anexe o arquivo em um e-mail para <0/>"
 
 #: src/components/settings/AttachmentsSection.tsx
+#: src/components/settings/SettingsDialogShell.tsx
 msgid "Attachments"
 msgstr "Anexos"
 
@@ -1876,8 +1929,13 @@ msgstr "Atualização automática ligada para \"{name}\""
 
 #. Section label for the automatic, one-click install path
 #: src/components/InstallInClaudeDesktopDialog.tsx
+#: src/components/settings/NetworkAccessSection.tsx
 msgid "Automatic"
 msgstr "Automático"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Automatic picks a free port each start. Choose a fixed port to keep the same address across restarts."
+msgstr "O modo automático escolhe uma porta livre a cada inicialização. Escolha uma porta fixa para manter o mesmo endereço entre reinicializações."
 
 #: src/components/PublishToGitHubDialog.tsx
 msgid "Available"
@@ -1965,7 +2023,6 @@ msgstr "Nota em branco"
 
 #: src/components/command-palette-commands.ts
 #: src/components/EditorTabs.tsx
-#: src/components/HelpPopover.tsx
 #: src/components/OkBlobRunnerPage.tsx
 msgid "Blob Run"
 msgstr "Blob Run"
@@ -2183,12 +2240,14 @@ msgstr "Não é possível compartilhar este caminho."
 #: src/components/SeedDialog.tsx
 #: src/components/settings/LinkPreviewsSection.tsx
 #: src/components/settings/LintingSection.tsx
+#: src/components/settings/NetworkAccessSection.tsx
 #: src/components/settings/SavedThemesTiles.tsx
 #: src/components/settings/SearchSection.tsx
 #: src/components/ShareBranchSwitchDialog.tsx
 #: src/components/ShareReceiveDialog.tsx
 #: src/components/SkillFileCreateDialog.tsx
 #: src/components/SkillFileRenameDialog.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
 #: src/components/SkillPluginBundleDialog.tsx
 #: src/components/SkillRenameDialog.tsx
 #: src/components/SkillScopeMoveDialog.tsx
@@ -2334,6 +2393,10 @@ msgstr "Verificando habilidade"
 #: src/components/ImportSkillForm.tsx
 msgid "Checking source"
 msgstr "Verificando a fonte"
+
+#: src/components/CreateProjectDialog.tsx
+msgid "Checking which AI tools you have"
+msgstr "Verificando quais ferramentas de IA você tem"
 
 #: src/components/settings/AccountSection.tsx
 msgid "Checking your GitHub connection"
@@ -2885,11 +2948,14 @@ msgstr "Arquivos em conflito: {0}."
 msgid "Conflicts"
 msgstr "Conflitos"
 
-#. Primary button that writes MCP config for the selected AI tools
 #: src/components/AuthModal.tsx
-#: src/components/McpConsentDialogBody.tsx
 msgid "Connect"
 msgstr "Conectar"
+
+#. placeholder {0}: formatToolList( status.editors.map((id) => EDITOR_LABELS[id]), i18n.locale, )
+#: src/components/CreateProjectDialog.tsx
+msgid "Connect {0} to this project"
+msgstr "Conectar {0} a este projeto"
 
 #: src/components/settings/AccountSection.tsx
 msgid "Connect a GitHub account to browse and sync your repositories."
@@ -2924,7 +2990,6 @@ msgid "Connect this project to GitHub to share."
 msgstr "Conecte este projeto ao GitHub para compartilhar."
 
 #: src/components/ConsentDialogBody.tsx
-#: src/components/CreateProjectDialog.tsx
 msgid "Connect to AI tools"
 msgstr "Conectar a ferramentas de IA"
 
@@ -3023,6 +3088,10 @@ msgstr "Regras de conteúdo"
 msgid "Content rules not yet loaded — try again in a moment"
 msgstr "As regras de conteúdo ainda não carregaram — tente de novo em instantes"
 
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Context cost"
+msgstr "Custo de contexto"
+
 #: src/components/acp/ThreadView.tsx
 msgid "Context window:"
 msgstr "Janela de contexto:"
@@ -3030,6 +3099,11 @@ msgstr "Janela de contexto:"
 #: src/components/acp/ThreadView.tsx
 msgid "Context window: {percent}% used, {usedLabel} of {sizeLabel} tokens"
 msgstr "Janela de contexto: {percent}% usado, {usedLabel} de {sizeLabel} tokens"
+
+#. Primary button that applies the first-launch setup choices
+#: src/components/McpConsentDialogBody.tsx
+msgid "Continue"
+msgstr "Continuar"
 
 #: src/components/AuthModal.tsx
 msgid "Continue in browser"
@@ -3720,6 +3794,12 @@ msgstr "Não deu para executar o teste. Verifique se o OpenKnowledge ainda está
 msgid "Couldn’t save changes. Try editing a color again."
 msgstr "Não foi possível salvar as alterações. Tente editar uma cor novamente."
 
+#. placeholder {0}: humanFormat(first.error)
+#. placeholder {0}: humanFormat(second.error)
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Couldn't save network settings — {0}"
+msgstr "Não foi possível salvar as configurações de rede — {0}"
+
 #: src/components/TemplateForm.tsx
 msgid "Couldn't save template: {error}"
 msgstr "Não deu para salvar o modelo: {error}"
@@ -3816,6 +3896,10 @@ msgstr "Não deu para atualizar o compartilhamento de habilidades"
 #: src/components/settings/SharingSection.tsx
 msgid "Couldn't update skills sharing — {detail}."
 msgstr "Não deu para atualizar o compartilhamento de habilidades — {detail}."
+
+#: src/components/TerminalCliUnverifiedBanner.tsx
+msgid "Couldn't verify that {displayName} ({bin}) is available, so this is a plain shell. You can still run {bin} yourself."
+msgstr "Não foi possível verificar se {displayName} ({bin}) está disponível, então este é um shell comum. Você ainda pode executar {bin} por conta própria."
 
 #: src/components/settings/settings-fields.ts
 msgid "Count skill installs publicly"
@@ -4268,10 +4352,6 @@ msgstr "Os detalhes do erro que você acabou de encontrar estão incluídos. Seg
 msgid "Detected in {0}"
 msgstr "Detectado em {0}"
 
-#: src/components/settings/AiToolsSection.tsx
-msgid "Detected on this machine"
-msgstr "Detectado neste computador"
-
 #: src/uninstall/UninstallPickerScreen.tsx
 msgid "Detected OpenKnowledge projects"
 msgstr "Projetos do OpenKnowledge detectados"
@@ -4379,6 +4459,7 @@ msgstr "Desconectando"
 #: src/components/OnboardingCard.tsx
 #: src/components/settings/SharingSection.tsx
 #: src/components/TerminalCliMissingBanner.tsx
+#: src/components/TerminalCliUnverifiedBanner.tsx
 msgid "Dismiss"
 msgstr "Dispensar"
 
@@ -4608,10 +4689,6 @@ msgstr "ex.: O editor travou depois que colei uma tabela grande"
 #: src/components/NavigatorApp.tsx
 msgid "Each pack scaffolds your project with ready-made folders and templates."
 msgstr "Cada pacote prepara seu projeto com pastas e modelos prontos."
-
-#: src/components/CreateProjectDialog.tsx
-msgid "Each selected tool gets an OpenKnowledge MCP entry."
-msgstr "Cada ferramenta selecionada recebe uma entrada MCP do OpenKnowledge."
 
 #: src/components/AppMenubar.tsx
 #: src/components/settings/LintingSection.tsx
@@ -4933,6 +5010,10 @@ msgstr "Digite um nome de pasta (ex.: cerebro)."
 msgid "Enter a name for this theme."
 msgstr "Insira um nome para este tema."
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Enter a port between 1 and 65535."
+msgstr "Digite uma porta entre 1 e 65535."
+
 #: src/components/CreateProjectDialog.tsx
 msgid "Enter a project name"
 msgstr "Digite um nome de projeto"
@@ -4957,7 +5038,14 @@ msgstr "Insira um nome de tema válido."
 msgid "Enter a valid URL (for example https://api.openai.com/v1)."
 msgstr "Digite uma URL válida (por exemplo https://api.openai.com/v1)."
 
-#: src/components/McpConsentDialogBody.tsx
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Enter a valid URL, for example https://notes.example.com"
+msgstr "Insira uma URL válida, por exemplo https://notes.example.com"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Enter the public origin your tunnel serves, for example https://notes.example.com"
+msgstr "Insira a origem pública que seu túnel serve, por exemplo https://notes.example.com"
+
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 msgid "Entry"
@@ -4998,6 +5086,10 @@ msgstr "tudo dentro das pastas {0}/ que estão em {1}/"
 #: src/components/settings/LintingSection.tsx
 msgid "everything under any {0}/ folder"
 msgstr "tudo dentro de qualquer pasta {0}/"
+
+#: src/components/ExcalidrawDocEditor.tsx
+msgid "Excalidraw canvas"
+msgstr "Tela do Excalidraw"
 
 #: src/components/settings/SharingSection.tsx
 msgid "Exception: skills are shared"
@@ -5066,6 +5158,22 @@ msgstr "Explorar"
 msgid "Explore skills"
 msgstr "Explorar habilidades"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Expose and restart"
+msgstr "Expor e reiniciar"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Expose this project to the network?"
+msgstr "Expor este projeto à rede?"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Expose this project's server to a wider network through a tunnel you run (for example Tailscale). A viewer on the tunnel gets the editor and agent endpoint, editing live against this machine's server."
+msgstr "Exponha o servidor deste projeto a uma rede mais ampla por meio de um túnel que você mesmo executa (por exemplo, Tailscale). Um visualizador no túnel recebe o editor e o endpoint do agente, editando ao vivo no servidor desta máquina."
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Exposing pins a fixed port so the tunnel's target stays stable across restarts."
+msgstr "Expor fixa uma porta para que o alvo do túnel permaneça estável entre reinicializações."
+
 #: src/components/empty-state/CreatePromptComposer.tsx
 #: src/components/handoff/AgentSplitButton.tsx
 #: src/components/handoff/OpenInAgentContextSubmenu.tsx
@@ -5086,6 +5194,10 @@ msgstr "Pré-visualização de links externos"
 #: src/components/settings/LinkPreviewsSection.tsx
 msgid "External link previews show a card with the site name, page title, and description when you hover a link."
 msgstr "A pré-visualização de links externos mostra um cartão com o nome do site, o título da página e a descrição quando você passa o cursor sobre um link."
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "External origin"
+msgstr "Origem externa"
 
 #: src/editor/extensions/WikiLinkPropPanel.tsx
 msgid "External wiki link"
@@ -5117,12 +5229,12 @@ msgid "Failed to clean up pending {kind}"
 msgstr "Falha ao limpar {kind} pendente"
 
 #: src/components/FileTree.tsx
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Failed to create file"
 msgstr "Falha ao criar o arquivo"
 
 #: src/components/FileTree.tsx
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Failed to create folder"
 msgstr "Falha ao criar a pasta"
 
@@ -5447,7 +5559,6 @@ msgstr "Campos"
 
 #: src/components/AppMenubar.tsx
 #: src/components/CommandPalette.tsx
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/share-metadata-rows.tsx
@@ -5584,6 +5695,10 @@ msgstr "Corrigir {flatId}"
 msgid "Fix all with AI ({count})"
 msgstr "Corrigir tudo com IA ({count})"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Fixed"
+msgstr "Fixa"
+
 #: src/lib/project-fix-sweep-store.ts
 msgid "Fixed {total, plural, one {# file} other {# files}}."
 msgstr "{total, plural, one {# arquivo corrigido} many {# arquivos corrigidos} other {# arquivos corrigidos}}."
@@ -5591,6 +5706,10 @@ msgstr "{total, plural, one {# arquivo corrigido} many {# arquivos corrigidos} o
 #: src/components/settings/AttachmentsSection.tsx
 msgid "Fixed folder in content root"
 msgstr "Pasta fixa na raiz do conteúdo"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Fixed port number"
+msgstr "Número de porta fixa"
 
 #. placeholder {0}: fixing.done
 #. placeholder {1}: fixing.total
@@ -5661,8 +5780,6 @@ msgstr "Link de compartilhamento da pasta copiado."
 msgid "Folder target: {linkTitle}. Click to open the overview."
 msgstr "Pasta de destino: {linkTitle}. Clique para abrir a visão geral."
 
-#: src/components/settings/AiToolsSection.tsx
-#: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/settings/SkillTargetsPicker.tsx
 msgid "Folders"
 msgstr "Pastas"
@@ -5802,8 +5919,8 @@ msgid "Full sync — your edits are committed and pushed to your remote automati
 msgstr "Sincronização completa — suas edições recebem commit e são enviadas ao seu remoto automaticamente."
 
 #: src/components/OkBlobRunner.tsx
-msgid "Game over · press space to play again"
-msgstr "Fim de jogo · pressione espaço para jogar de novo"
+msgid "Game over · press <0>Space</0> to play again"
+msgstr "Fim de jogo · pressione <0>Espaço</0> para jogar de novo"
 
 #: src/lib/keyboard-shortcuts.ts
 msgid "General"
@@ -5891,8 +6008,8 @@ msgid "Give the AI tools you use access to read and update your projects. Checki
 msgstr "Dê às ferramentas de IA que você usa acesso para ler e atualizar seus projetos. Marcar uma caixa configura na hora; desmarcar remove."
 
 #: src/components/McpConsentDialogBody.tsx
-msgid "Give the AI tools you use access to read and update your projects. Pick what to set up below, and change it anytime in Settings > AI tools & CLI."
-msgstr "Dê às ferramentas de IA que você usa acesso para ler e atualizar seus projetos. Escolha abaixo o que configurar e mude quando quiser em Configurações > Ferramentas de IA e CLI."
+msgid "Give the AI tools you use access to read and update your projects. You can change any of this later in Settings > AI tools & CLI."
+msgstr "Dê às ferramentas de IA que você usa acesso para ler e atualizar seus projetos. Você pode mudar tudo isso depois em Configurações > Ferramentas de IA e CLI."
 
 #: src/components/settings/LintingSection.tsx
 msgid "Glob patterns this schema applies to"
@@ -6030,13 +6147,6 @@ msgstr "Ajuda"
 msgid "Helps coding agents choose OKF document types, preserve provenance, and avoid inventing unsupported metadata."
 msgstr "Ajuda os agentes de codificação a escolher tipos de documentos OKF, preservar a proveniência e evitar a invenção de metadados não suportados."
 
-#. Subtext for the open-knowledge-discovery skill row
-#. Subtext for the open-knowledge-discovery skill row
-#: src/components/McpConsentDialogBody.tsx
-#: src/components/settings/AiToolsSection.tsx
-msgid "Helps your coding agent recognize OpenKnowledge projects and route reads and writes through it."
-msgstr "Ajuda seu agente de programação a reconhecer projetos do OpenKnowledge e a rotear leituras e escritas por ele."
-
 #: src/components/OkBlobRunner.tsx
 msgid "HI"
 msgstr "MÁX"
@@ -6081,7 +6191,11 @@ msgstr "Ocultar as opções avançadas"
 msgid "Hide Agents"
 msgstr "Ocultar Agentes"
 
+#. Collapses the list of files the setup writes to
+#. Collapses the list of project files the AI-tool setup writes
 #: src/components/acp/ThreadView.tsx
+#: src/components/CreateProjectDialog.tsx
+#: src/components/McpConsentDialogBody.tsx
 msgid "Hide details"
 msgstr "Ocultar detalhes"
 
@@ -6129,10 +6243,6 @@ msgstr "Ocultar o painel"
 #: src/components/EditorToolbar.tsx
 msgid "Hide panel ({panelShortcutLabel})"
 msgstr "Ocultar o painel ({panelShortcutLabel})"
-
-#: src/components/settings/ContentRulesSection.tsx
-msgid "Hide problem indicators"
-msgstr "Ocultar os indicadores de problemas"
 
 #: src/editor/find-replace/FindReplaceBar.tsx
 msgid "Hide replace"
@@ -6227,21 +6337,18 @@ msgid "How to push manually"
 msgstr "Como enviar manualmente"
 
 #. Link on an undetected tool row to its OpenKnowledge setup guide
-#. Link on an undetected tool row to its OpenKnowledge setup guide
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 msgid "How to set up"
 msgstr "Como configurar"
 
 #. placeholder {0}: editor.label
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 msgid "How to set up {0} (opens in browser)"
 msgstr "Como configurar {0} (abre no navegador)"
 
 #: src/components/settings/ContentRulesSection.tsx
-msgid "How validation findings surface across the project. These choices are committed to config.yml and shared with every collaborator via git."
-msgstr "Como os achados de validação aparecem no projeto. Estas escolhas ficam salvas no config.yml e são compartilhadas com todos os colaboradores pelo git."
+msgid "How validation findings surface across the project."
+msgstr "Como os achados de validação aparecem no projeto."
 
 #: src/editor/slash-command/embed-starter-items.tsx
 msgid "HTML"
@@ -6562,8 +6669,11 @@ msgid "Insert, delete, move, copy, and indent source editor lines through CodeMi
 msgstr "Insere, exclui, move, copia e recua linhas do editor de código pelo mapa de teclas padrão do CodeMirror."
 
 #: src/components/InstallInClaudeDesktopDialog.tsx
+#: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/IntegrationsSection.tsx
+#: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/skill-actions.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
 #: src/components/SkillPreviewTab.tsx
 #: src/components/SkillsTree.tsx
 msgid "Install"
@@ -6577,6 +6687,11 @@ msgstr "Instalar {0}"
 #: src/components/handoff/OpenInAgentMenuItem.tsx
 msgid "Install {brand} →"
 msgstr "Instalar {brand} →"
+
+#: src/components/settings/AiToolsSection.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Install {name}"
+msgstr "Instalar {name}"
 
 #. placeholder {0}: res.error
 #: src/hooks/use-explore-preview-install.ts
@@ -6707,6 +6822,10 @@ msgstr "Instalando"
 #: src/components/acp/ThreadView.tsx
 msgid "Installing {agentName}…"
 msgstr "Instalando {agentName}…"
+
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Installs to"
+msgstr "Instala em"
 
 #: src/components/SkillDirectoryResult.tsx
 msgid "installs:"
@@ -6904,11 +7023,11 @@ msgstr "Layout"
 msgid "Layout options"
 msgstr "Opções de layout"
 
-#: src/components/settings/PluginSectionHeader.tsx
+#: src/components/settings/SettingsSectionHeader.tsx
 msgid "Learn more"
 msgstr "Saiba mais"
 
-#: src/components/settings/PluginSectionHeader.tsx
+#: src/components/settings/SettingsSectionHeader.tsx
 msgid "Learn more about {title}"
 msgstr "Saiba mais sobre {title}"
 
@@ -7068,6 +7187,10 @@ msgstr "Carregando as duas versões"
 msgid "Loading branch state"
 msgstr "Carregando o estado dos ramos"
 
+#: src/components/settings/SharingSection.tsx
+msgid "Loading config sharing"
+msgstr "Carregando compartilhamento da configuração"
+
 #: src/components/DiffViewBoundary.tsx
 msgid "Loading conflict for {filePath}"
 msgstr "Carregando o conflito de {filePath}"
@@ -7214,9 +7337,13 @@ msgstr "Arquivos locais"
 msgid "Local path"
 msgstr "Caminho local"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Local server port"
+msgstr "Porta do servidor local"
+
 #: src/lib/install-onboarding-toast.ts
-msgid "Local-only requested but no git repository was created. Switch later via Settings → Config sharing once the project is in a git repo."
-msgstr "Somente local foi solicitado, mas nenhum repositório git foi criado. Você pode mudar depois em Configurações → Compartilhamento da configuração, quando o projeto estiver em um repositório git."
+msgid "Local-only requested but no git repository was created. Switch later via Settings → Sync & sharing once the project is in a git repo."
+msgstr "Somente local foi solicitado, mas nenhum repositório git foi criado. Você pode mudar depois em Configurações → Sincronização e compartilhamento, quando o projeto estiver em um repositório git."
 
 #: src/components/CreateProjectDialog.tsx
 msgid "Location"
@@ -7338,7 +7465,7 @@ msgstr "O reparo automático do MCP falhou"
 
 #. Group label above the per-editor MCP list in Settings → AI tools & CLI — each row wires OpenKnowledge's MCP server into that tool
 #. Group label above the per-editor project MCP list in Settings → This project → AI tools
-#. Section label above the editor checkbox list in the first-launch dialog — each row wires OpenKnowledge's MCP server into that tool
+#. Heading above the per-tool MCP config paths in the disclosure
 #: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
@@ -7708,12 +7835,17 @@ msgstr "Erro no .okignore aninhado em {path}"
 msgid "Nested fields"
 msgstr "Campos aninhados"
 
+#: src/components/settings/NetworkAccessSection.tsx
+#: src/components/settings/SettingsDialogShell.tsx
+msgid "Network access"
+msgstr "Acesso à rede"
+
 #: src/components/FileTree.tsx
 msgid "Network error - {kind} \"{createdPath}\" still exists on disk"
 msgstr "Erro de rede - {kind} \"{createdPath}\" ainda existe no disco"
 
 #: src/components/FileTree.tsx
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Network error — please try again"
 msgstr "Erro de rede — tente de novo"
 
@@ -7724,6 +7856,10 @@ msgstr "erro de rede (o `ok start` está em execução?)"
 #: src/components/FileTree.tsx
 msgid "Network error during cleanup"
 msgstr "Erro de rede durante a limpeza"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Network settings not yet loaded — try again in a moment."
+msgstr "Configurações de rede ainda não carregadas — tente novamente em instantes."
 
 #: src/components/SyncStatusBadge.tsx
 msgid "never"
@@ -7741,8 +7877,8 @@ msgid "New {0} chat"
 msgstr "Novo chat do {0}"
 
 #: src/components/OkBlobRunner.tsx
-msgid "New best · press space to play again"
-msgstr "Novo recorde · pressione espaço para jogar de novo"
+msgid "New best · press <0>Space</0> to play again"
+msgstr "Novo recorde · pressione <0>Espaço</0> para jogar de novo"
 
 #: src/components/NewWorktreeDialog.tsx
 msgid "New branch <0>{trimmed}</0> will be created from <1>{currentBaseLabel}</1>, in its own worktree under <2>.ok/worktrees/</2>."
@@ -7904,6 +8040,10 @@ msgstr "Ainda não há arquivo <0>.markdownlint.*</0> — todas as regras rodam 
 msgid "No active or recent OpenKnowledge projects were found."
 msgstr "Nenhum projeto do OpenKnowledge ativo ou recente foi encontrado."
 
+#: src/components/SkillInstallMenu.tsx
+msgid "No agent folders yet"
+msgstr "Ainda não há pastas de agentes"
+
 #: src/comments/use-comment-delivery.ts
 msgid "No agent is set up yet — opening Configure agents."
 msgstr "Nenhum agente foi configurado ainda — abrindo Configurar agentes."
@@ -7932,6 +8072,19 @@ msgstr "Nenhum agente selecionado — as habilidades ficam salvas, mas não são
 #: src/components/FileSidebar.tsx
 msgid "No AI agents installed"
 msgstr "Nenhum agente de IA instalado"
+
+#. Shown in place of the AI-tools checkbox when no AI tool was detected
+#: src/components/McpConsentDialogBody.tsx
+msgid "No AI tools detected yet. Once you install one, connect it from Settings > AI tools & CLI."
+msgstr "Nenhuma ferramenta de IA detectada ainda. Depois de instalar uma, conecte-a em Configurações > Ferramentas de IA e CLI."
+
+#: src/components/CreateProjectDialog.tsx
+msgid "No AI tools detected yet. Once you install one, connect it from Settings > This project."
+msgstr "Nenhuma ferramenta de IA detectada ainda. Depois de instalar uma, conecte-a em Configurações > Este projeto."
+
+#: src/components/SkillConsentRow.tsx
+msgid "No AI tools detected. Install one to use this skill."
+msgstr "Nenhuma ferramenta de IA detectada. Instale uma para usar esta habilidade."
 
 #: src/components/settings/SearchSection.tsx
 msgid "No API key is set for this endpoint. Add one above."
@@ -8236,10 +8389,6 @@ msgstr "Nenhum modelo disponível"
 msgid "No templates found."
 msgstr "Nenhum modelo encontrado."
 
-#: src/components/NewItemDialog.tsx
-msgid "No templates yet. Add one in this folder's Templates section, or in Settings → Templates."
-msgstr "Ainda não há modelos. Adicione um na seção Modelos desta pasta ou em Configurações → Modelos."
-
 #: src/components/TemplatesCard.tsx
 msgid "No templates yet. Add one to give new docs in this folder a ready-made starting point."
 msgstr "Ainda não há modelos. Adicione um para dar aos novos documentos desta pasta um ponto de partida pronto."
@@ -8406,6 +8555,10 @@ msgstr "Ligada — suas consultas de busca e o texto das páginas correspondente
 msgid "On <0>{address}</0>"
 msgstr "Em <0>{address}</0>"
 
+#: src/components/SkillCostValue.tsx
+msgid "on demand"
+msgstr "sob demanda"
+
 #: src/comments/PropertyCommentButton.tsx
 msgid "On selected text in <0>{address}</0>"
 msgstr "Sobre o texto selecionado em <0>{address}</0>"
@@ -8413,6 +8566,10 @@ msgstr "Sobre o texto selecionado em <0>{address}</0>"
 #: src/components/settings/LintingSection.tsx
 msgid "On the root index, okf_version is written as a quoted string like \"0.2\". Unquoted, YAML reads it as a number and 0.10 silently becomes 0.1."
 msgstr "No índice raiz, okf_version é escrito como uma string entre aspas, como \"0.2\". Sem aspas, YAML lê-o como um número e 0.10 silenciosamente se torna 0.1."
+
+#: src/components/SkillCostValue.tsx
+msgid "on trigger"
+msgstr "ao acionar"
 
 #. Next step for a Cursor project MCP row — Cursor leaves project servers disabled
 #: src/components/settings/ProjectAiToolsSection.tsx
@@ -9096,6 +9253,10 @@ msgstr "Saída"
 msgid "Outline"
 msgstr "Estrutura"
 
+#: src/components/SkillCostValue.tsx
+msgid "over the {budgetLabel} token budget"
+msgstr "acima do orçamento de tokens de {budgetLabel}"
+
 #: src/components/AutoSyncEnableWarning.tsx
 msgid "Overlapping edits"
 msgstr "Edições sobrepostas"
@@ -9327,8 +9488,8 @@ msgid "Personal access token"
 msgstr "Token de acesso pessoal"
 
 #: src/components/settings/ScopeBadge.tsx
-msgid "Personal to this device — stored in your user config, not shared."
-msgstr "Pessoal deste dispositivo — guardado na sua configuração de usuário, não compartilhado."
+msgid "Personal to this device. Applies to every project you open here and is never shared with collaborators."
+msgstr "Pessoal deste dispositivo. Vale para todos os projetos que você abrir aqui e nunca é compartilhado com os colaboradores."
 
 #: src/components/InstallInClaudeDesktopDialog.tsx
 msgid "Pick <0>openknowledge.skill</0> from your <1>Downloads</1> folder. It enables automatically."
@@ -9438,6 +9599,10 @@ msgstr "Populares"
 msgid "Popular on skills.sh"
 msgstr "Populares no skills.sh"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Port {configuredPort} is in use, so the server is running on port {boundPort} instead. A tunnel forwarding to the fixed port won't reach it — free that port and apply again, or choose a different one."
+msgstr "A porta {configuredPort} está em uso, então o servidor está rodando na porta {boundPort}. Um túnel que aponta para a porta fixa não vai alcançá-lo — libere essa porta e aplique novamente, ou escolha outra."
+
 #: src/components/settings/SettingsDialogBody.tsx
 #: src/components/settings/SettingsDialogShell.tsx
 msgid "Preferences"
@@ -9464,8 +9629,8 @@ msgid "Present a document as a slide deck in its own window. Works in the OpenKn
 msgstr "Apresente um documento como slides em uma janela própria. Funciona apenas no aplicativo de desktop do OpenKnowledge e precisa da CLI do Slidev, instalada separadamente. Quando ativado, aparece em Plugins na barra lateral."
 
 #: src/components/OkBlobRunner.tsx
-msgid "Press space or tap the blob to start"
-msgstr "Pressione espaço ou toque no blob para começar"
+msgid "Press <0>Space</0> or tap the blob to start"
+msgstr "Pressione <0>Espaço</0> ou toque no blob para começar"
 
 #: src/components/EditorWorkspace.tsx
 msgid "Press Space to pick up a tab. Use the arrow keys to move it within a tab strip, then press Space or Enter to drop it. Press Shift+F10 or the Menu key to open the tab context menu for split, close, pin, and other tab actions."
@@ -9574,8 +9739,8 @@ msgid "Project name"
 msgstr "Nome do projeto"
 
 #: src/components/settings/LintingSection.tsx
-msgid "Project plugins are your project's authoring standard — turn them on or off here. The choice is committed to config.yml and shared with every collaborator via git. Each enabled plugin gets its own page under Plugins in the settings sidebar."
-msgstr "Os plugins de projeto são o padrão de autoria do seu projeto — ligue ou desligue aqui. A escolha fica salva no config.yml e é compartilhada com todos os colaboradores pelo git. Cada plugin ativado ganha uma página própria em Plugins, na barra lateral de configurações."
+msgid "Project plugins are your project's authoring standard — turn them on or off here. Each enabled plugin gets its own page under Plugins in the settings sidebar."
+msgstr "Os plugins de projeto são o padrão de autoria do seu projeto — ligue ou desligue aqui. Cada plugin ativado ganha uma página própria em Plugins, na barra lateral de configurações."
 
 #: src/components/FileTree.tsx
 #: src/components/SeedRootPicker.tsx
@@ -10046,10 +10211,9 @@ msgstr "\"{0}\" foi removido de todos os outros locais — a pasta de origem del
 msgid "Removed \"{projectName}\" from recent projects. Its folder no longer exists."
 msgstr "\"{projectName}\" foi removido dos projetos recentes. A pasta dele não existe mais."
 
-#. Warning shown when the user unchecks an already-installed skill
-#: src/components/McpConsentDialogBody.tsx
-msgid "Removes this skill from your editors."
-msgstr "Remove esta habilidade dos seus editores."
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Removes from"
+msgstr "Remove de"
 
 #: src/components/CreateProjectDialog.tsx
 msgid "Removing"
@@ -10205,6 +10369,11 @@ msgstr "Substituir estas cópias por links simbólicos para a fonte?"
 msgid "Replace these symlinks with independent copies?"
 msgstr "Substituir estes links simbólicos por cópias independentes?"
 
+#. placeholder {0}: formatToolList( replacing.map((e) => e.label), i18n.locale, )
+#: src/components/McpConsentDialogBody.tsx
+msgid "Replaces the existing OpenKnowledge entry in {0}"
+msgstr "Substitui a entrada existente do OpenKnowledge em {0}"
+
 #: src/components/BugReportHistory.tsx
 #: src/components/command-palette-commands.ts
 #: src/components/HelpPopover.tsx
@@ -10355,6 +10524,10 @@ msgstr "Reiniciando"
 #: src/lib/install-server-drift-listener.ts
 msgid "Restarting closes this project's server. Connected agents (Claude Code, Codex, Cursor) will see their OpenKnowledge MCP connection close unexpectedly — you may need to restart the agent, or toggle its OpenKnowledge MCP server off and on, to reconnect."
 msgstr "Reiniciar fecha o servidor deste projeto. Os agentes conectados (Claude Code, Codex, Cursor) verão a conexão MCP com o OpenKnowledge fechar de forma inesperada — pode ser preciso reiniciar o agente, ou desligar e ligar o servidor MCP do OpenKnowledge nele, para reconectar."
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Restarting the server is only available in the desktop app."
+msgstr "Reiniciar o servidor só está disponível no aplicativo desktop."
 
 #: src/lib/install-server-drift-listener.ts
 msgid "Restarting the server…"
@@ -10832,6 +11005,10 @@ msgstr "Ver os {0} pacotes iniciais"
 msgid "See the full install guide"
 msgstr "Ver o guia de instalação completo"
 
+#: src/components/PackCardGrid.tsx
+msgid "See what's added"
+msgstr "Ver o que será adicionado"
+
 #. placeholder {0}: BASE16_SLOT_ROLES[slot]
 #: src/components/settings/CustomThemeEditor.tsx
 msgid "Select {slot} — {0}"
@@ -10995,7 +11172,7 @@ msgstr "Separador"
 msgid "Server can't open documents"
 msgstr "O servidor não consegue abrir documentos"
 
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Server error (HTTP {status})"
 msgstr "Erro do servidor (HTTP {status})"
 
@@ -11072,6 +11249,11 @@ msgstr "Configure na página própria dele, em Plugins."
 msgid "Set the sync default for users opening this project for the first time. This setting is committed to your repository."
 msgstr "Defina a sincronização padrão para quem abrir este projeto pela primeira vez. Esta configuração fica salva no seu repositório."
 
+#. placeholder {0}: formatToolList( editors.map((e) => e.label), i18n.locale, )
+#: src/components/McpConsentDialogBody.tsx
+msgid "Set up {0}"
+msgstr "Configurar {0}"
+
 #: src/components/command-palette-commands.ts
 msgid "Set up OpenKnowledge integrations"
 msgstr "Configurar as integrações do OpenKnowledge"
@@ -11107,6 +11289,10 @@ msgstr "Conteúdo das configurações"
 #: src/components/settings/SettingsDialogErrorBoundary.tsx
 msgid "Settings failed to load"
 msgstr "Falha ao carregar as configurações"
+
+#: src/components/settings/SettingsDialogBody.tsx
+msgid "Settings for this project. Some are shared with every collaborator through git; others apply only on this computer."
+msgstr "Configurações deste projeto. Algumas são compartilhadas com cada colaborador pelo git; outras se aplicam somente neste computador."
 
 #: src/components/settings/SettingsDialogShell.tsx
 msgid "Settings sections"
@@ -11178,8 +11364,8 @@ msgid "Shared repositories"
 msgstr "Repositórios compartilhados"
 
 #: src/components/settings/ScopeBadge.tsx
-msgid "Shared with everyone on this project — committed to config.yml via git."
-msgstr "Compartilhado com todo mundo neste projeto — salvo no config.yml pelo git."
+msgid "Shared with everyone on this project. Stored in the project folder and travels with it through git."
+msgstr "Compartilhado com todo mundo no projeto. Fica na pasta do projeto e viaja junto com ela pelo git."
 
 #: src/components/PublishToGitHubDialog.tsx
 msgid "Sharing a doc needs a GitHub repository. Create one for this project."
@@ -11217,13 +11403,14 @@ msgstr "Mostrar mais {0}"
 msgid "Show {hidden} more"
 msgstr "Mostrar mais {hidden}"
 
+#: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ConfigureAgentsSection.tsx
-msgid "Show {inAppHiddenCount} more"
-msgstr "Mostrar mais {inAppHiddenCount}"
+msgid "Show {hiddenCount} more"
+msgstr "Mostrar mais {hiddenCount}"
 
 #: src/components/settings/LinkPreviewsSection.tsx
-msgid "Show a preview card when you hover an external link in the editor. This setting applies only to this computer."
-msgstr "Mostra um cartão de pré-visualização quando você passa o cursor sobre um link externo no editor. Esta configuração vale só para este computador."
+msgid "Show a preview card when you hover an external link in the editor."
+msgstr "Mostra um cartão de pré-visualização quando você passa o cursor sobre um link externo no editor."
 
 #: src/components/settings/OkignoreSection.tsx
 msgid "Show advanced"
@@ -11254,9 +11441,7 @@ msgstr "Mostrar o painel do documento"
 msgid "Show external URL nodes"
 msgstr "Mostrar os nós de URL externa"
 
-#. Collapses the undetected AI tools back behind the toggle
 #: src/components/LinksPanel.tsx
-#: src/components/McpConsentDialogBody.tsx
 msgid "Show fewer"
 msgstr "Mostrar menos"
 
@@ -11285,6 +11470,7 @@ msgid "Show in Explorer"
 msgstr "Mostrar no Explorador"
 
 #: src/components/PackCardGrid.tsx
+#: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ConfigureAgentsSection.tsx
 msgid "Show less"
 msgstr "Mostrar menos"
@@ -11320,10 +11506,6 @@ msgstr "Mostrar o painel"
 #: src/components/EditorToolbar.tsx
 msgid "Show panel ({panelShortcutLabel})"
 msgstr "Mostrar o painel ({panelShortcutLabel})"
-
-#: src/components/settings/ContentRulesSection.tsx
-msgid "Show problem indicators"
-msgstr "Mostrar os indicadores de problemas"
 
 #: src/editor/find-replace/FindReplaceBar.tsx
 msgid "Show replace"
@@ -11477,6 +11659,11 @@ msgstr "Habilidades"
 msgid "Skills are now shared. Commit .ok/skills to share them with your team."
 msgstr "As habilidades agora são compartilhadas. Faça commit de .ok/skills para compartilhá-las com sua equipe."
 
+#. Tells the user a skill installs to every detected AI tool, independent of the per-tool MCP connections listed above
+#: src/components/settings/AiToolsSection.tsx
+msgid "Skills install to every AI tool detected on this machine, independent of the MCP connections you chose above."
+msgstr "As habilidades são instaladas em todas as ferramentas de IA detectadas nesta máquina, independentemente das conexões MCP que você escolheu acima."
+
 #: src/components/AppMenubar.tsx
 #: src/components/command-palette-commands.ts
 #: src/components/FileSidebar.tsx
@@ -11499,11 +11686,6 @@ msgstr "O skills.sh está indisponível; mostrando resultados do GitHub (sem cla
 #: src/uninstall/UninstallSurveyScreen.tsx
 msgid "Skip"
 msgstr "Pular"
-
-#. Secondary button — dismisses the dialog without wiring any tools
-#: src/components/McpConsentDialogBody.tsx
-msgid "Skip for now"
-msgstr "Pular por enquanto"
 
 #. placeholder {0}: item.displayName
 #: src/components/acp/ThreadView.tsx
@@ -11660,10 +11842,6 @@ msgstr "Busca no código"
 #: src/lib/keyboard-shortcuts.ts
 msgid "Source undo or redo"
 msgstr "Desfazer ou refazer no código"
-
-#: src/components/OkBlobRunner.tsx
-msgid "Space to jump · down arrow to duck"
-msgstr "Espaço para pular · seta para baixo para agachar"
 
 #: src/components/OkBlobRunnerPage.tsx
 msgid "Space to jump, down arrow to duck. That is the whole game."
@@ -11951,11 +12129,15 @@ msgstr "Cria um link simbólico da habilidade para {0}"
 msgid "Symlinks the skill to {path}"
 msgstr "Cria um link simbólico da habilidade para {path}"
 
-#: src/components/settings/SettingsDialogShell.tsx
 #: src/components/settings/SyncSection.tsx
 #: src/components/SyncStatusBadge.tsx
 msgid "Sync"
 msgstr "Sincronização"
+
+#: src/components/settings/SettingsDialogBody.tsx
+#: src/components/settings/SettingsDialogShell.tsx
+msgid "Sync & sharing"
+msgstr "Sincronização e compartilhamento"
 
 #: src/components/SyncStatusBadge.tsx
 msgid "Sync disabled"
@@ -12115,7 +12297,6 @@ msgstr "Lista de tarefas"
 msgid "Task List"
 msgstr "Lista de tarefas"
 
-#. Subtext for the project runtime-skill row
 #: src/components/settings/ProjectAiToolsSection.tsx
 msgid "Teaches coding agents in this project to read and write through OpenKnowledge."
 msgstr "Ensina os agentes de programação deste projeto a ler e escrever pelo OpenKnowledge."
@@ -12337,6 +12518,10 @@ msgstr "a pasta de habilidades padrão (o caminho exato aparece depois de salvar
 msgid "The desktop app isn't responding. Refresh and try again."
 msgstr "O app de desktop não está respondendo. Atualize e tente de novo."
 
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "The destinations changed. Review the list, then confirm."
+msgstr "Os destinos mudaram. Revise a lista e confirme."
+
 #. placeholder {0}: summary.target
 #: src/components/settings/LintingSection.tsx
 msgid "the doc {0}"
@@ -12432,6 +12617,10 @@ msgstr "O provedor recusou a requisição (HTTP {0}). Verifique a chave de API e
 msgid "The provider rejected the request. Check the API key and the model id."
 msgstr "O provedor recusou a requisição. Verifique a chave de API e o id do modelo."
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "The public URL your tunnel serves. The server admits requests for this host and advertises it in the URLs it issues."
+msgstr "A URL pública que o seu túnel serve. O servidor aceita requisições para este host e o anuncia nas URLs que emite."
+
 #: src/components/ReportBugDialogBody.tsx
 msgid "The report service couldn't be reached."
 msgstr "Não foi possível contatar o serviço de relatórios."
@@ -12455,6 +12644,11 @@ msgstr "O arquivo de esquema não existe ou falhou ao carregar — adicionar um 
 #: src/components/ConnectingBanner.tsx
 msgid "the server responded but server.lock has no port yet"
 msgstr "o servidor respondeu, mas o server.lock ainda não tem porta"
+
+#. placeholder {0}: origin.trim()
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "The server will accept requests for {0} with no built-in authentication. Anyone who can reach your tunnel will have full control of this knowledge base — including sync, GitHub credentials, and local operations. Make sure the tunnel's edge restricts who can connect."
+msgstr "O servidor aceitará requisições para {0} sem autenticação integrada. Qualquer pessoa que conseguir acessar o seu túnel terá controle total desta base de conhecimento — incluindo sincronização, credenciais do GitHub e operações locais. Certifique-se de que a borda do túnel restrinja quem pode se conectar."
 
 #: src/components/settings/LintingSection.tsx
 msgid "The shapes of title, description, resource, and tags when you use them. None are required; declaring one only pins its type, so tags written as a comma-separated string is flagged."
@@ -12505,6 +12699,10 @@ msgstr "O terminal parou de forma inesperada."
 #: src/components/AuthModal.tsx
 msgid "The token needs the repo and read:user scopes."
 msgstr "O token precisa dos escopos repo e read:user."
+
+#: src/lib/tab-session-restore-recovery-notice.ts
+msgid "The workspace opened without it so the app could start."
+msgstr "O espaço de trabalho abriu sem ele para que o aplicativo pudesse iniciar."
 
 #: src/components/settings/settings-fields.ts
 msgid "Theme"
@@ -12766,6 +12964,10 @@ msgstr "este item"
 msgid "This looks like a drive root (e.g., C:\\). Scaffolding here will scan an entire drive."
 msgstr "Isto parece a raiz de uma unidade (ex.: C:\\). Preparar o projeto aqui vai varrer uma unidade inteira."
 
+#: src/components/settings/ScopeBadge.tsx
+msgid "This machine"
+msgstr "Esta máquina"
+
 #: src/uninstall/UninstallProgressScreen.tsx
 msgid "This may take a moment. Your markdown content is kept."
 msgstr "Isto pode demorar um pouco. Seu conteúdo markdown é preservado."
@@ -12908,6 +13110,10 @@ msgstr "Isto envia conteúdo para fora do seu computador"
 msgid "This sends the link's address off your machine"
 msgstr "Isto envia o endereço do link para fora do seu computador"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "This server has no built-in authentication. Anyone who can reach the tunnel gets full control of this knowledge base — restrict access at the tunnel's edge (a Tailscale ACL, a reverse proxy with auth, or a firewall)."
+msgstr "Este servidor não tem autenticação integrada. Qualquer pessoa que conseguir acessar o túnel obtém controle total desta base de conhecimento — restrinja o acesso na borda do túnel (uma ACL do Tailscale, um proxy reverso com autenticação ou um firewall)."
+
 #: src/components/settings/LinkPreviewsSection.tsx
 msgid "This setting is per-machine and isn't shared with collaborators."
 msgstr "Esta configuração é de cada computador e não é compartilhada com os colaboradores."
@@ -12915,6 +13121,11 @@ msgstr "Esta configuração é de cada computador e não é compartilhada com os
 #: src/components/settings/SearchSection.tsx
 msgid "This setting is per-machine and isn't shared with collaborators. It needs an API key (set below) unless your endpoint is a local server that doesn't require one."
 msgstr "Esta configuração é de cada computador e não é compartilhada com os colaboradores. Ela precisa de uma chave de API (defina abaixo), a menos que seu endpoint seja um servidor local que não exija uma."
+
+#. Tells the user the project skill is committed to the repo, unlike the user-global skills
+#: src/components/settings/ProjectAiToolsSection.tsx
+msgid "This skill lives in the project folder, so it installs for everyone who opens this project — not just you."
+msgstr "Esta habilidade fica na pasta do projeto, então ela é instalada para todos que abrirem este projeto, não apenas para você."
 
 #: src/components/ImportSkillForm.tsx
 msgid "This source bundles several skills — choose one, then Import."
@@ -13080,6 +13291,11 @@ msgstr "Liga ou desliga o sublinhado."
 #: src/components/settings/applies-to-folder-picker.tsx
 msgid "Toggles the pattern {0}/**"
 msgstr "Alterna o padrão {0}/**"
+
+#: src/components/SkillBundlePreview.tsx
+#: src/components/SkillProperties.tsx
+msgid "tokens"
+msgstr "tokens"
 
 #: src/components/FeedbackForm.tsx
 msgid "Too slow"
@@ -13271,6 +13487,17 @@ msgstr "Desfazer até esta edição?"
 #: src/lib/keyboard-shortcuts.ts
 msgid "Undo, redo, or step through selection changes in the Edit source pane or a code-shaped property field."
 msgstr "Desfaz, refaz ou percorre as mudanças de seleção no painel Editar código ou em um campo de propriedade em formato de código."
+
+#: src/components/settings/AiToolsSection.tsx
+#: src/components/settings/ProjectAiToolsSection.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: src/components/settings/AiToolsSection.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Uninstall {name}"
+msgstr "Desinstalar {name}"
 
 #: src/lib/native-menu-catalog.ts
 #: src/uninstall/UninstallPickerScreen.tsx
@@ -13562,6 +13789,10 @@ msgstr "Usar um pacote inicial"
 msgid "Use a token instead"
 msgstr "Usar um token em vez disso"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Use an http:// or https:// origin."
+msgstr "Use uma origem http:// ou https://."
+
 #: src/components/settings/SearchSection.tsx
 msgid "Use an https:// URL — http:// is only allowed for localhost."
 msgstr "Use uma URL https:// — http:// só é aceito para localhost."
@@ -13589,8 +13820,8 @@ msgid "User"
 msgstr "Usuário"
 
 #: src/components/settings/LintingSection.tsx
-msgid "User plugins are personal to this device — turn them on or off here. The choice lives in your user config and is never committed to the project. Each enabled plugin gets its own page under Plugins in the settings sidebar."
-msgstr "Os plugins de usuário são pessoais deste dispositivo — ligue ou desligue aqui. A escolha fica na sua configuração de usuário e nunca vai para o projeto. Cada plugin ativado ganha uma página própria em Plugins, na barra lateral de configurações."
+msgid "User plugins are personal to this device — turn them on or off here. Each enabled plugin gets its own page under Plugins in the settings sidebar."
+msgstr "Os plugins de usuário são pessoais deste dispositivo — ligue ou desligue aqui. Cada plugin ativado ganha uma página própria em Plugins, na barra lateral de configurações."
 
 #: src/components/settings/SearchSection.tsx
 msgid "Using the <0>OK_EMBEDDINGS_API_KEY</0> environment variable (managed outside OpenKnowledge)."
@@ -13785,11 +14016,13 @@ msgstr "O que a IA deve fazer? (opcional)"
 msgid "What the agent may read, write, and surface."
 msgstr "O que o agente pode ler, escrever e mostrar."
 
+#. Expands the list of files the setup writes to
+#. Expands the list of project files the AI-tool setup writes
+#: src/components/CreateProjectDialog.tsx
 #: src/components/McpConsentDialogBody.tsx
 msgid "What this changes"
 msgstr "O que isto muda"
 
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 msgid "What this checkbox changes"
@@ -13882,11 +14115,6 @@ msgstr "Será criado em: <0>{targetPreview}</0>"
 #: src/components/CreateProjectDialog.tsx
 msgid "Will be saved as <0>{sanitized}</0>."
 msgstr "Será salvo como <0>{sanitized}</0>."
-
-#. Disclosure that Add will overwrite the tool's existing OpenKnowledge MCP entry
-#: src/components/McpConsentDialogBody.tsx
-msgid "Will replace existing OpenKnowledge entry"
-msgstr "Vai substituir a entrada existente do OpenKnowledge"
 
 #: src/components/AppMenubar.tsx
 #: src/lib/native-menu-catalog.ts
@@ -14100,6 +14328,10 @@ msgstr "Faltam escopos obrigatórios no seu token do GitHub. Tente entrar de nov
 #: src/components/PublishToGitHubDialog.tsx
 msgid "Your knowledge base is now on GitHub at <0>{ownerLogin}/{repoName}</0>."
 msgstr "Sua base de conhecimento já está no GitHub, em <0>{ownerLogin}/{repoName}</0>."
+
+#: src/lib/tab-session-restore-recovery-notice.ts
+msgid "Your last open document couldn't be restored."
+msgstr "Não foi possível restaurar seu último documento aberto."
 
 #: src/components/share-receive-miss-content.tsx
 msgid "Your local copy is behind."

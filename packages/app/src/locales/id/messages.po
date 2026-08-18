@@ -100,6 +100,11 @@ msgstr "\"{trimmed}\" sudah ada di sini"
 msgid "\"frontmatter\" is a reserved property name"
 msgstr "\"frontmatter\" adalah nama properti yang dicadangkan"
 
+#. placeholder {0}: item.attempts
+#: src/components/acp/ThreadView.tsx
+msgid "({0, plural, one {# attempt} other {# attempts}})"
+msgstr "({0, plural, other {# percobaan}})"
+
 #: src/components/settings/LintingSection.tsx
 msgid "(a bare folder name needs /** after it to match what's inside)"
 msgstr "(nama folder saja memerlukan /** setelahnya agar cocok dengan isinya)"
@@ -184,10 +189,20 @@ msgstr "{0, plural, other {# dokumen}}"
 msgid "{0, plural, one {# error} other {# errors}}"
 msgstr "{0, plural, other {# galat}}"
 
+#. placeholder {0}: pack.entryCounts.files
+#: src/components/PackCardGrid.tsx
+msgid "{0, plural, one {# file} other {# files}}"
+msgstr "{0, plural, other {# berkas}}"
+
 #. placeholder {0}: selected.size
 #: src/components/settings/applies-to-folder-picker.tsx
 msgid "{0, plural, one {# folder picked} other {# folders picked}}"
 msgstr "{0, plural, other {# folder dipilih}}"
+
+#. placeholder {0}: pack.entryCounts.folders
+#: src/components/PackCardGrid.tsx
+msgid "{0, plural, one {# folder} other {# folders}}"
+msgstr "{0, plural, other {# folder}}"
 
 #. placeholder {0}: value.length
 #: src/components/ArrayOfObjectsWidget.tsx
@@ -267,11 +282,6 @@ msgstr "{0, plural, other {Tidak ada masalah di # dokumen.}}"
 #: src/components/CreatedItemsList.tsx
 msgid "{0, plural, one {Plugin} other {Plugins}}"
 msgstr "{0, plural, other {Plugin}}"
-
-#. placeholder {0}: editorList.hiddenCount
-#: src/components/McpConsentDialogBody.tsx
-msgid "{0, plural, one {Show # more tool} other {Show # more tools}}"
-msgstr "{0, plural, other {Tampilkan # alat lagi}}"
 
 #. placeholder {0}: skillRows.length
 #: src/components/CreatedItemsList.tsx
@@ -983,6 +993,10 @@ msgstr "<0>Sumber cermin dihapus.</0> Dokumen <1>{src}</1> sudah tidak tersedia.
 msgid "<0>ok</0> won't run in external terminals until you add it later from the File menu. OpenKnowledge's built-in terminal and AI tools keep working."
 msgstr "<0>ok</0> tidak akan berjalan di terminal eksternal sampai Anda menambahkannya nanti dari menu Berkas. Terminal bawaan dan alat AI OpenKnowledge tetap berfungsi."
 
+#: src/components/OkBlobRunner.tsx
+msgid "<0>Space</0> to jump · <1>↓</1> to duck"
+msgstr "<0>Spasi</0> untuk melompat · <1>↓</1> untuk menunduk"
+
 #: src/components/settings/SkillTargetsPicker.tsx
 msgid "~/.myteam/skills"
 msgstr "~/.myteam/skills"
@@ -1184,10 +1198,6 @@ msgstr "Tentang {appName}"
 msgid "Above"
 msgstr "Di atas"
 
-#: src/components/settings/SkillTargetsPicker.tsx
-msgid "absent"
-msgstr "tidak ada"
-
 #: src/components/DiffView.tsx
 msgid "Accept"
 msgstr "Terima"
@@ -1324,8 +1334,8 @@ msgid "Add link"
 msgstr "Tambahkan tautan"
 
 #: src/components/settings/SearchSection.tsx
-msgid "Add meaning-based ranking to search so conceptually-related pages surface even when they share no keywords. This setting applies only to this computer."
-msgstr "Menambahkan pemeringkatan berbasis makna ke pencarian agar halaman yang berkaitan secara konsep tetap muncul meski tidak berbagi kata kunci. Pengaturan ini hanya berlaku di komputer ini."
+msgid "Add meaning-based ranking to search so conceptually-related pages surface even when they share no keywords."
+msgstr "Menambahkan pemeringkatan berbasis makna ke pencarian agar halaman yang berkaitan secara konsep tetap muncul meski tidak berbagi kata kunci."
 
 #: src/components/settings/OkignoreSection.tsx
 msgid "Add pattern"
@@ -1393,13 +1403,6 @@ msgstr "Tambahkan komentar Anda ke pesan ini"
 msgid "Added"
 msgstr "Ditambahkan"
 
-#. Subtext for the open-knowledge-write-skill skill row
-#. Subtext for the open-knowledge-write-skill skill row
-#: src/components/McpConsentDialogBody.tsx
-#: src/components/settings/AiToolsSection.tsx
-msgid "Adds a guided workflow for authoring new Agent Skills."
-msgstr "Menambahkan alur terpandu untuk menulis Keterampilan Agen baru."
-
 #: src/components/settings/AiToolsSection.tsx
 msgid "Adds a managed block to"
 msgstr "Menambahkan blok terkelola ke"
@@ -1410,6 +1413,21 @@ msgstr "Menambahkan blok terkelola ke"
 #: src/components/settings/AiToolsSection.tsx
 msgid "Adds a managed block to {0}"
 msgstr "Menambahkan blok terkelola ke {0}"
+
+#. Subtext under the create-project AI-tools checkbox
+#: src/components/CreateProjectDialog.tsx
+msgid "Adds an OpenKnowledge MCP entry and the project skill, so each tool can read and update these notes."
+msgstr "Menambahkan entri MCP OpenKnowledge dan keterampilan proyek, sehingga setiap alat bisa membaca dan memperbarui dokumen ini."
+
+#. Subtext under the single AI-tools checkbox when a skill is also installed
+#: src/components/McpConsentDialogBody.tsx
+msgid "Adds OpenKnowledge's MCP connection to each, plus the open-knowledge-discovery skill so your agents recognize OpenKnowledge projects."
+msgstr "Menambahkan koneksi MCP OpenKnowledge ke masing-masing, ditambah keterampilan open-knowledge-discovery agar agen Anda mengenali proyek OpenKnowledge."
+
+#. Subtext under the single AI-tools checkbox when only MCP is wired
+#: src/components/McpConsentDialogBody.tsx
+msgid "Adds OpenKnowledge's MCP connection to each."
+msgstr "Menambahkan koneksi MCP OpenKnowledge ke masing-masing."
 
 #: src/components/ReportBugDialogBody.tsx
 msgid "Adds telemetry, server state, and runtime info when available. Credentials are always removed; document names, if included, appear in cleartext (not redacted)."
@@ -1466,9 +1484,12 @@ msgstr "Panel agen ditutup agar Terminal tetap mudah dibaca."
 msgid "Agent settings"
 msgstr "Pengaturan agen"
 
-#. Group label above the skill rows in Settings → AI tools & CLI
-#. Section label above the skill checkboxes in the first-launch dialog
+#. Heading above the skill install destinations in the disclosure
 #: src/components/McpConsentDialogBody.tsx
+msgid "Agent Skill"
+msgstr "Keterampilan Agen"
+
+#. Group label above the skill rows in Settings → AI tools & CLI
 #: src/components/settings/AiToolsSection.tsx
 msgid "Agent Skills"
 msgstr "Keterampilan Agen"
@@ -1485,6 +1506,8 @@ msgstr "Agen"
 msgid "AI tool management is only available in the OpenKnowledge desktop app."
 msgstr "Pengelolaan alat AI hanya tersedia di aplikasi desktop OpenKnowledge."
 
+#. Section label above the AI-tools checkbox in the first-launch dialog
+#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/settings/SettingsDialogShell.tsx
 msgid "AI tools"
@@ -1530,6 +1553,10 @@ msgstr "Semua bagian sudah diselesaikan"
 #: src/components/CommandPalette.tsx
 msgid "All tags"
 msgstr "Semua tag"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Allow external access"
+msgstr "Izinkan akses eksternal"
 
 #: src/components/settings/frontmatter-schema-field-editor.tsx
 msgid "Allowed element values (empty = any)"
@@ -1582,6 +1609,15 @@ msgstr "Sudah masuk?"
 #: src/components/ReportBugDialogBody.tsx
 msgid "Always included"
 msgstr "Selalu disertakan"
+
+#: src/components/SkillCostValue.tsx
+msgid "always-on"
+msgstr "selalu aktif"
+
+#. Suffix on a skill directory card's context-cost figure
+#: src/components/SkillDirectoryResult.tsx
+msgid "always-on tokens"
+msgstr "token selalu aktif"
 
 #: src/components/AppErrorBoundary.tsx
 #: src/components/DocumentErrorBoundary.tsx
@@ -1661,13 +1697,29 @@ msgstr "Berlaku untuk (glob — awalan ! mengecualikan; kosong berarti semua dok
 msgid "Applies to all projects on this machine. Claude and Codex, started from the built-in terminal, auto-approve OpenKnowledge's read and write tools (Claude also auto-runs \"ok open\"). Deleting, moving, sharing, importing or installing skills, other commands, and non-OpenKnowledge file edits still ask. Cursor, OpenCode, and Pi are unaffected. Best-effort per agent."
 msgstr "Berlaku untuk semua proyek di komputer ini. Claude dan Codex, yang dijalankan dari terminal bawaan, otomatis menyetujui alat baca dan tulis OpenKnowledge (Claude juga menjalankan \"ok open\" sendiri). Menghapus, memindahkan, membagikan, mengimpor atau memasang keterampilan, perintah lain, dan penyuntingan berkas di luar OpenKnowledge tetap ditanyakan. Cursor, OpenCode, dan Pi tidak terpengaruh. Sebaik mungkin, per agen."
 
+#: src/components/settings/ScopeBadge.tsx
+msgid "Applies to this project on this computer only. Stored in .ok/local, not shared via git."
+msgstr "Berlaku untuk proyek ini hanya di komputer ini. Disimpan di .ok/local, tidak dibagikan lewat git."
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Apply and restart project server"
+msgstr "Terapkan dan mulai ulang server proyek"
+
 #: src/editor/bubble-menu/LinkEditPopover.tsx
 msgid "Apply link"
 msgstr "Terapkan tautan"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Applying restarts this project's server."
+msgstr "Menerapkan akan memulai ulang server proyek ini."
+
 #: src/components/settings/SearchSection.tsx
 msgid "Applying your change"
 msgstr "Menerapkan perubahan Anda"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Applying…"
+msgstr "Menerapkan…"
 
 #: src/components/acp/ThreadView.tsx
 msgid "Approved"
@@ -1682,11 +1734,11 @@ msgid "Are you sure you want to convert this file into a template? The original 
 msgstr "Yakin ingin mengubah berkas ini menjadi templat? Berkas aslinya akan dihapus. Tindakan ini tidak bisa dibatalkan."
 
 #: src/components/file-tree-trash-copy.ts
-msgid "Are you sure you want to delete '{name}' and its contents?"
+msgid "Are you sure you want to delete \"{name}\" and its contents?"
 msgstr "Yakin ingin menghapus \"{name}\" beserta isinya?"
 
 #: src/components/file-tree-trash-copy.ts
-msgid "Are you sure you want to delete '{name}'?"
+msgid "Are you sure you want to delete \"{name}\"?"
 msgstr "Yakin ingin menghapus \"{name}\"?"
 
 #: src/components/FileTree.tsx
@@ -1786,6 +1838,7 @@ msgid "Attach the file in an email to <0/>"
 msgstr "Lampirkan berkasnya dalam surel ke <0/>"
 
 #: src/components/settings/AttachmentsSection.tsx
+#: src/components/settings/SettingsDialogShell.tsx
 msgid "Attachments"
 msgstr "Lampiran"
 
@@ -1876,8 +1929,13 @@ msgstr "Pembaruan otomatis aktif untuk \"{name}\""
 
 #. Section label for the automatic, one-click install path
 #: src/components/InstallInClaudeDesktopDialog.tsx
+#: src/components/settings/NetworkAccessSection.tsx
 msgid "Automatic"
 msgstr "Otomatis"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Automatic picks a free port each start. Choose a fixed port to keep the same address across restarts."
+msgstr "Otomatis memilih port bebas setiap kali dimulai. Pilih port tetap untuk mempertahankan alamat yang sama di seluruh mulai ulang."
 
 #: src/components/PublishToGitHubDialog.tsx
 msgid "Available"
@@ -1965,7 +2023,6 @@ msgstr "Catatan kosong"
 
 #: src/components/command-palette-commands.ts
 #: src/components/EditorTabs.tsx
-#: src/components/HelpPopover.tsx
 #: src/components/OkBlobRunnerPage.tsx
 msgid "Blob Run"
 msgstr "Blob Run"
@@ -2183,12 +2240,14 @@ msgstr "Tidak dapat membagikan jalur ini."
 #: src/components/SeedDialog.tsx
 #: src/components/settings/LinkPreviewsSection.tsx
 #: src/components/settings/LintingSection.tsx
+#: src/components/settings/NetworkAccessSection.tsx
 #: src/components/settings/SavedThemesTiles.tsx
 #: src/components/settings/SearchSection.tsx
 #: src/components/ShareBranchSwitchDialog.tsx
 #: src/components/ShareReceiveDialog.tsx
 #: src/components/SkillFileCreateDialog.tsx
 #: src/components/SkillFileRenameDialog.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
 #: src/components/SkillPluginBundleDialog.tsx
 #: src/components/SkillRenameDialog.tsx
 #: src/components/SkillScopeMoveDialog.tsx
@@ -2334,6 +2393,10 @@ msgstr "Memeriksa keterampilan"
 #: src/components/ImportSkillForm.tsx
 msgid "Checking source"
 msgstr "Memeriksa sumber"
+
+#: src/components/CreateProjectDialog.tsx
+msgid "Checking which AI tools you have"
+msgstr "Memeriksa alat AI yang Anda miliki"
 
 #: src/components/settings/AccountSection.tsx
 msgid "Checking your GitHub connection"
@@ -2885,11 +2948,14 @@ msgstr "Berkas yang berkonflik: {0}."
 msgid "Conflicts"
 msgstr "Konflik"
 
-#. Primary button that writes MCP config for the selected AI tools
 #: src/components/AuthModal.tsx
-#: src/components/McpConsentDialogBody.tsx
 msgid "Connect"
 msgstr "Hubungkan"
+
+#. placeholder {0}: formatToolList( status.editors.map((id) => EDITOR_LABELS[id]), i18n.locale, )
+#: src/components/CreateProjectDialog.tsx
+msgid "Connect {0} to this project"
+msgstr "Hubungkan {0} ke proyek ini"
 
 #: src/components/settings/AccountSection.tsx
 msgid "Connect a GitHub account to browse and sync your repositories."
@@ -2924,7 +2990,6 @@ msgid "Connect this project to GitHub to share."
 msgstr "Hubungkan proyek ini ke GitHub untuk membagikannya."
 
 #: src/components/ConsentDialogBody.tsx
-#: src/components/CreateProjectDialog.tsx
 msgid "Connect to AI tools"
 msgstr "Hubungkan ke alat AI"
 
@@ -3023,6 +3088,10 @@ msgstr "Aturan konten"
 msgid "Content rules not yet loaded — try again in a moment"
 msgstr "Aturan konten belum dimuat — coba lagi sebentar"
 
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Context cost"
+msgstr "Biaya konteks"
+
 #: src/components/acp/ThreadView.tsx
 msgid "Context window:"
 msgstr "Jendela konteks:"
@@ -3030,6 +3099,11 @@ msgstr "Jendela konteks:"
 #: src/components/acp/ThreadView.tsx
 msgid "Context window: {percent}% used, {usedLabel} of {sizeLabel} tokens"
 msgstr "Jendela konteks: {percent}% terpakai, {usedLabel} dari {sizeLabel} token"
+
+#. Primary button that applies the first-launch setup choices
+#: src/components/McpConsentDialogBody.tsx
+msgid "Continue"
+msgstr "Lanjutkan"
 
 #: src/components/AuthModal.tsx
 msgid "Continue in browser"
@@ -3720,6 +3794,12 @@ msgstr "Pengujiannya tidak bisa dijalankan. Pastikan OpenKnowledge masih berjala
 msgid "Couldn’t save changes. Try editing a color again."
 msgstr "Perubahan tidak dapat disimpan. Coba sunting warna lagi."
 
+#. placeholder {0}: humanFormat(first.error)
+#. placeholder {0}: humanFormat(second.error)
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Couldn't save network settings — {0}"
+msgstr "Tidak dapat menyimpan pengaturan jaringan — {0}"
+
 #: src/components/TemplateForm.tsx
 msgid "Couldn't save template: {error}"
 msgstr "Templat tidak bisa disimpan: {error}"
@@ -3816,6 +3896,10 @@ msgstr "Berbagi keterampilan tidak bisa diperbarui"
 #: src/components/settings/SharingSection.tsx
 msgid "Couldn't update skills sharing — {detail}."
 msgstr "Berbagi keterampilan tidak bisa diperbarui — {detail}."
+
+#: src/components/TerminalCliUnverifiedBanner.tsx
+msgid "Couldn't verify that {displayName} ({bin}) is available, so this is a plain shell. You can still run {bin} yourself."
+msgstr "Tidak dapat memverifikasi bahwa {displayName} ({bin}) tersedia, jadi ini adalah shell biasa. Anda tetap dapat menjalankan {bin} sendiri."
 
 #: src/components/settings/settings-fields.ts
 msgid "Count skill installs publicly"
@@ -4268,10 +4352,6 @@ msgstr "Detail tentang galat yang baru Anda alami disertakan. Rahasia seperti ku
 msgid "Detected in {0}"
 msgstr "Terdeteksi di {0}"
 
-#: src/components/settings/AiToolsSection.tsx
-msgid "Detected on this machine"
-msgstr "Terdeteksi di komputer ini"
-
 #: src/uninstall/UninstallPickerScreen.tsx
 msgid "Detected OpenKnowledge projects"
 msgstr "Proyek OpenKnowledge yang terdeteksi"
@@ -4379,6 +4459,7 @@ msgstr "Memutus koneksi"
 #: src/components/OnboardingCard.tsx
 #: src/components/settings/SharingSection.tsx
 #: src/components/TerminalCliMissingBanner.tsx
+#: src/components/TerminalCliUnverifiedBanner.tsx
 msgid "Dismiss"
 msgstr "Tutup"
 
@@ -4608,10 +4689,6 @@ msgstr "mis. Penyunting membeku setelah saya menempelkan tabel besar"
 #: src/components/NavigatorApp.tsx
 msgid "Each pack scaffolds your project with ready-made folders and templates."
 msgstr "Setiap paket menyusun proyek Anda dengan folder dan templat siap pakai."
-
-#: src/components/CreateProjectDialog.tsx
-msgid "Each selected tool gets an OpenKnowledge MCP entry."
-msgstr "Setiap alat yang dipilih mendapat entri MCP OpenKnowledge."
 
 #: src/components/AppMenubar.tsx
 #: src/components/settings/LintingSection.tsx
@@ -4933,6 +5010,10 @@ msgstr "Masukkan nama folder (mis. otak)."
 msgid "Enter a name for this theme."
 msgstr "Masukkan nama untuk tema ini."
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Enter a port between 1 and 65535."
+msgstr "Masukkan port antara 1 dan 65535."
+
 #: src/components/CreateProjectDialog.tsx
 msgid "Enter a project name"
 msgstr "Masukkan nama proyek"
@@ -4957,7 +5038,14 @@ msgstr "Masukkan nama tema yang valid."
 msgid "Enter a valid URL (for example https://api.openai.com/v1)."
 msgstr "Masukkan URL yang valid (misalnya https://api.openai.com/v1)."
 
-#: src/components/McpConsentDialogBody.tsx
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Enter a valid URL, for example https://notes.example.com"
+msgstr "Masukkan URL yang valid, misalnya https://notes.example.com"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Enter the public origin your tunnel serves, for example https://notes.example.com"
+msgstr "Masukkan origin publik yang dilayani tunnel Anda, misalnya https://notes.example.com"
+
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 msgid "Entry"
@@ -4998,6 +5086,10 @@ msgstr "semua yang ada di folder {0}/ di dalam {1}/"
 #: src/components/settings/LintingSection.tsx
 msgid "everything under any {0}/ folder"
 msgstr "semua yang ada di folder {0}/ mana pun"
+
+#: src/components/ExcalidrawDocEditor.tsx
+msgid "Excalidraw canvas"
+msgstr "Kanvas Excalidraw"
 
 #: src/components/settings/SharingSection.tsx
 msgid "Exception: skills are shared"
@@ -5066,6 +5158,22 @@ msgstr "Jelajahi"
 msgid "Explore skills"
 msgstr "Jelajahi keterampilan"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Expose and restart"
+msgstr "Ekspos dan mulai ulang"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Expose this project to the network?"
+msgstr "Ekspos proyek ini ke jaringan?"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Expose this project's server to a wider network through a tunnel you run (for example Tailscale). A viewer on the tunnel gets the editor and agent endpoint, editing live against this machine's server."
+msgstr "Ekspos server proyek ini ke jaringan yang lebih luas melalui tunnel yang Anda jalankan (misalnya Tailscale). Pemirsa di tunnel mendapatkan editor dan endpoint agen, mengedit secara langsung terhadap server mesin ini."
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Exposing pins a fixed port so the tunnel's target stays stable across restarts."
+msgstr "Mengekspos akan menetapkan port tetap agar target tunnel tetap stabil di seluruh mulai ulang."
+
 #: src/components/empty-state/CreatePromptComposer.tsx
 #: src/components/handoff/AgentSplitButton.tsx
 #: src/components/handoff/OpenInAgentContextSubmenu.tsx
@@ -5086,6 +5194,10 @@ msgstr "Pratinjau tautan eksternal"
 #: src/components/settings/LinkPreviewsSection.tsx
 msgid "External link previews show a card with the site name, page title, and description when you hover a link."
 msgstr "Pratinjau tautan eksternal menampilkan kartu berisi nama situs, judul halaman, dan deskripsi saat Anda mengarahkan kursor ke sebuah tautan."
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "External origin"
+msgstr "Origin eksternal"
 
 #: src/editor/extensions/WikiLinkPropPanel.tsx
 msgid "External wiki link"
@@ -5117,12 +5229,12 @@ msgid "Failed to clean up pending {kind}"
 msgstr "Gagal membersihkan {kind} yang tertunda"
 
 #: src/components/FileTree.tsx
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Failed to create file"
 msgstr "Gagal membuat berkas"
 
 #: src/components/FileTree.tsx
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Failed to create folder"
 msgstr "Gagal membuat folder"
 
@@ -5447,7 +5559,6 @@ msgstr "Bidang"
 
 #: src/components/AppMenubar.tsx
 #: src/components/CommandPalette.tsx
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/share-metadata-rows.tsx
@@ -5584,6 +5695,10 @@ msgstr "Perbaiki {flatId}"
 msgid "Fix all with AI ({count})"
 msgstr "Perbaiki semua dengan AI ({count})"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Fixed"
+msgstr "Tetap"
+
 #: src/lib/project-fix-sweep-store.ts
 msgid "Fixed {total, plural, one {# file} other {# files}}."
 msgstr "{total, plural, other {# berkas diperbaiki}}."
@@ -5591,6 +5706,10 @@ msgstr "{total, plural, other {# berkas diperbaiki}}."
 #: src/components/settings/AttachmentsSection.tsx
 msgid "Fixed folder in content root"
 msgstr "Folder tetap di akar konten"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Fixed port number"
+msgstr "Nomor port tetap"
 
 #. placeholder {0}: fixing.done
 #. placeholder {1}: fixing.total
@@ -5661,8 +5780,6 @@ msgstr "Tautan berbagi folder disalin."
 msgid "Folder target: {linkTitle}. Click to open the overview."
 msgstr "Folder tujuan: {linkTitle}. Klik untuk membuka ikhtisarnya."
 
-#: src/components/settings/AiToolsSection.tsx
-#: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/settings/SkillTargetsPicker.tsx
 msgid "Folders"
 msgstr "Folder"
@@ -5802,8 +5919,8 @@ msgid "Full sync — your edits are committed and pushed to your remote automati
 msgstr "Sinkronisasi penuh — suntingan Anda di-commit dan dikirim ke remote Anda secara otomatis."
 
 #: src/components/OkBlobRunner.tsx
-msgid "Game over · press space to play again"
-msgstr "Permainan berakhir · tekan spasi untuk main lagi"
+msgid "Game over · press <0>Space</0> to play again"
+msgstr "Permainan berakhir · tekan <0>Spasi</0> untuk main lagi"
 
 #: src/lib/keyboard-shortcuts.ts
 msgid "General"
@@ -5891,8 +6008,8 @@ msgid "Give the AI tools you use access to read and update your projects. Checki
 msgstr "Beri alat AI yang Anda pakai akses untuk membaca dan memperbarui proyek Anda. Mencentang kotak langsung menyiapkannya; melepas centang menghapusnya."
 
 #: src/components/McpConsentDialogBody.tsx
-msgid "Give the AI tools you use access to read and update your projects. Pick what to set up below, and change it anytime in Settings > AI tools & CLI."
-msgstr "Beri alat AI yang Anda pakai akses untuk membaca dan memperbarui proyek Anda. Pilih apa yang disiapkan di bawah, dan ubah kapan saja di Pengaturan > Alat AI & CLI."
+msgid "Give the AI tools you use access to read and update your projects. You can change any of this later in Settings > AI tools & CLI."
+msgstr "Beri alat AI yang Anda pakai akses untuk membaca dan memperbarui proyek Anda. Anda bisa mengubah semuanya nanti di Pengaturan > Alat AI & CLI."
 
 #: src/components/settings/LintingSection.tsx
 msgid "Glob patterns this schema applies to"
@@ -6030,13 +6147,6 @@ msgstr "Bantuan"
 msgid "Helps coding agents choose OKF document types, preserve provenance, and avoid inventing unsupported metadata."
 msgstr "Membantu agen pengkodean memilih jenis dokumen OKF, mempertahankan asal, dan menghindari penemuan metadata yang tidak didukung."
 
-#. Subtext for the open-knowledge-discovery skill row
-#. Subtext for the open-knowledge-discovery skill row
-#: src/components/McpConsentDialogBody.tsx
-#: src/components/settings/AiToolsSection.tsx
-msgid "Helps your coding agent recognize OpenKnowledge projects and route reads and writes through it."
-msgstr "Membantu agen pemrograman Anda mengenali proyek OpenKnowledge dan mengarahkan baca-tulis melaluinya."
-
 #: src/components/OkBlobRunner.tsx
 msgid "HI"
 msgstr "MAKS"
@@ -6081,7 +6191,11 @@ msgstr "Sembunyikan opsi lanjutan"
 msgid "Hide Agents"
 msgstr "Sembunyikan Agen"
 
+#. Collapses the list of files the setup writes to
+#. Collapses the list of project files the AI-tool setup writes
 #: src/components/acp/ThreadView.tsx
+#: src/components/CreateProjectDialog.tsx
+#: src/components/McpConsentDialogBody.tsx
 msgid "Hide details"
 msgstr "Sembunyikan detail"
 
@@ -6129,10 +6243,6 @@ msgstr "Sembunyikan panel"
 #: src/components/EditorToolbar.tsx
 msgid "Hide panel ({panelShortcutLabel})"
 msgstr "Sembunyikan panel ({panelShortcutLabel})"
-
-#: src/components/settings/ContentRulesSection.tsx
-msgid "Hide problem indicators"
-msgstr "Sembunyikan penanda masalah"
 
 #: src/editor/find-replace/FindReplaceBar.tsx
 msgid "Hide replace"
@@ -6227,21 +6337,18 @@ msgid "How to push manually"
 msgstr "Cara push manual"
 
 #. Link on an undetected tool row to its OpenKnowledge setup guide
-#. Link on an undetected tool row to its OpenKnowledge setup guide
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 msgid "How to set up"
 msgstr "Cara menyiapkan"
 
 #. placeholder {0}: editor.label
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 msgid "How to set up {0} (opens in browser)"
 msgstr "Cara menyiapkan {0} (terbuka di peramban)"
 
 #: src/components/settings/ContentRulesSection.tsx
-msgid "How validation findings surface across the project. These choices are committed to config.yml and shared with every collaborator via git."
-msgstr "Bagaimana temuan validasi muncul di seluruh proyek. Pilihan ini disimpan di config.yml dan dibagikan ke setiap kolaborator lewat git."
+msgid "How validation findings surface across the project."
+msgstr "Bagaimana temuan validasi muncul di seluruh proyek."
 
 #: src/editor/slash-command/embed-starter-items.tsx
 msgid "HTML"
@@ -6562,8 +6669,11 @@ msgid "Insert, delete, move, copy, and indent source editor lines through CodeMi
 msgstr "Menyisipkan, menghapus, memindahkan, menyalin, dan mengindentasi baris penyunting sumber lewat peta tombol bawaan CodeMirror."
 
 #: src/components/InstallInClaudeDesktopDialog.tsx
+#: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/IntegrationsSection.tsx
+#: src/components/settings/ProjectAiToolsSection.tsx
 #: src/components/skill-actions.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
 #: src/components/SkillPreviewTab.tsx
 #: src/components/SkillsTree.tsx
 msgid "Install"
@@ -6577,6 +6687,11 @@ msgstr "Pasang {0}"
 #: src/components/handoff/OpenInAgentMenuItem.tsx
 msgid "Install {brand} →"
 msgstr "Pasang {brand} →"
+
+#: src/components/settings/AiToolsSection.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Install {name}"
+msgstr "Pasang {name}"
 
 #. placeholder {0}: res.error
 #: src/hooks/use-explore-preview-install.ts
@@ -6707,6 +6822,10 @@ msgstr "Memasang"
 #: src/components/acp/ThreadView.tsx
 msgid "Installing {agentName}…"
 msgstr "Memasang {agentName}…"
+
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Installs to"
+msgstr "Dipasang di"
 
 #: src/components/SkillDirectoryResult.tsx
 msgid "installs:"
@@ -6904,11 +7023,11 @@ msgstr "Tata letak"
 msgid "Layout options"
 msgstr "Opsi tata letak"
 
-#: src/components/settings/PluginSectionHeader.tsx
+#: src/components/settings/SettingsSectionHeader.tsx
 msgid "Learn more"
 msgstr "Pelajari lebih lanjut"
 
-#: src/components/settings/PluginSectionHeader.tsx
+#: src/components/settings/SettingsSectionHeader.tsx
 msgid "Learn more about {title}"
 msgstr "Pelajari lebih lanjut tentang {title}"
 
@@ -7068,6 +7187,10 @@ msgstr "Memuat kedua versinya"
 msgid "Loading branch state"
 msgstr "Memuat keadaan cabang"
 
+#: src/components/settings/SharingSection.tsx
+msgid "Loading config sharing"
+msgstr "Memuat berbagi konfigurasi"
+
 #: src/components/DiffViewBoundary.tsx
 msgid "Loading conflict for {filePath}"
 msgstr "Memuat konflik untuk {filePath}"
@@ -7214,9 +7337,13 @@ msgstr "Berkas lokal"
 msgid "Local path"
 msgstr "Jalur lokal"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Local server port"
+msgstr "Port server lokal"
+
 #: src/lib/install-onboarding-toast.ts
-msgid "Local-only requested but no git repository was created. Switch later via Settings → Config sharing once the project is in a git repo."
-msgstr "Mode hanya lokal diminta, tetapi tidak ada repositori git yang dibuat. Anda dapat menggantinya nanti lewat Pengaturan → Berbagi konfigurasi setelah proyek berada di repositori git."
+msgid "Local-only requested but no git repository was created. Switch later via Settings → Sync & sharing once the project is in a git repo."
+msgstr "Mode hanya lokal diminta, tetapi tidak ada repositori git yang dibuat. Anda dapat menggantinya nanti lewat Pengaturan → Sinkronisasi & berbagi setelah proyek berada di repositori git."
 
 #: src/components/CreateProjectDialog.tsx
 msgid "Location"
@@ -7338,7 +7465,7 @@ msgstr "Perbaikan otomatis MCP gagal"
 
 #. Group label above the per-editor MCP list in Settings → AI tools & CLI — each row wires OpenKnowledge's MCP server into that tool
 #. Group label above the per-editor project MCP list in Settings → This project → AI tools
-#. Section label above the editor checkbox list in the first-launch dialog — each row wires OpenKnowledge's MCP server into that tool
+#. Heading above the per-tool MCP config paths in the disclosure
 #: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
@@ -7708,12 +7835,17 @@ msgstr "Galat .okignore bersarang di {path}"
 msgid "Nested fields"
 msgstr "Bidang bersarang"
 
+#: src/components/settings/NetworkAccessSection.tsx
+#: src/components/settings/SettingsDialogShell.tsx
+msgid "Network access"
+msgstr "Akses jaringan"
+
 #: src/components/FileTree.tsx
 msgid "Network error - {kind} \"{createdPath}\" still exists on disk"
 msgstr "Galat jaringan - {kind} \"{createdPath}\" masih ada di disk"
 
 #: src/components/FileTree.tsx
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Network error — please try again"
 msgstr "Galat jaringan — silakan coba lagi"
 
@@ -7724,6 +7856,10 @@ msgstr "kesalahan jaringan (apakah `ok start` sedang berjalan?)"
 #: src/components/FileTree.tsx
 msgid "Network error during cleanup"
 msgstr "Galat jaringan saat pembersihan"
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Network settings not yet loaded — try again in a moment."
+msgstr "Pengaturan jaringan belum dimuat — coba lagi sebentar."
 
 #: src/components/SyncStatusBadge.tsx
 msgid "never"
@@ -7741,8 +7877,8 @@ msgid "New {0} chat"
 msgstr "Obrolan {0} baru"
 
 #: src/components/OkBlobRunner.tsx
-msgid "New best · press space to play again"
-msgstr "Rekor baru · tekan spasi untuk main lagi"
+msgid "New best · press <0>Space</0> to play again"
+msgstr "Rekor baru · tekan <0>Spasi</0> untuk main lagi"
 
 #: src/components/NewWorktreeDialog.tsx
 msgid "New branch <0>{trimmed}</0> will be created from <1>{currentBaseLabel}</1>, in its own worktree under <2>.ok/worktrees/</2>."
@@ -7904,6 +8040,10 @@ msgstr "Belum ada berkas <0>.markdownlint.*</0> — setiap aturan berjalan denga
 msgid "No active or recent OpenKnowledge projects were found."
 msgstr "Tidak ditemukan proyek OpenKnowledge yang aktif maupun yang terbaru."
 
+#: src/components/SkillInstallMenu.tsx
+msgid "No agent folders yet"
+msgstr "Belum ada folder agen"
+
 #: src/comments/use-comment-delivery.ts
 msgid "No agent is set up yet — opening Configure agents."
 msgstr "Belum ada agen yang disiapkan — membuka Atur agen."
@@ -7932,6 +8072,19 @@ msgstr "Tidak ada agen yang dipilih — keterampilannya tersimpan tetapi tidak d
 #: src/components/FileSidebar.tsx
 msgid "No AI agents installed"
 msgstr "Tidak ada agen AI yang terpasang"
+
+#. Shown in place of the AI-tools checkbox when no AI tool was detected
+#: src/components/McpConsentDialogBody.tsx
+msgid "No AI tools detected yet. Once you install one, connect it from Settings > AI tools & CLI."
+msgstr "Belum ada alat AI yang terdeteksi. Setelah Anda memasang satu, hubungkan dari Pengaturan > Alat AI & CLI."
+
+#: src/components/CreateProjectDialog.tsx
+msgid "No AI tools detected yet. Once you install one, connect it from Settings > This project."
+msgstr "Belum ada alat AI yang terdeteksi. Setelah Anda memasang satu, hubungkan dari Pengaturan > Proyek ini."
+
+#: src/components/SkillConsentRow.tsx
+msgid "No AI tools detected. Install one to use this skill."
+msgstr "Tidak ada alat AI yang terdeteksi. Pasang satu untuk memakai keterampilan ini."
 
 #: src/components/settings/SearchSection.tsx
 msgid "No API key is set for this endpoint. Add one above."
@@ -8236,10 +8389,6 @@ msgstr "Tidak ada templat yang tersedia"
 msgid "No templates found."
 msgstr "Tidak ada templat yang ditemukan."
 
-#: src/components/NewItemDialog.tsx
-msgid "No templates yet. Add one in this folder's Templates section, or in Settings → Templates."
-msgstr "Belum ada templat. Tambahkan satu di bagian Templat folder ini, atau di Pengaturan → Templat."
-
 #: src/components/TemplatesCard.tsx
 msgid "No templates yet. Add one to give new docs in this folder a ready-made starting point."
 msgstr "Belum ada templat. Tambahkan satu agar dokumen baru di folder ini punya titik awal yang siap pakai."
@@ -8406,6 +8555,10 @@ msgstr "Aktif — kueri pencarian Anda dan teks halaman yang cocok dikirim ke pe
 msgid "On <0>{address}</0>"
 msgstr "Pada <0>{address}</0>"
 
+#: src/components/SkillCostValue.tsx
+msgid "on demand"
+msgstr "sesuai permintaan"
+
 #: src/comments/PropertyCommentButton.tsx
 msgid "On selected text in <0>{address}</0>"
 msgstr "Pada teks terpilih di <0>{address}</0>"
@@ -8413,6 +8566,10 @@ msgstr "Pada teks terpilih di <0>{address}</0>"
 #: src/components/settings/LintingSection.tsx
 msgid "On the root index, okf_version is written as a quoted string like \"0.2\". Unquoted, YAML reads it as a number and 0.10 silently becomes 0.1."
 msgstr "Pada indeks root, okf_version ditulis sebagai string yang dikutip seperti \"0.2\". Tanpa tanda kutip, YAML membacanya sebagai angka dan 0.10 diam-diam menjadi 0.1."
+
+#: src/components/SkillCostValue.tsx
+msgid "on trigger"
+msgstr "saat dipicu"
 
 #. Next step for a Cursor project MCP row — Cursor leaves project servers disabled
 #: src/components/settings/ProjectAiToolsSection.tsx
@@ -9096,6 +9253,10 @@ msgstr "Keluar"
 msgid "Outline"
 msgstr "Kerangka"
 
+#: src/components/SkillCostValue.tsx
+msgid "over the {budgetLabel} token budget"
+msgstr "melebihi anggaran token {budgetLabel}"
+
 #: src/components/AutoSyncEnableWarning.tsx
 msgid "Overlapping edits"
 msgstr "Suntingan bertumpang tindih"
@@ -9327,8 +9488,8 @@ msgid "Personal access token"
 msgstr "Token akses pribadi"
 
 #: src/components/settings/ScopeBadge.tsx
-msgid "Personal to this device — stored in your user config, not shared."
-msgstr "Pribadi untuk perangkat ini — disimpan di konfigurasi pengguna Anda, tidak dibagikan."
+msgid "Personal to this device. Applies to every project you open here and is never shared with collaborators."
+msgstr "Pribadi untuk perangkat ini. Berlaku untuk setiap proyek yang Anda buka di sini dan tidak pernah dibagikan ke kolaborator."
 
 #: src/components/InstallInClaudeDesktopDialog.tsx
 msgid "Pick <0>openknowledge.skill</0> from your <1>Downloads</1> folder. It enables automatically."
@@ -9438,6 +9599,10 @@ msgstr "Populer"
 msgid "Popular on skills.sh"
 msgstr "Populer di skills.sh"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Port {configuredPort} is in use, so the server is running on port {boundPort} instead. A tunnel forwarding to the fixed port won't reach it — free that port and apply again, or choose a different one."
+msgstr "Port {configuredPort} sedang digunakan, jadi server berjalan di port {boundPort}. Tunnel yang menuju port tetap tidak akan menjangkaunya — bebaskan port itu dan terapkan lagi, atau pilih yang lain."
+
 #: src/components/settings/SettingsDialogBody.tsx
 #: src/components/settings/SettingsDialogShell.tsx
 msgid "Preferences"
@@ -9464,8 +9629,8 @@ msgid "Present a document as a slide deck in its own window. Works in the OpenKn
 msgstr "Tampilkan dokumen sebagai dek slide di jendela tersendiri. Hanya berfungsi di aplikasi desktop OpenKnowledge dan memerlukan CLI Slidev yang dipasang terpisah. Saat aktif, muncul di Plugins pada bilah sisi."
 
 #: src/components/OkBlobRunner.tsx
-msgid "Press space or tap the blob to start"
-msgstr "Tekan spasi atau ketuk blob untuk mulai"
+msgid "Press <0>Space</0> or tap the blob to start"
+msgstr "Tekan <0>Spasi</0> atau ketuk blob untuk mulai"
 
 #: src/components/EditorWorkspace.tsx
 msgid "Press Space to pick up a tab. Use the arrow keys to move it within a tab strip, then press Space or Enter to drop it. Press Shift+F10 or the Menu key to open the tab context menu for split, close, pin, and other tab actions."
@@ -9574,8 +9739,8 @@ msgid "Project name"
 msgstr "Nama proyek"
 
 #: src/components/settings/LintingSection.tsx
-msgid "Project plugins are your project's authoring standard — turn them on or off here. The choice is committed to config.yml and shared with every collaborator via git. Each enabled plugin gets its own page under Plugins in the settings sidebar."
-msgstr "Plugin proyek adalah standar penulisan proyek Anda — nyalakan atau matikan di sini. Pilihan ini disimpan di config.yml dan dibagikan ke setiap kolaborator lewat git. Setiap plugin yang aktif mendapat halamannya sendiri di bawah Plugin pada bilah sisi pengaturan."
+msgid "Project plugins are your project's authoring standard — turn them on or off here. Each enabled plugin gets its own page under Plugins in the settings sidebar."
+msgstr "Plugin proyek adalah standar penulisan proyek Anda — nyalakan atau matikan di sini. Setiap plugin yang aktif mendapat halamannya sendiri di bawah Plugin pada bilah sisi pengaturan."
 
 #: src/components/FileTree.tsx
 #: src/components/SeedRootPicker.tsx
@@ -10046,10 +10211,9 @@ msgstr "\"{0}\" dihapus dari semua lokasi lain — folder sumbernya tetap dimuat
 msgid "Removed \"{projectName}\" from recent projects. Its folder no longer exists."
 msgstr "\"{projectName}\" dihapus dari proyek terbaru. Foldernya sudah tidak ada."
 
-#. Warning shown when the user unchecks an already-installed skill
-#: src/components/McpConsentDialogBody.tsx
-msgid "Removes this skill from your editors."
-msgstr "Menghapus keterampilan ini dari penyunting Anda."
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Removes from"
+msgstr "Dihapus dari"
 
 #: src/components/CreateProjectDialog.tsx
 msgid "Removing"
@@ -10205,6 +10369,11 @@ msgstr "Ganti salinan-salinan ini dengan symlink ke sumbernya?"
 msgid "Replace these symlinks with independent copies?"
 msgstr "Ganti symlink-symlink ini dengan salinan mandiri?"
 
+#. placeholder {0}: formatToolList( replacing.map((e) => e.label), i18n.locale, )
+#: src/components/McpConsentDialogBody.tsx
+msgid "Replaces the existing OpenKnowledge entry in {0}"
+msgstr "Mengganti entri OpenKnowledge yang ada di {0}"
+
 #: src/components/BugReportHistory.tsx
 #: src/components/command-palette-commands.ts
 #: src/components/HelpPopover.tsx
@@ -10355,6 +10524,10 @@ msgstr "Memulai ulang"
 #: src/lib/install-server-drift-listener.ts
 msgid "Restarting closes this project's server. Connected agents (Claude Code, Codex, Cursor) will see their OpenKnowledge MCP connection close unexpectedly — you may need to restart the agent, or toggle its OpenKnowledge MCP server off and on, to reconnect."
 msgstr "Memulai ulang akan menutup server proyek ini. Agen yang terhubung (Claude Code, Codex, Cursor) akan melihat koneksi MCP OpenKnowledge mereka tertutup tak terduga — Anda mungkin perlu memulai ulang agennya, atau mematikan lalu menyalakan server MCP OpenKnowledge padanya, untuk tersambung kembali."
+
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Restarting the server is only available in the desktop app."
+msgstr "Memulai ulang server hanya tersedia di aplikasi desktop."
 
 #: src/lib/install-server-drift-listener.ts
 msgid "Restarting the server…"
@@ -10832,6 +11005,10 @@ msgstr "Lihat semua {0} paket awal"
 msgid "See the full install guide"
 msgstr "Lihat panduan pemasangan lengkap"
 
+#: src/components/PackCardGrid.tsx
+msgid "See what's added"
+msgstr "Lihat yang ditambahkan"
+
 #. placeholder {0}: BASE16_SLOT_ROLES[slot]
 #: src/components/settings/CustomThemeEditor.tsx
 msgid "Select {slot} — {0}"
@@ -10995,7 +11172,7 @@ msgstr "Pemisah"
 msgid "Server can't open documents"
 msgstr "Server tidak bisa membuka dokumen"
 
-#: src/components/NewItemDialog.tsx
+#: src/lib/create-page-request.ts
 msgid "Server error (HTTP {status})"
 msgstr "Galat server (HTTP {status})"
 
@@ -11072,6 +11249,11 @@ msgstr "Siapkan di halamannya sendiri di bawah Plugin."
 msgid "Set the sync default for users opening this project for the first time. This setting is committed to your repository."
 msgstr "Setel sinkronisasi bawaan untuk pengguna yang membuka proyek ini pertama kali. Pengaturan ini disimpan di repositori Anda."
 
+#. placeholder {0}: formatToolList( editors.map((e) => e.label), i18n.locale, )
+#: src/components/McpConsentDialogBody.tsx
+msgid "Set up {0}"
+msgstr "Siapkan {0}"
+
 #: src/components/command-palette-commands.ts
 msgid "Set up OpenKnowledge integrations"
 msgstr "Siapkan integrasi OpenKnowledge"
@@ -11107,6 +11289,10 @@ msgstr "Isi pengaturan"
 #: src/components/settings/SettingsDialogErrorBoundary.tsx
 msgid "Settings failed to load"
 msgstr "Gagal memuat pengaturan"
+
+#: src/components/settings/SettingsDialogBody.tsx
+msgid "Settings for this project. Some are shared with every collaborator through git; others apply only on this computer."
+msgstr "Pengaturan untuk proyek ini. Sebagian dibagikan ke setiap kolaborator lewat git; sisanya hanya berlaku di komputer ini."
 
 #: src/components/settings/SettingsDialogShell.tsx
 msgid "Settings sections"
@@ -11178,8 +11364,8 @@ msgid "Shared repositories"
 msgstr "Repositori bersama"
 
 #: src/components/settings/ScopeBadge.tsx
-msgid "Shared with everyone on this project — committed to config.yml via git."
-msgstr "Dibagikan dengan semua orang di proyek ini — disimpan di config.yml lewat git."
+msgid "Shared with everyone on this project. Stored in the project folder and travels with it through git."
+msgstr "Dibagikan ke semua orang di proyek ini. Disimpan di folder proyek dan ikut berpindah lewat git."
 
 #: src/components/PublishToGitHubDialog.tsx
 msgid "Sharing a doc needs a GitHub repository. Create one for this project."
@@ -11217,13 +11403,14 @@ msgstr "Tampilkan {0} lagi"
 msgid "Show {hidden} more"
 msgstr "Tampilkan {hidden} lagi"
 
+#: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ConfigureAgentsSection.tsx
-msgid "Show {inAppHiddenCount} more"
-msgstr "Tampilkan {inAppHiddenCount} lagi"
+msgid "Show {hiddenCount} more"
+msgstr "Tampilkan {hiddenCount} lagi"
 
 #: src/components/settings/LinkPreviewsSection.tsx
-msgid "Show a preview card when you hover an external link in the editor. This setting applies only to this computer."
-msgstr "Menampilkan kartu pratinjau saat Anda mengarahkan kursor ke tautan eksternal di penyunting. Pengaturan ini hanya berlaku di komputer ini."
+msgid "Show a preview card when you hover an external link in the editor."
+msgstr "Menampilkan kartu pratinjau saat Anda mengarahkan kursor ke tautan eksternal di penyunting."
 
 #: src/components/settings/OkignoreSection.tsx
 msgid "Show advanced"
@@ -11254,9 +11441,7 @@ msgstr "Tampilkan panel dokumen"
 msgid "Show external URL nodes"
 msgstr "Tampilkan simpul URL eksternal"
 
-#. Collapses the undetected AI tools back behind the toggle
 #: src/components/LinksPanel.tsx
-#: src/components/McpConsentDialogBody.tsx
 msgid "Show fewer"
 msgstr "Tampilkan lebih sedikit"
 
@@ -11285,6 +11470,7 @@ msgid "Show in Explorer"
 msgstr "Tampilkan di Explorer"
 
 #: src/components/PackCardGrid.tsx
+#: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ConfigureAgentsSection.tsx
 msgid "Show less"
 msgstr "Tampilkan lebih sedikit"
@@ -11320,10 +11506,6 @@ msgstr "Tampilkan panel"
 #: src/components/EditorToolbar.tsx
 msgid "Show panel ({panelShortcutLabel})"
 msgstr "Tampilkan panel ({panelShortcutLabel})"
-
-#: src/components/settings/ContentRulesSection.tsx
-msgid "Show problem indicators"
-msgstr "Tampilkan penanda masalah"
 
 #: src/editor/find-replace/FindReplaceBar.tsx
 msgid "Show replace"
@@ -11477,6 +11659,11 @@ msgstr "Keterampilan"
 msgid "Skills are now shared. Commit .ok/skills to share them with your team."
 msgstr "Keterampilan kini dibagikan. Lakukan commit pada .ok/skills untuk membagikannya dengan tim Anda."
 
+#. Tells the user a skill installs to every detected AI tool, independent of the per-tool MCP connections listed above
+#: src/components/settings/AiToolsSection.tsx
+msgid "Skills install to every AI tool detected on this machine, independent of the MCP connections you chose above."
+msgstr "Keterampilan dipasang ke setiap alat AI yang terdeteksi di mesin ini, terlepas dari koneksi MCP yang Anda pilih di atas."
+
 #: src/components/AppMenubar.tsx
 #: src/components/command-palette-commands.ts
 #: src/components/FileSidebar.tsx
@@ -11499,11 +11686,6 @@ msgstr "skills.sh tidak tersedia; menampilkan hasil GitHub (tanpa peringkat pema
 #: src/uninstall/UninstallSurveyScreen.tsx
 msgid "Skip"
 msgstr "Lewati"
-
-#. Secondary button — dismisses the dialog without wiring any tools
-#: src/components/McpConsentDialogBody.tsx
-msgid "Skip for now"
-msgstr "Lewati dulu"
 
 #. placeholder {0}: item.displayName
 #: src/components/acp/ThreadView.tsx
@@ -11660,10 +11842,6 @@ msgstr "Pencarian di sumber"
 #: src/lib/keyboard-shortcuts.ts
 msgid "Source undo or redo"
 msgstr "Batalkan atau ulangi di sumber"
-
-#: src/components/OkBlobRunner.tsx
-msgid "Space to jump · down arrow to duck"
-msgstr "Spasi untuk melompat · panah bawah untuk menunduk"
 
 #: src/components/OkBlobRunnerPage.tsx
 msgid "Space to jump, down arrow to duck. That is the whole game."
@@ -11951,11 +12129,15 @@ msgstr "Menautkan keterampilan secara symlink ke {0}"
 msgid "Symlinks the skill to {path}"
 msgstr "Menautkan keterampilan secara symlink ke {path}"
 
-#: src/components/settings/SettingsDialogShell.tsx
 #: src/components/settings/SyncSection.tsx
 #: src/components/SyncStatusBadge.tsx
 msgid "Sync"
 msgstr "Sinkronisasi"
+
+#: src/components/settings/SettingsDialogBody.tsx
+#: src/components/settings/SettingsDialogShell.tsx
+msgid "Sync & sharing"
+msgstr "Sinkronisasi & berbagi"
 
 #: src/components/SyncStatusBadge.tsx
 msgid "Sync disabled"
@@ -12115,7 +12297,6 @@ msgstr "Daftar tugas"
 msgid "Task List"
 msgstr "Daftar Tugas"
 
-#. Subtext for the project runtime-skill row
 #: src/components/settings/ProjectAiToolsSection.tsx
 msgid "Teaches coding agents in this project to read and write through OpenKnowledge."
 msgstr "Mengajari agen pemrograman di proyek ini untuk membaca dan menulis lewat OpenKnowledge."
@@ -12337,6 +12518,10 @@ msgstr "folder keterampilan bawaan (jalur persisnya muncul setelah disimpan)"
 msgid "The desktop app isn't responding. Refresh and try again."
 msgstr "Aplikasi desktopnya tidak merespons. Segarkan lalu coba lagi."
 
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "The destinations changed. Review the list, then confirm."
+msgstr "Tujuannya berubah. Periksa daftarnya, lalu konfirmasi."
+
 #. placeholder {0}: summary.target
 #: src/components/settings/LintingSection.tsx
 msgid "the doc {0}"
@@ -12432,6 +12617,10 @@ msgstr "Penyedianya menolak permintaannya (HTTP {0}). Periksa kunci API dan id m
 msgid "The provider rejected the request. Check the API key and the model id."
 msgstr "Penyedianya menolak permintaannya. Periksa kunci API dan id modelnya."
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "The public URL your tunnel serves. The server admits requests for this host and advertises it in the URLs it issues."
+msgstr "URL publik yang dilayani tunnel Anda. Server menerima permintaan untuk host ini dan mengumumkannya dalam URL yang diterbitkannya."
+
 #: src/components/ReportBugDialogBody.tsx
 msgid "The report service couldn't be reached."
 msgstr "Layanan laporan tidak dapat dihubungi."
@@ -12455,6 +12644,11 @@ msgstr "Berkas skemanya tidak ada atau gagal dimuat — menambahkan sebuah bidan
 #: src/components/ConnectingBanner.tsx
 msgid "the server responded but server.lock has no port yet"
 msgstr "server merespons tetapi server.lock belum memiliki port"
+
+#. placeholder {0}: origin.trim()
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "The server will accept requests for {0} with no built-in authentication. Anyone who can reach your tunnel will have full control of this knowledge base — including sync, GitHub credentials, and local operations. Make sure the tunnel's edge restricts who can connect."
+msgstr "Server akan menerima permintaan untuk {0} tanpa autentikasi bawaan. Siapa pun yang dapat menjangkau tunnel Anda akan memiliki kendali penuh atas basis pengetahuan ini — termasuk sinkronisasi, kredensial GitHub, dan operasi lokal. Pastikan tepi tunnel membatasi siapa yang dapat terhubung."
 
 #: src/components/settings/LintingSection.tsx
 msgid "The shapes of title, description, resource, and tags when you use them. None are required; declaring one only pins its type, so tags written as a comma-separated string is flagged."
@@ -12505,6 +12699,10 @@ msgstr "Terminal berhenti tak terduga."
 #: src/components/AuthModal.tsx
 msgid "The token needs the repo and read:user scopes."
 msgstr "Token itu memerlukan cakupan repo dan read:user."
+
+#: src/lib/tab-session-restore-recovery-notice.ts
+msgid "The workspace opened without it so the app could start."
+msgstr "Ruang kerja terbuka tanpanya agar aplikasi dapat dimulai."
 
 #: src/components/settings/settings-fields.ts
 msgid "Theme"
@@ -12766,6 +12964,10 @@ msgstr "item ini"
 msgid "This looks like a drive root (e.g., C:\\). Scaffolding here will scan an entire drive."
 msgstr "Ini tampak seperti akar sebuah drive (mis. C:\\). Menyusun proyek di sini akan memindai seluruh drive."
 
+#: src/components/settings/ScopeBadge.tsx
+msgid "This machine"
+msgstr "Mesin ini"
+
 #: src/uninstall/UninstallProgressScreen.tsx
 msgid "This may take a moment. Your markdown content is kept."
 msgstr "Ini mungkin makan waktu sebentar. Konten markdown Anda dipertahankan."
@@ -12908,6 +13110,10 @@ msgstr "Ini mengirim konten keluar dari komputer Anda"
 msgid "This sends the link's address off your machine"
 msgstr "Ini mengirim alamat tautannya keluar dari komputer Anda"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "This server has no built-in authentication. Anyone who can reach the tunnel gets full control of this knowledge base — restrict access at the tunnel's edge (a Tailscale ACL, a reverse proxy with auth, or a firewall)."
+msgstr "Server ini tidak memiliki autentikasi bawaan. Siapa pun yang dapat menjangkau tunnel mendapatkan kendali penuh atas basis pengetahuan ini — batasi akses di tepi tunnel (ACL Tailscale, reverse proxy dengan autentikasi, atau firewall)."
+
 #: src/components/settings/LinkPreviewsSection.tsx
 msgid "This setting is per-machine and isn't shared with collaborators."
 msgstr "Pengaturan ini berlaku per komputer dan tidak dibagikan dengan kolaborator."
@@ -12915,6 +13121,11 @@ msgstr "Pengaturan ini berlaku per komputer dan tidak dibagikan dengan kolaborat
 #: src/components/settings/SearchSection.tsx
 msgid "This setting is per-machine and isn't shared with collaborators. It needs an API key (set below) unless your endpoint is a local server that doesn't require one."
 msgstr "Pengaturan ini berlaku per komputer dan tidak dibagikan dengan kolaborator. Ia memerlukan kunci API (setel di bawah) kecuali endpoint Anda adalah server lokal yang tidak memerlukannya."
+
+#. Tells the user the project skill is committed to the repo, unlike the user-global skills
+#: src/components/settings/ProjectAiToolsSection.tsx
+msgid "This skill lives in the project folder, so it installs for everyone who opens this project — not just you."
+msgstr "Keterampilan ini berada di folder proyek, jadi terpasang untuk semua orang yang membuka proyek ini, bukan hanya Anda."
 
 #: src/components/ImportSkillForm.tsx
 msgid "This source bundles several skills — choose one, then Import."
@@ -13080,6 +13291,11 @@ msgstr "Menyalakan atau mematikan format garis bawah."
 #: src/components/settings/applies-to-folder-picker.tsx
 msgid "Toggles the pattern {0}/**"
 msgstr "Mengaktifkan atau menonaktifkan pola {0}/**"
+
+#: src/components/SkillBundlePreview.tsx
+#: src/components/SkillProperties.tsx
+msgid "tokens"
+msgstr "token"
 
 #: src/components/FeedbackForm.tsx
 msgid "Too slow"
@@ -13271,6 +13487,17 @@ msgstr "Batalkan hingga suntingan ini?"
 #: src/lib/keyboard-shortcuts.ts
 msgid "Undo, redo, or step through selection changes in the Edit source pane or a code-shaped property field."
 msgstr "Membatalkan, mengulangi, atau menelusuri perubahan pilihan di panel Sunting sumber atau bidang properti berbentuk kode."
+
+#: src/components/settings/AiToolsSection.tsx
+#: src/components/settings/ProjectAiToolsSection.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Uninstall"
+msgstr "Copot"
+
+#: src/components/settings/AiToolsSection.tsx
+#: src/components/SkillInstallConfirmDialog.tsx
+msgid "Uninstall {name}"
+msgstr "Copot {name}"
 
 #: src/lib/native-menu-catalog.ts
 #: src/uninstall/UninstallPickerScreen.tsx
@@ -13562,6 +13789,10 @@ msgstr "Pakai paket awal"
 msgid "Use a token instead"
 msgstr "Pakai token saja"
 
+#: src/components/settings/NetworkAccessSection.tsx
+msgid "Use an http:// or https:// origin."
+msgstr "Gunakan origin http:// atau https://."
+
 #: src/components/settings/SearchSection.tsx
 msgid "Use an https:// URL — http:// is only allowed for localhost."
 msgstr "Pakai URL https:// — http:// hanya diizinkan untuk localhost."
@@ -13589,8 +13820,8 @@ msgid "User"
 msgstr "Pengguna"
 
 #: src/components/settings/LintingSection.tsx
-msgid "User plugins are personal to this device — turn them on or off here. The choice lives in your user config and is never committed to the project. Each enabled plugin gets its own page under Plugins in the settings sidebar."
-msgstr "Plugin pengguna bersifat pribadi untuk perangkat ini — nyalakan atau matikan di sini. Pilihan ini ada di konfigurasi pengguna Anda dan tidak pernah di-commit ke proyek. Setiap plugin yang aktif mendapat halamannya sendiri di bawah Plugin pada bilah sisi pengaturan."
+msgid "User plugins are personal to this device — turn them on or off here. Each enabled plugin gets its own page under Plugins in the settings sidebar."
+msgstr "Plugin pengguna bersifat pribadi untuk perangkat ini — nyalakan atau matikan di sini. Setiap plugin yang aktif mendapat halamannya sendiri di bawah Plugin pada bilah sisi pengaturan."
 
 #: src/components/settings/SearchSection.tsx
 msgid "Using the <0>OK_EMBEDDINGS_API_KEY</0> environment variable (managed outside OpenKnowledge)."
@@ -13785,11 +14016,13 @@ msgstr "Apa yang harus dilakukan AI? (opsional)"
 msgid "What the agent may read, write, and surface."
 msgstr "Apa yang boleh dibaca, ditulis, dan ditampilkan agen."
 
+#. Expands the list of files the setup writes to
+#. Expands the list of project files the AI-tool setup writes
+#: src/components/CreateProjectDialog.tsx
 #: src/components/McpConsentDialogBody.tsx
 msgid "What this changes"
 msgstr "Apa yang berubah karena ini"
 
-#: src/components/McpConsentDialogBody.tsx
 #: src/components/settings/AiToolsSection.tsx
 #: src/components/settings/ProjectAiToolsSection.tsx
 msgid "What this checkbox changes"
@@ -13882,11 +14115,6 @@ msgstr "Akan dibuat di: <0>{targetPreview}</0>"
 #: src/components/CreateProjectDialog.tsx
 msgid "Will be saved as <0>{sanitized}</0>."
 msgstr "Akan disimpan sebagai <0>{sanitized}</0>."
-
-#. Disclosure that Add will overwrite the tool's existing OpenKnowledge MCP entry
-#: src/components/McpConsentDialogBody.tsx
-msgid "Will replace existing OpenKnowledge entry"
-msgstr "Akan menggantikan entri OpenKnowledge yang sudah ada"
 
 #: src/components/AppMenubar.tsx
 #: src/lib/native-menu-catalog.ts
@@ -14100,6 +14328,10 @@ msgstr "Token GitHub Anda kehilangan cakupan yang wajib. Coba masuk lagi."
 #: src/components/PublishToGitHubDialog.tsx
 msgid "Your knowledge base is now on GitHub at <0>{ownerLogin}/{repoName}</0>."
 msgstr "Basis pengetahuan Anda kini ada di GitHub di <0>{ownerLogin}/{repoName}</0>."
+
+#: src/lib/tab-session-restore-recovery-notice.ts
+msgid "Your last open document couldn't be restored."
+msgstr "Dokumen terakhir yang Anda buka tidak dapat dipulihkan."
 
 #: src/components/share-receive-miss-content.tsx
 msgid "Your local copy is behind."

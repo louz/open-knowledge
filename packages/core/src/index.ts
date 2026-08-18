@@ -351,7 +351,9 @@ export {
   PROJECT_SKILL_EDITOR_IDS,
   PROJECT_SKILL_PROJECTION_IGNORE_PATHS,
   RESERVED_PROJECT_SKILL_NAME,
+  receivesProjectIntegrationWrite,
   skillRootActivationPath,
+  USER_MCP_GATED_EDITOR_IDS,
   USER_SKILL_HOSTS,
 } from './constants/editors.ts';
 export {
@@ -434,6 +436,7 @@ export {
   type DedupMode,
   type DedupUIMode,
   type EmitFormat,
+  EXCALIDRAW_FILE_EXTENSIONS,
   EXECUTABLE_BLOCKLIST_EXTENSIONS,
   FILE_ATTACHMENT_EXTENSIONS,
   // re-exported here as the canonical dispatch surface — same set, same
@@ -441,6 +444,7 @@ export {
   IMAGE_EXTENSIONS,
   INLINE_RENDERABLE_EXTENSIONS,
   type InlineAssetMediaKind,
+  isExcalidrawDocFile,
   isMermaidDocFile,
   LINKABLE_ASSET_EXTENSIONS,
   MERMAID_FILE_EXTENSIONS,
@@ -1746,9 +1750,12 @@ export {
   type CandidateBridgeDeps,
   type CandidateSelection,
   type CandidateSelectionPayload,
+  type CanonicalGitHubShareSource,
   canonicalGitHubRemoteUrl,
   classifyBranchMatch,
   type DecodedShare,
+  type DecodedShareV1,
+  type DecodedShareV2,
   decodeShareUrl,
   type ExpectedShareRepo,
   encodeShareUrl,
@@ -1756,9 +1763,15 @@ export {
   type HeadBranchInfo,
   InvalidShareUrlError,
   isGitWorkingTree,
+  MAX_V2_SHARE_PAYLOAD_BYTES,
+  MAX_V2_SHARE_TOKEN_CHARS,
+  MAX_V2_SHARED_URL_UTF8_BYTES,
+  parseCanonicalGitHubShareUrl,
+  projectCanonicalGitHubShareTarget,
   type RecentProjectEntry,
   type ResolvedGitDirKind,
   selectCandidate,
+  serializeCanonicalGitHubShareUrl,
   UnsupportedShareVersionError,
 } from './sharing/index.ts';
 export {
@@ -1829,6 +1842,18 @@ export {
   isDetectedSkillInProject,
   isSkillOutsideOpenProject,
 } from './skills-catalog/scope.ts';
+// Three-tier context-cost estimator — pure, browser-safe; shared by the client
+// preview payload and the server skills-list walk so a skill's cost reads the
+// same on every surface.
+export {
+  ALWAYS_ON_TOKEN_BUDGET,
+  estimateSkillCost,
+  ON_TRIGGER_TOKEN_BUDGET,
+  READABLE_SKILL_EXTENSIONS,
+  type SkillCostInput,
+  type SkillCostTiers,
+  SkillCostTiersSchema,
+} from './skills-catalog/skill-cost.ts';
 export {
   parseSkillsShCatalogSource,
   type SkillsShCatalogSource,
